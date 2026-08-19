@@ -1,0 +1,29 @@
+{
+  "name": "farmsapp-design-system",
+  "packageManager": "pnpm@11.22.0+sha512.1ff870c4c6133dfd88fb2afc46dd13d47f09c9794b438c6fdb47ca98caf3bc16381ee0be93a091b8e3824cf01f889f46d7d9e20910fb0be1ab0fb5baa80dd621",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint && eslint . && stylelint \"**/*.css\"",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "generate": "plop --plopfile tooling/generators/plopfile.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0",
+    "prettier": "^3.4.0",
+    "eslint": "^9.17.0",
+    "stylelint": "^16.12.0",
+    "@farmsapp/eslint-config": "workspace:*",
+    "@farmsapp/stylelint-config": "workspace:*",
+    "plop": "^4.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-commonjs": "^28.0.0",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "rollup-plugin-dts": "^6.1.1"
+  }
+}

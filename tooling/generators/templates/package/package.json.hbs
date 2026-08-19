@@ -1,0 +1,28 @@
+{
+  "name": "@farmsapp/{{dashCase name}}",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["build"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@farmsapp/eslint-config": "workspace:*",
+    "typescript": "^5.7.0",
+    "rollup": "^4.28.0"
+  }
+}

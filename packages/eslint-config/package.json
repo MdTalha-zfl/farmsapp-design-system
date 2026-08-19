@@ -1,0 +1,24 @@
+{
+  "name": "@farmsapp/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared ESLint flat config for the design system monorepo.",
+  "type": "module",
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./react": "./react.mjs"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.17.0",
+    "globals": "^15.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "typescript-eslint": "^8.18.0"
+  },
+  "peerDependencies": {
+    "eslint": "^9.0.0"
+  }
+}
