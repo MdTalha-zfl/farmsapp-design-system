@@ -1,0 +1,37 @@
+{
+  "name": "@farmsapp/design-system",
+  "version": "0.0.0",
+  "description": "Meta package — re-exports components and primitives for consumers who want a single install. Re-exports only, no logic of its own. System Blueprint §04.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["build"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@farmsapp/components": "workspace:*",
+    "@farmsapp/primitives": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  },
+  "devDependencies": {
+    "@farmsapp/eslint-config": "workspace:*",
+    "@types/react": "^18.3.0",
+    "typescript": "^5.7.0",
+    "rollup": "^4.28.0"
+  }
+}

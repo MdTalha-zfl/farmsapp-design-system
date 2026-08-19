@@ -1,0 +1,35 @@
+{
+  "name": "@farmsapp/themes",
+  "version": "0.0.0",
+  "description": "ThemeProvider and brand/theme CSS layers — System Blueprint §06.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["build"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@farmsapp/tokens": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19"
+  },
+  "devDependencies": {
+    "@farmsapp/eslint-config": "workspace:*",
+    "@types/react": "^18.3.0",
+    "typescript": "^5.7.0",
+    "rollup": "^4.28.0"
+  }
+}
