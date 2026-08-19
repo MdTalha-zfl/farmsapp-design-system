@@ -1,0 +1,46 @@
+name: Release
+
+# Runs after CI has already verified main. Changesets opens/updates a
+# "Version Packages" PR; merging *that* PR is what triggers the actual
+# publish, via the same workflow re-running against the now-bumped
+# versions. See System Blueprint §04/§11.
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write # required for npm Trusted Publishing (OIDC) — no NPM_TOKEN secret
+
+jobs:
+  release:
+    name: Version or publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Create release PR or publish
+        uses: changesets/action@v1
+        with:
+          version: pnpm run version-packages
+          publish: pnpm exec changeset publish

@@ -10,10 +10,13 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "format": "prettier --write .",
-    "generate": "plop --plopfile tooling/generators/plopfile.mjs"
+    "generate": "plop --plopfile tooling/generators/plopfile.mjs",
+    "changeset": "changeset",
+    "version-packages": "changeset version"
   },
   "devDependencies": {
     "turbo": "^2.3.0",
+    "@changesets/cli": "^2.27.0",
     "typescript": "^5.7.0",
     "prettier": "^3.4.0",
     "eslint": "^9.17.0",
