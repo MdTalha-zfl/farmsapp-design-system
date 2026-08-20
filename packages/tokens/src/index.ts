@@ -1,6 +1,7 @@
 /**
- * Token source lands here in Phase 2 (primitive) and Phase 3 (semantic) —
- * see System Blueprint §05. Placeholder for now so the package builds,
- * lints, and publishes end-to-end before any real token exists.
+ * Generated token constants are re-exported here. src/generated/tokens.ts
+ * is build output — written by Style Dictionary on every `pnpm run build`,
+ * never hand-edited, not committed to git. See System Blueprint §05 and the
+ * Token Foundation roadmap, Chunk 01.
  */
-export const TOKENS_PACKAGE_VERSION = "0.0.0" as const;
+export * from "./generated/tokens";

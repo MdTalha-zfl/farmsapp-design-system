@@ -1,0 +1,11 @@
+{
+  "color": {
+    "blue": {
+      "500": {
+        "$value": "#2B5A9E",
+        "$type": "color",
+        "$description": "Dummy primitive token — proves the Style Dictionary pipeline (Token Foundation Chunk 01). Replaced by the real 12-step brand/neutral scales in Chunk 03."
+      }
+    }
+  }
+}

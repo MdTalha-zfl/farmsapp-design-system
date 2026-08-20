@@ -2,5 +2,7 @@ packages:
   - "apps/*"
   - "packages/*"
 allowBuilds:
+  '@bundled-es-modules/glob': true
   esbuild: true
   sharp: true
+  style-dictionary: true

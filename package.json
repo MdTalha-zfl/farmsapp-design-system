@@ -6,7 +6,7 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "lint": "turbo run lint && eslint . && stylelint \"**/*.css\"",
+    "lint": "turbo run lint && eslint . && stylelint \"**/*.css\" --allow-empty-input",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "format": "prettier --write .",

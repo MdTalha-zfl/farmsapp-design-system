@@ -9,6 +9,7 @@
       "types": "./build/index.d.ts",
       "default": "./build/index.js"
     },
+    "./css": "./build/css/tokens.css",
     "./package.json": "./package.json"
   },
   "files": ["build"],
@@ -16,13 +17,14 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "style-dictionary build --config style-dictionary.config.mjs && rollup -c",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@farmsapp/eslint-config": "workspace:*",
     "typescript": "^5.7.0",
-    "rollup": "^4.28.0"
+    "rollup": "^4.28.0",
+    "style-dictionary": "^4.3.0"
   }
 }
