@@ -1,6 +1,6 @@
 /**
- * ThemeProvider (light/dark × brand, via data-theme/data-brand attributes)
- * lands here in Phase 4 — see System Blueprint §06. Placeholder for now so
- * the package builds, lints, and publishes end-to-end.
+ * ThemeProvider — light/dark via data-theme (Chunk 04), brand overrides via
+ * data-brand (Chunk 05). See System Blueprint §06.
  */
-export const THEMES_PACKAGE_VERSION = "0.0.0" as const;
+export { ThemeProvider, useTheme, type Theme, type Brand } from "./ThemeProvider";
+export { getThemeInitScript, THEME_STORAGE_KEY, BRAND_STORAGE_KEY } from "./bootstrap";
