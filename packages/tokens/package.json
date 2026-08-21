@@ -17,14 +17,17 @@
     "access": "public"
   },
   "scripts": {
-    "build": "style-dictionary build --config style-dictionary.config.mjs && rollup -c",
+    "build": "node scripts/check-contrast.mjs && node scripts/build-tokens.mjs && node scripts/assemble-layers.mjs && rollup -c",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "generate:scales": "node scripts/generate-scale.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs"
   },
   "devDependencies": {
     "@farmsapp/eslint-config": "workspace:*",
     "typescript": "^5.7.0",
     "rollup": "^4.28.0",
-    "style-dictionary": "^4.3.0"
+    "style-dictionary": "^4.3.0",
+    "culori": "^4.0.1"
   }
 }

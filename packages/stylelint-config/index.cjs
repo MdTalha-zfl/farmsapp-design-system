@@ -19,5 +19,16 @@ module.exports = {
     ],
     "custom-property-pattern": "^ds-[a-z0-9-]+$",
     "selector-class-pattern": null,
+    "value-keyword-case": [
+      "lower",
+      {
+        ignoreProperties: ["/font-family/", "/^font$/"],
+        // Font names are proper nouns, not CSS keywords — lowercasing
+        // "SFMono-Regular" produces "sfmono-regular", which doesn't match
+        // the real font and silently breaks the font stack. Caught by
+        // manually stylelint-checking a build/ output file that's normally
+        // excluded from lint — see Theme Runtime Chunk 01.
+      },
+    ],
   },
 };

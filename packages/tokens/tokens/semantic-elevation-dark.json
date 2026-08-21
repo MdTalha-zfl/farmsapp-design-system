@@ -1,0 +1,6 @@
+{
+  "elevation": {
+    "card": { "$value": "{shadow.raised-dark}", "$type": "shadow" },
+    "dialog": { "$value": "{shadow.overlay-dark}", "$type": "shadow" }
+  }
+}

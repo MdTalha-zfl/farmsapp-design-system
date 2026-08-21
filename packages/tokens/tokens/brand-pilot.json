@@ -1,0 +1,12 @@
+{
+  "color": {
+    "brand": {
+      "9": { "$value": "#3e2743", "$type": "color", "$description": "PILOT BRAND — synthetic, not a real second identity. Overrides only the two steps any semantic token actually references (see decisions/decision-brand-override-targets-primitives.md). Same L/C as the real brand family's step 9, hue shifted to 320° so it's obviously not the real brand at a glance." },
+      "10": { "$value": "#341d3a", "$type": "color" }
+    },
+    "brand-dark": {
+      "9": { "$value": "#bb7cca", "$type": "color" },
+      "10": { "$value": "#cb93d8", "$type": "color" }
+    }
+  }
+}

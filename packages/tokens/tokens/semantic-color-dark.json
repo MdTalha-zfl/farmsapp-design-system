@@ -1,0 +1,41 @@
+{
+  "color": {
+    "surface": {
+      "base": { "$value": "{color.neutral-dark.1}", "$type": "color" },
+      "raised": { "$value": "{color.neutral-dark.2}", "$type": "color" },
+      "sunken": { "$value": "{color.neutral-dark.3}", "$type": "color" }
+    },
+    "border": {
+      "subtle": { "$value": "{color.neutral-dark.5}", "$type": "color" },
+      "default": { "$value": "{color.neutral-dark.6}", "$type": "color" },
+      "strong": { "$value": "{color.neutral-dark.8}", "$type": "color" }
+    },
+    "text": {
+      "primary": { "$value": "{color.neutral-dark.12}", "$type": "color" },
+      "secondary": { "$value": "{color.neutral-dark.11}", "$type": "color" },
+      "disabled": { "$value": "{color.neutral-dark.9}", "$type": "color" },
+      "inverse": {
+        "$value": "{color.neutral-dark.1}",
+        "$type": "color",
+        "$description": "NOT a mechanical re-point of the light value's neutral.1 (light scale's near-white). Verified by real WCAG contrast against every dark-scale step-9 solid action color (brand/danger/warning/success): near-white text fails AA on all four (2.17-2.77:1) because Theme Runtime Chunk 02 deliberately brightened dark step 9 for legibility against a dark page, which flips which text polarity actually reads. Near-black (neutral-dark.1) passes comfortably on all four (5.59-7.16:1). See Theme Runtime roadmap Chunk 03."
+      }
+    },
+    "action": {
+      "primary": { "$value": "{color.brand-dark.9}", "$type": "color" },
+      "primary-hover": { "$value": "{color.brand-dark.10}", "$type": "color" },
+      "primary-active": { "$value": "{color.brand-dark.10}", "$type": "color" },
+      "primary-disabled": { "$value": "{color.neutral-dark.6}", "$type": "color" }
+    },
+    "feedback": {
+      "success": { "$value": "{color.success-dark.9}", "$type": "color" },
+      "warning": { "$value": "{color.warning-dark.9}", "$type": "color" },
+      "danger": { "$value": "{color.danger-dark.9}", "$type": "color" },
+      "success-subtle": { "$value": "{color.success-dark.3}", "$type": "color" },
+      "warning-subtle": { "$value": "{color.warning-dark.3}", "$type": "color" },
+      "danger-subtle": { "$value": "{color.danger-dark.3}", "$type": "color" }
+    },
+    "focus": {
+      "ring": { "$value": "{color.brand-dark.9}", "$type": "color" }
+    }
+  }
+}

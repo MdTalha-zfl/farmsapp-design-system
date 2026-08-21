@@ -1,0 +1,23 @@
+{
+  "shadow": {
+    "resting-dark": {
+      "$type": "shadow",
+      "$value": { "offsetX": "0px", "offsetY": "1px", "blur": "2px", "spread": "0px", "color": "#00000059" },
+      "$description": "Dark-mode companion to shadow.resting — Theme Runtime Chunk 07. Retuned alpha, not just a copy: a pure-black shadow reads almost nothing against an already near-black surface (neutral-dark.1 sits at OKLCH L≈0.15 — there's little room left to darken further, verified by computing the actual composited lightness delta at several alphas rather than guessing). 35% alpha lands the perceptible delta in the same range as an adjacent primitive scale step (~0.02-0.03 L)."
+    },
+    "raised-dark": {
+      "$type": "shadow",
+      "$value": [
+        { "offsetX": "0px", "offsetY": "4px", "blur": "8px", "spread": "0px", "color": "#00000073" },
+        { "offsetX": "0px", "offsetY": "1px", "blur": "2px", "spread": "0px", "color": "#00000040" }
+      ]
+    },
+    "overlay-dark": {
+      "$type": "shadow",
+      "$value": [
+        { "offsetX": "0px", "offsetY": "16px", "blur": "32px", "spread": "0px", "color": "#0009" },
+        { "offsetX": "0px", "offsetY": "4px", "blur": "8px", "spread": "0px", "color": "#00000059" }
+      ]
+    }
+  }
+}
