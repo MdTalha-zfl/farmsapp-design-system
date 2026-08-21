@@ -1,7 +1,7 @@
 {
   "name": "@farmsapp/utilities",
   "version": "0.0.0",
-  "description": "Hooks, accessibility helpers, and RTL/dir utilities — System Blueprint §04.",
+  "description": "Shared hooks (useId, useControllableState) and accessibility helpers — System Blueprint §04. RTL/dir utilities deliberately out of scope, see decisions/decision-cut-rtl-utilities.md.",
   "type": "module",
   "sideEffects": false,
   "exports": {
