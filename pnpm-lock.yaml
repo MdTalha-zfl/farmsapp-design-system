@@ -38,6 +38,9 @@ importers:
       rollup-plugin-esbuild:
         specifier: ^6.1.1
         version: 6.2.1(esbuild@0.28.2)(rollup@4.62.4)(supports-color@7.2.0)
+      rollup-plugin-preserve-directives:
+        specifier: ^0.4.0
+        version: 0.4.0(rollup@4.62.4)
       stylelint:
         specifier: ^16.12.0
         version: 16.26.1(supports-color@7.2.0)(typescript@5.9.3)
@@ -279,6 +282,9 @@ importers:
       '@farmsapp/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      culori:
+        specifier: ^4.0.1
+        version: 4.0.2
       rollup:
         specifier: ^4.28.0
         version: 4.62.4
@@ -1891,6 +1897,10 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
+  culori@4.0.2:
+    resolution: {integrity: sha512-1+BhOB8ahCn4O0cep0Sh2l9KCOfOdY+BXJnKMHFFzDEouSr/el18QwXEMRlOj9UY5nCeA8UN3a/82rUWRBeyBw==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
   damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
 
@@ -2083,6 +2093,7 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -3208,6 +3219,11 @@ packages:
     peerDependencies:
       esbuild: '>=0.18.0'
       rollup: ^1.20.0 || ^2.0.0 || ^3.0.0 || ^4.0.0
+
+  rollup-plugin-preserve-directives@0.4.0:
+    resolution: {integrity: sha512-gx4nBxYm5BysmEQS+e2tAMrtFxrGvk+Pe5ppafRibQi0zlW7VYAbEGk6IKDw9sJGPdFWgVTE0o4BU4cdG0Fylg==}
+    peerDependencies:
+      rollup: 2.x || 3.x || 4.x
 
   rollup@4.62.4:
     resolution: {integrity: sha512-RXOqwaPsBGjMNMa4sQjDjHieHEZDFoj/Rdr46l2MU5DfEs16wHJPC2RPTPHWhNl+M3aI472LLqFkFKut4SblOg==}
@@ -5157,6 +5173,8 @@ snapshots:
 
   csstype@3.2.3: {}
 
+  culori@4.0.2: {}
+
   damerau-levenshtein@1.0.8: {}
 
   data-view-buffer@1.0.2:
@@ -6693,6 +6711,12 @@ snapshots:
       unplugin-utils: 0.2.5
     transitivePeerDependencies:
       - supports-color
+
+  rollup-plugin-preserve-directives@0.4.0(rollup@4.62.4):
+    dependencies:
+      '@rollup/pluginutils': 5.4.0(rollup@4.62.4)
+      magic-string: 0.30.21
+      rollup: 4.62.4
 
   rollup@4.62.4:
     dependencies:

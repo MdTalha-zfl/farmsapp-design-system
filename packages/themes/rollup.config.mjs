@@ -1,4 +1,4 @@
-import { defineConfig } from "../../tooling/build/rollup.config.base.mjs";
+import { defineConfig } from "../../tooling/rollup/rollup.config.base.mjs";
 
 export default defineConfig(import.meta.dirname, {
   index: "./src/index.tsx",
