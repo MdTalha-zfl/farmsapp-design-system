@@ -1,6 +1,20 @@
 packages:
   - "apps/*"
   - "packages/*"
+# Every library package declares a permissive `"react": "^18 || ^19"` peer
+# range, correctly (real external consumers should bring their own react).
+# Within this workspace, that same permissiveness let pnpm resolve two real,
+# separate React copies for isolated peer-only packages vs. the apps (which
+# pin react ^18.3.0 directly) -- confirmed by a real crash ("Cannot read
+# properties of null (reading 'useState')") when a script imported both
+# react-dom/server (resolved via the apps' copy) and @farmsapp/utilities
+# (whose own peer resolved a different copy). Doesn't affect real published
+# consumers, who'd bring one react instance either way, but it's a real
+# footgun for any workspace-internal testing that crosses package
+# boundaries -- pinned here so local dev only ever has one react instance.
+overrides:
+  react: 18.3.1
+  react-dom: 18.3.1
 allowBuilds:
   '@bundled-es-modules/glob': true
   esbuild: true
