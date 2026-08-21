@@ -1,0 +1,45 @@
+{
+  "fontFamily": {
+    "body": {
+      "$value": ["Noto Sans", "Noto Sans Devanagari", "sans-serif"],
+      "$type": "fontFamily",
+      "$description": "Noto Sans covers Latin; Noto Sans Devanagari is the fallback for Hindi text the base family doesn't cover. Locked 2026-08-20 — see LEARNING.md Chunk 04."
+    },
+    "mono": {
+      "$value": ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
+      "$type": "fontFamily",
+      "$description": "System monospace stack, deliberately not a downloaded font — for tabular/numeric data (prices, quantities) without adding another network request on a weak-connectivity audience."
+    }
+  },
+  "fontSize": {
+    "100": { "$value": "12px", "$type": "dimension" },
+    "200": { "$value": "13px", "$type": "dimension" },
+    "300": { "$value": "14px", "$type": "dimension" },
+    "400": { "$value": "16px", "$type": "dimension", "$description": "Base body size." },
+    "500": { "$value": "18px", "$type": "dimension" },
+    "600": { "$value": "20px", "$type": "dimension" },
+    "700": { "$value": "24px", "$type": "dimension" },
+    "800": { "$value": "30px", "$type": "dimension" },
+    "900": { "$value": "36px", "$type": "dimension" }
+  },
+  "fontWeight": {
+    "regular": { "$value": 400, "$type": "fontWeight" },
+    "medium": { "$value": 500, "$type": "fontWeight" },
+    "semibold": { "$value": 600, "$type": "fontWeight" },
+    "bold": { "$value": 700, "$type": "fontWeight" }
+  },
+  "lineHeight": {
+    "tight": { "$value": 1.2, "$type": "number", "$description": "Headings." },
+    "base": { "$value": 1.5, "$type": "number", "$description": "Body copy." },
+    "relaxed": { "$value": 1.65, "$type": "number", "$description": "Longer-form reading." }
+  },
+  "letterSpacing": {
+    "tight": {
+      "$value": "-0.01em",
+      "$type": "dimension",
+      "$description": "Large headings. Latin script only — see the Devanagari note on this token family in project memory / LEARNING.md."
+    },
+    "normal": { "$value": "0em", "$type": "dimension" },
+    "wide": { "$value": "0.02em", "$type": "dimension", "$description": "Small caps / labels. Latin script only." }
+  }
+}

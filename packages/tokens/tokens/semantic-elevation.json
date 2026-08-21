@@ -1,0 +1,14 @@
+{
+  "elevation": {
+    "card": {
+      "$value": "{shadow.raised}",
+      "$type": "shadow",
+      "$description": "Named by use, not by shadow depth — a component author shouldn't need to know which raw shadow level \"card\" corresponds to."
+    },
+    "dialog": {
+      "$value": "{shadow.overlay}",
+      "$type": "shadow",
+      "$description": "Dialog/Popover (Phase 7-8) reach for this by role."
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "shadow": {
+    "resting": {
+      "$type": "shadow",
+      "$value": { "offsetX": "0px", "offsetY": "1px", "blur": "2px", "spread": "0px", "color": "#00000014" }
+    },
+    "raised": {
+      "$type": "shadow",
+      "$value": [
+        { "offsetX": "0px", "offsetY": "4px", "blur": "8px", "spread": "0px", "color": "#00000014" },
+        { "offsetX": "0px", "offsetY": "1px", "blur": "2px", "spread": "0px", "color": "#0000000a" }
+      ]
+    },
+    "overlay": {
+      "$type": "shadow",
+      "$value": [
+        { "offsetX": "0px", "offsetY": "16px", "blur": "32px", "spread": "0px", "color": "#00000029" },
+        { "offsetX": "0px", "offsetY": "4px", "blur": "8px", "spread": "0px", "color": "#00000014" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "text": {
+    "display": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.body}",
+        "fontSize": "{fontSize.900}",
+        "fontWeight": "{fontWeight.bold}",
+        "lineHeight": "{lineHeight.tight}",
+        "letterSpacing": "{letterSpacing.tight}"
+      },
+      "$description": "letterSpacing here is Latin-script tuning, not for Devanagari content. Note for Phase 5: Style Dictionary's CSS output serializes this token via the CSS `font` shorthand, which cannot carry letter-spacing at all (a CSS limitation, not ours) — so `font: var(--ds-text-display)` alone applies weight/size/line-height/family but never letter-spacing. That's convenient here: Devanagari content should consume just the shorthand, while Latin-specific components opt in separately with `letter-spacing: var(--ds-letter-spacing-tight)`."
+    },
+    "heading-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.body}",
+        "fontSize": "{fontSize.700}",
+        "fontWeight": "{fontWeight.semibold}",
+        "lineHeight": "{lineHeight.tight}",
+        "letterSpacing": "{letterSpacing.normal}"
+      }
+    },
+    "heading-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.body}",
+        "fontSize": "{fontSize.600}",
+        "fontWeight": "{fontWeight.semibold}",
+        "lineHeight": "{lineHeight.tight}",
+        "letterSpacing": "{letterSpacing.normal}"
+      }
+    },
+    "heading-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.body}",
+        "fontSize": "{fontSize.500}",
+        "fontWeight": "{fontWeight.semibold}",
+        "lineHeight": "{lineHeight.base}",
+        "letterSpacing": "{letterSpacing.normal}"
+      }
+    },
+    "body-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.body}",
+        "fontSize": "{fontSize.400}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.base}",
+        "letterSpacing": "{letterSpacing.normal}"
+      }
+    },
+    "body-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.body}",
+        "fontSize": "{fontSize.300}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.base}",
+        "letterSpacing": "{letterSpacing.normal}"
+      }
+    },
+    "caption": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.body}",
+        "fontSize": "{fontSize.100}",
+        "fontWeight": "{fontWeight.medium}",
+        "lineHeight": "{lineHeight.base}",
+        "letterSpacing": "{letterSpacing.normal}"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "duration": {
+    "fast": { "$value": "100ms", "$type": "duration", "$description": "Snappy/utilitarian — locked 2026-08-20." },
+    "base": { "$value": "150ms", "$type": "duration" },
+    "slow": { "$value": "200ms", "$type": "duration" }
+  },
+  "easing": {
+    "linear": { "$value": [0, 0, 1, 1], "$type": "cubicBezier" },
+    "standard": {
+      "$value": [0.2, 0, 0, 1],
+      "$type": "cubicBezier",
+      "$description": "A restrained, mostly-linear ease-out — deliberately not a pronounced curve, matching the snappy/utilitarian decision."
+    }
+  },
+  "zIndex": {
+    "base": { "$value": 0, "$type": "number" },
+    "sticky": { "$value": 100, "$type": "number" },
+    "overlay": { "$value": 200, "$type": "number" },
+    "modal": { "$value": 300, "$type": "number" },
+    "toast": { "$value": 400, "$type": "number" }
+  }
+}

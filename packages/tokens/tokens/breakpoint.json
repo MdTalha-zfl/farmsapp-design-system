@@ -1,0 +1,13 @@
+{
+  "breakpoint": {
+    "consumer": {
+      "md": { "$value": 600, "$type": "number", "$description": "Large phone / small tablet and up." },
+      "lg": { "$value": 900, "$type": "number", "$description": "Tablet / small laptop and up (edge case for this surface)." }
+    },
+    "portal": {
+      "md": { "$value": 600, "$type": "number", "$description": "Tablet and up." },
+      "lg": { "$value": 1280, "$type": "number", "$description": "Laptop / desktop and up — the portal's primary usage." },
+      "xl": { "$value": 1536, "$type": "number", "$description": "Large monitor and up." }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "color": {
+    "surface": {
+      "base": { "$value": "{color.neutral.1}", "$type": "color", "$description": "Page background." },
+      "raised": { "$value": "{color.neutral.2}", "$type": "color", "$description": "Cards, panels." },
+      "sunken": { "$value": "{color.neutral.3}", "$type": "color", "$description": "Inset wells, code blocks." },
+      "overlay": {
+        "$value": "color-mix(in srgb, {color.neutral.12} 60%, transparent)",
+        "$type": "color",
+        "$description": "Modal/dialog scrim. Deliberately derived via color-mix() at the semantic layer rather than adding an alpha primitive to Token Foundation — see Semantic Layer roadmap Chunk 01."
+      }
+    },
+    "border": {
+      "subtle": { "$value": "{color.neutral.5}", "$type": "color" },
+      "default": { "$value": "{color.neutral.6}", "$type": "color" },
+      "strong": { "$value": "{color.neutral.8}", "$type": "color" }
+    },
+    "text": {
+      "primary": { "$value": "{color.neutral.12}", "$type": "color" },
+      "secondary": { "$value": "{color.neutral.11}", "$type": "color" },
+      "disabled": { "$value": "{color.neutral.9}", "$type": "color" },
+      "inverse": { "$value": "{color.neutral.1}", "$type": "color", "$description": "Text on solid dark backgrounds, e.g. on a primary button." }
+    },
+    "action": {
+      "primary": { "$value": "{color.brand.9}", "$type": "color" },
+      "primary-hover": { "$value": "{color.brand.10}", "$type": "color" },
+      "primary-active": {
+        "$value": "{color.brand.10}",
+        "$type": "color",
+        "$description": "Reuses hover's value — the primitive step convention has no dedicated pressed step (9-10 are solid bg default/hover, 11-12 are reserved for text). Pressed feedback comes from motion, not a third color. See Semantic Layer roadmap Chunk 02."
+      },
+      "primary-disabled": {
+        "$value": "{color.neutral.6}",
+        "$type": "color",
+        "$description": "Flattened to neutral, not a dimmed brand color — a washed-out brand green still reads as \"branded\"; flat neutral reads unambiguously as \"not interactive\"."
+      }
+    },
+    "feedback": {
+      "success": {
+        "$value": "{color.success.9}",
+        "$type": "color",
+        "$description": "Deliberately NOT {color.brand.9} — a dedicated hue (140°, higher chroma) so a success signal never blends into ordinary brand chrome. See Semantic Layer roadmap Chunk 03."
+      },
+      "warning": { "$value": "{color.warning.9}", "$type": "color" },
+      "danger": { "$value": "{color.danger.9}", "$type": "color" },
+      "success-subtle": { "$value": "{color.success.3}", "$type": "color", "$description": "Banner/toast backgrounds behind step-9 text or icons." },
+      "warning-subtle": { "$value": "{color.warning.3}", "$type": "color" },
+      "danger-subtle": { "$value": "{color.danger.3}", "$type": "color" }
+    },
+    "focus": {
+      "ring": { "$value": "{color.brand.9}", "$type": "color", "$description": "Reuses the brand color — unlike feedback colors, a focus ring's job never competes with \"is this branded chrome,\" so there's no signal-collision risk here." }
+    }
+  }
+}
