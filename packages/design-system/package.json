@@ -1,7 +1,7 @@
 {
   "name": "@farmsapp/design-system",
   "version": "0.0.0",
-  "description": "Meta package — re-exports components and primitives for consumers who want a single install. Re-exports only, no logic of its own. System Blueprint §04.",
+  "description": "Box, Stack, Inline, Container, Text, Heading, Icon, VisuallyHidden, Button, Input, Dialog, Menu, and the rest of the component library — the single published package, merged from the former packages/primitives and packages/components. See decisions/decision-merge-components-into-design-system.md.",
   "type": "module",
   "sideEffects": false,
   "exports": {
@@ -21,8 +21,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@farmsapp/components": "workspace:*",
-    "@farmsapp/primitives": "workspace:*"
+    "@farmsapp/tokens": "workspace:*",
+    "@farmsapp/utilities": "workspace:*"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@farmsapp/eslint-config": "workspace:*",
     "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
     "typescript": "^5.7.0",
     "rollup": "^4.28.0"
   }

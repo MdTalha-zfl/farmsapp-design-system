@@ -39,5 +39,7 @@ export default tseslint.config(
 );
 
 // NOTE (Phase 5): a custom rule rejecting raw hex/px literals inside
-// `packages/components` and `packages/primitives` is added here once those
-// packages contain real component code — see System Blueprint §05.
+// `packages/design-system` (the single published component package —
+// primitives and higher-level components both live there, see
+// decisions/decision-merge-components-into-design-system.md) is added here
+// once it contains real component code. See System Blueprint §05.

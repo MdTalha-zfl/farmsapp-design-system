@@ -113,11 +113,11 @@ importers:
         specifier: ^6.0.0
         version: 6.4.3(@types/node@26.2.0)(yaml@2.9.0)
 
-  packages/components:
+  packages/design-system:
     dependencies:
-      '@farmsapp/primitives':
+      '@farmsapp/tokens':
         specifier: workspace:*
-        version: link:../primitives
+        version: link:../tokens
       '@farmsapp/utilities':
         specifier: workspace:*
         version: link:../utilities
@@ -137,34 +137,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.7(@types/react@18.3.31)
-      rollup:
-        specifier: ^4.28.0
-        version: 4.62.4
-      typescript:
-        specifier: ^5.7.0
-        version: 5.9.3
-
-  packages/design-system:
-    dependencies:
-      '@farmsapp/components':
-        specifier: workspace:*
-        version: link:../components
-      '@farmsapp/primitives':
-        specifier: workspace:*
-        version: link:../primitives
-      react:
-        specifier: ^18 || ^19
-        version: 19.2.8
-      react-dom:
-        specifier: ^18 || ^19
-        version: 19.2.8(react@19.2.8)
-    devDependencies:
-      '@farmsapp/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@types/react':
-        specifier: ^18.3.0
-        version: 18.3.31
       rollup:
         specifier: ^4.28.0
         version: 4.62.4
@@ -201,31 +173,6 @@ importers:
 
   packages/icons:
     dependencies:
-      react:
-        specifier: ^18 || ^19
-        version: 19.2.8
-    devDependencies:
-      '@farmsapp/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@types/react':
-        specifier: ^18.3.0
-        version: 18.3.31
-      rollup:
-        specifier: ^4.28.0
-        version: 4.62.4
-      typescript:
-        specifier: ^5.7.0
-        version: 5.9.3
-
-  packages/primitives:
-    dependencies:
-      '@farmsapp/tokens':
-        specifier: workspace:*
-        version: link:../tokens
-      '@farmsapp/utilities':
-        specifier: workspace:*
-        version: link:../utilities
       react:
         specifier: ^18 || ^19
         version: 19.2.8
