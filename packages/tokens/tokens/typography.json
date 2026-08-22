@@ -12,15 +12,15 @@
     }
   },
   "fontSize": {
-    "100": { "$value": "12px", "$type": "dimension" },
-    "200": { "$value": "13px", "$type": "dimension" },
-    "300": { "$value": "14px", "$type": "dimension" },
-    "400": { "$value": "16px", "$type": "dimension", "$description": "Base body size." },
-    "500": { "$value": "18px", "$type": "dimension" },
-    "600": { "$value": "20px", "$type": "dimension" },
-    "700": { "$value": "24px", "$type": "dimension" },
-    "800": { "$value": "30px", "$type": "dimension" },
-    "900": { "$value": "36px", "$type": "dimension" }
+    "100": { "$value": "0.75rem", "$type": "dimension", "$description": "12px at the assumed 16px root. rem, not px — decisions/decision-rem-for-typography-px-for-layout.md: type must respect a user's browser/OS text-size setting; layout stays px so that setting can't shift which responsive breakpoint applies." },
+    "200": { "$value": "0.8125rem", "$type": "dimension", "$description": "13px at the assumed 16px root." },
+    "300": { "$value": "0.875rem", "$type": "dimension", "$description": "14px at the assumed 16px root." },
+    "400": { "$value": "1rem", "$type": "dimension", "$description": "Base body size — 16px at the assumed 16px root." },
+    "500": { "$value": "1.125rem", "$type": "dimension", "$description": "18px at the assumed 16px root." },
+    "600": { "$value": "1.25rem", "$type": "dimension", "$description": "20px at the assumed 16px root." },
+    "700": { "$value": "1.5rem", "$type": "dimension", "$description": "24px at the assumed 16px root." },
+    "800": { "$value": "1.875rem", "$type": "dimension", "$description": "30px at the assumed 16px root." },
+    "900": { "$value": "2.25rem", "$type": "dimension", "$description": "36px at the assumed 16px root." }
   },
   "fontWeight": {
     "regular": { "$value": 400, "$type": "fontWeight" },
