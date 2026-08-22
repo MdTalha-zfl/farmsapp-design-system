@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@farmsapp/design-system": "workspace:*",
+    "@farmsapp/themes": "workspace:*",
+    "@farmsapp/tokens": "workspace:*",
     "react": "^18.3.0",
     "react-dom": "^18.3.0"
   },

@@ -1,0 +1,72 @@
+/**
+ * Fixed pixel dimensions used purely by the Box variant gallery's own visual
+ * comparison layout (e.g. "how wide is a 240px swatch") — not design tokens,
+ * and deliberately NOT threaded through any Box `style`/`unsafeStyle` prop.
+ * This is the actual pattern a consuming app should reach for once it needs
+ * something outside Box's token surface: a real CSS class of its own,
+ * applied via Box's still-supported (additive-only) `className` prop —
+ * never inline style, which Box no longer accepts at all. See
+ * decisions/decision-box-style-prop-locked-down.md.
+ */
+
+.demo-size-24 {
+  width: 24px;
+  height: 24px;
+}
+.demo-w-40 {
+  width: 40px;
+}
+.demo-w-60 {
+  width: 60px;
+}
+.demo-w-96 {
+  width: 96px;
+}
+.demo-h-96 {
+  height: 96px;
+}
+.demo-w-120 {
+  width: 120px;
+}
+.demo-w-140 {
+  width: 140px;
+}
+.demo-w-200 {
+  width: 200px;
+}
+.demo-w-240 {
+  width: 240px;
+}
+.demo-h-20 {
+  height: 20px;
+}
+.demo-h-40 {
+  height: 40px;
+}
+.demo-h-70 {
+  height: 70px;
+}
+.demo-h-90 {
+  height: 90px;
+}
+.demo-max-w-480 {
+  max-width: 480px;
+}
+.demo-max-w-960-centered {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.demo-flex-shrink-0 {
+  flex-shrink: 0;
+}
+.demo-inline-block {
+  display: inline-block;
+}
+.demo-overflow-hidden {
+  overflow: hidden;
+}
+.demo-inverse-swatch-bg {
+  /* Only place in the gallery reaching for a raw var() outside Box's own
+     color props — see the comment above this swatch in main.tsx for why. */
+  background-color: var(--ds-color-action-primary);
+}
