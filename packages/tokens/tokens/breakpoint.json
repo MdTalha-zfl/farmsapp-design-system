@@ -1,5 +1,9 @@
 {
   "breakpoint": {
+    "component": {
+      "md": { "$value": 600, "$type": "number", "$description": "Box/Stack/Inline/Container responsive style props. Deliberately its OWN scale, not a reuse of consumer/portal below — those are page-layout breakpoints (nav, hero sections) picked per-surface; this one has to be a single fixed scale because it's baked into statically-generated atomic CSS classes at build time, shared by both apps. See decisions/decision-component-breakpoint-scale.md." },
+      "lg": { "$value": 1024, "$type": "number" }
+    },
     "consumer": {
       "md": { "$value": 600, "$type": "number", "$description": "Large phone / small tablet and up." },
       "lg": { "$value": 900, "$type": "number", "$description": "Tablet / small laptop and up (edge case for this surface)." }
