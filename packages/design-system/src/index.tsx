@@ -2,7 +2,23 @@
  * The single published component library — Box, Stack, Inline, Container,
  * Text, Heading, Icon, VisuallyHidden land starting Phase 5; Button, Input,
  * Dialog, Menu, and the rest starting Phase 7 (System Blueprint §07 for the
- * prop vocabulary every component must follow). Placeholder for now so the
- * package builds, lints, and publishes end-to-end.
+ * prop vocabulary every component must follow).
  */
 export const DESIGN_SYSTEM_PACKAGE_VERSION = "0.0.0" as const;
+
+export {
+  Box,
+  type BoxProps,
+  type BoxOwnProps,
+  type SpaceStep,
+  type MarginStep,
+  type Responsive,
+  type SurfaceColor,
+  type BorderColor,
+  type TextColor,
+  type Radius,
+  type BorderWidth,
+} from "./components/Box/Box";
+export { Stack, type StackProps, type StackOwnProps } from "./components/Stack/Stack";
+export { Inline, type InlineProps, type InlineOwnProps } from "./components/Inline/Inline";
+export { Container, type ContainerProps, type ContainerOwnProps } from "./components/Container/Container";

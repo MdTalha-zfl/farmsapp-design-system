@@ -1,6 +1,7 @@
 node_modules/
 packages/*/build/
 **/src/generated/
+packages/design-system/src/components/Box/generatedValidSteps.mjs
 dist/
 .next/
 .turbo/

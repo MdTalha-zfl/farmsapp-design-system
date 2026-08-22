@@ -1,0 +1,10 @@
+{
+  "container": {
+    "maxWidth": {
+      "sm": { "$value": "640px", "$type": "dimension", "$description": "Narrow reading-width content — a single form, a focused task." },
+      "md": { "$value": "768px", "$type": "dimension" },
+      "lg": { "$value": "1024px", "$type": "dimension" },
+      "xl": { "$value": "1280px", "$type": "dimension", "$description": "Data-dense layouts — the portal's typical usage." }
+    }
+  }
+}
