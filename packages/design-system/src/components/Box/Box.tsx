@@ -33,7 +33,11 @@ export type Responsive<T> = T | { base?: T; md?: T; lg?: T };
 
 export type SurfaceColor = "base" | "raised" | "sunken" | "overlay";
 export type BorderColor = "subtle" | "default" | "strong";
-export type TextColor = "primary" | "secondary" | "disabled" | "inverse";
+// TextColor moved to resolveTypographyClasses.ts, 2026-08-22 — Box no
+// longer has a text-color concept at all, matching Blade's real BaseBox
+// (backgroundColor/borderColor only; text coloring is BaseText's exclusive
+// concern). See decisions/decision-text-heading-own-typography-props.md's
+// "Update" section.
 export type Radius = "none" | "sm" | "md" | "lg" | "xl" | "full";
 export type BorderWidth = "thin" | "thick" | "heavy";
 
@@ -62,7 +66,6 @@ export interface BoxOwnProps {
   justifyContent?: Responsive<"start" | "center" | "end" | "between" | "around" | "evenly">;
   backgroundColor?: SurfaceColor;
   borderColor?: BorderColor;
-  color?: TextColor;
   borderRadius?: Radius;
   borderWidth?: BorderWidth;
   children?: ReactNode;
@@ -163,9 +166,20 @@ const BOX_OWN_PROP_KEYS = new Set(PROP_CONFIG.keys());
 // validated pattern from Blade (real allowlist, not a speculative addition
 // here). Only runs when NODE_ENV !== "production", stripped by the
 // consuming app's own bundler dead-code elimination in a production build.
+// h1-h6 added in Phase 5 Chunk 04: Heading.tsx renders `<Box as={tag}>`
+// internally for its real, structural h1-h6 tag — caught by this exact
+// warning firing on every single Heading render before the fix (verified
+// via a real renderToString probe, not assumed), since the allowlist
+// hadn't been told about the one first-party component that now legitimately
+// needs these tags. Unlike `button` (deliberately still excluded — a real
+// interactive element needs its own dedicated component with keyboard/ARIA
+// handling that doesn't exist yet), heading tags are purely structural, and
+// the "dedicated component instead of Box's as prop" the warning message
+// itself asks for now exists (Heading) and is exactly what produces this.
 const ALLOWED_AS_TAGS = new Set([
   "div", "span", "section", "article", "header", "footer", "nav", "main",
   "aside", "ul", "ol", "li", "figure", "figcaption", "label", "form",
+  "h1", "h2", "h3", "h4", "h5", "h6",
 ]);
 
 function warnIfDisallowedTag(as: ElementType): void {
@@ -180,9 +194,21 @@ function warnIfDisallowedTag(as: ElementType): void {
   }
 }
 
+// "color" excluded explicitly, not just via keyof BoxOwnProps (which no
+// longer lists it) — React's own base HTMLAttributes<T> declares a generic,
+// non-standard `color?: string` attribute every element inherits (see the
+// "Non-standard Attributes" section of @types/react's index.d.ts). Without
+// this exclusion, removing `color` from BoxOwnProps let it silently leak
+// back in from React's own types: untyped, unvalidated, and — worse than a
+// type gap — it would render as a literal HTML `color` DOM attribute (not
+// CSS), which has no visual effect on a div/span at all. Caught by a real
+// throwaway type-error probe (a directive comment expecting a compile
+// error) that unexpectedly stayed silent, not assumed safe just because
+// BoxOwnProps itself looked right. Same shape as the "style" exclusion
+// just above it.
 export type BoxProps<T extends ElementType = "div"> = BoxOwnProps & {
   as?: T;
-} & Omit<ComponentPropsWithoutRef<T>, keyof BoxOwnProps | "as" | "style">;
+} & Omit<ComponentPropsWithoutRef<T>, keyof BoxOwnProps | "as" | "style" | "color">;
 
 // React.forwardRef is not itself generic — the render function's props type
 // gets fixed at definition time, so `forwardRef<HTMLElement, BoxProps<ElementType>>`

@@ -1,4 +1,12 @@
 {
+  "fontSize": {
+    "xsmall": { "$value": "{fontSize.100}", "$type": "dimension", "$description": "12px — same primitive step text.caption's own composite token uses. Text's `size` prop, added Phase 5 Chunk 04 follow-up: a standalone font-size override independent of `variant`, resolved the same way `weight` overrides variant's own font-weight (later in cascade source order — see TOKEN_TEXT_PROPS in atomicConfig.mjs)." },
+    "small": { "$value": "{fontSize.300}", "$type": "dimension", "$description": "14px — same primitive step text.body-sm's own composite token uses." },
+    "medium": { "$value": "{fontSize.400}", "$type": "dimension", "$description": "16px — same primitive step text.body-md's own composite token uses. Text's own default size, matching variant=\"body\"'s default when size is left unset." },
+    "large": { "$value": "{fontSize.500}", "$type": "dimension", "$description": "18px — same primitive step text.heading-sm's own composite token uses. Lets running text read as large as a small heading without becoming one semantically." },
+    "xlarge": { "$value": "{fontSize.600}", "$type": "dimension", "$description": "20px — same primitive step text.heading-md's own composite token uses." },
+    "2xlarge": { "$value": "{fontSize.700}", "$type": "dimension", "$description": "24px — same primitive step text.heading-lg's own composite token uses. Deliberately stops here, not at fontSize.800/900 (30px/36px) — those two stay heading/display-exclusive territory; see decisions/decision-text-size-prop.md." }
+  },
   "text": {
     "display": {
       "$type": "typography",

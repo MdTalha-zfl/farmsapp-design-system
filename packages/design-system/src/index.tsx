@@ -15,10 +15,37 @@ export {
   type Responsive,
   type SurfaceColor,
   type BorderColor,
-  type TextColor,
   type Radius,
   type BorderWidth,
 } from "./components/Box/Box";
 export { Stack, type StackProps, type StackOwnProps } from "./components/Stack/Stack";
 export { Inline, type InlineProps, type InlineOwnProps } from "./components/Inline/Inline";
 export { Container, type ContainerProps, type ContainerOwnProps } from "./components/Container/Container";
+export {
+  Text,
+  type TextProps,
+  type TextOwnProps,
+  type TextBodyOwnProps,
+  type TextCaptionOwnProps,
+  type TextVariant,
+  type TextAsTag,
+  type BaseTextSizes,
+  type CaptionTextSize,
+} from "./components/Text/Text";
+export {
+  Heading,
+  type HeadingProps,
+  type HeadingOwnProps,
+  type HeadingLevel,
+  type HeadingVariant,
+} from "./components/Heading/Heading";
+export type {
+  LetterSpacingStep,
+  TypographyLang,
+  TextColor,
+  TextWeight,
+  TextDecorationLine,
+  TextWordBreak,
+  TextAlign,
+  TextTransform,
+} from "./components/Box/resolveTypographyClasses";

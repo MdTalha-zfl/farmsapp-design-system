@@ -27,9 +27,13 @@ export interface StackOwnProps extends Omit<BoxOwnProps, "display" | "flexDirect
   gap: Responsive<SpaceStep>;
 }
 
+// "color" excluded for the same reason as Box's own BoxProps<T> — React's
+// base HTMLAttributes<T> has a generic, non-standard `color?: string` every
+// element inherits, which would otherwise leak back in once BoxOwnProps
+// (and therefore StackOwnProps) stopped declaring `color` itself.
 export type StackProps<T extends ElementType = "div"> = StackOwnProps & {
   as?: T;
-} & Omit<ComponentPropsWithoutRef<T>, keyof StackOwnProps | "as" | "style">;
+} & Omit<ComponentPropsWithoutRef<T>, keyof StackOwnProps | "as" | "style" | "color">;
 
 const StackImpl = forwardRef<HTMLElement, StackProps<ElementType>>(function Stack(
   { gap, ...props },

@@ -20,9 +20,11 @@ export interface InlineOwnProps extends Omit<BoxOwnProps, "display" | "flexDirec
   wrap?: boolean;
 }
 
+// "color" excluded for the same reason as Box's own BoxProps<T> — see the
+// comment there (Box.tsx).
 export type InlineProps<T extends ElementType = "div"> = InlineOwnProps & {
   as?: T;
-} & Omit<ComponentPropsWithoutRef<T>, keyof InlineOwnProps | "as" | "style">;
+} & Omit<ComponentPropsWithoutRef<T>, keyof InlineOwnProps | "as" | "style" | "color">;
 
 const InlineImpl = forwardRef<HTMLElement, InlineProps<ElementType>>(function Inline(
   { gap, wrap, ...props },

@@ -48,9 +48,11 @@ export interface ContainerOwnProps extends Omit<BoxOwnProps, "unsafeStyle"> {
   maxWidth: MaxWidth;
 }
 
+// "color" excluded for the same reason as Box's own BoxProps<T> — see the
+// comment there (Box.tsx).
 export type ContainerProps<T extends ElementType = "div"> = ContainerOwnProps & {
   as?: T;
-} & Omit<ComponentPropsWithoutRef<T>, keyof ContainerOwnProps | "as" | "style">;
+} & Omit<ComponentPropsWithoutRef<T>, keyof ContainerOwnProps | "as" | "style" | "color">;
 
 // Runtime guard, same reason as Box's `as` allowlist warning: `maxWidth` is
 // a plain string at the JS boundary (a non-TypeScript consumer, or a typo
