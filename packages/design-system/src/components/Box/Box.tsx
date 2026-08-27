@@ -69,31 +69,10 @@ export interface BoxOwnProps {
   borderRadius?: Radius;
   borderWidth?: BorderWidth;
   children?: ReactNode;
-  /**
-   * Escape hatch for first-party Box-derived primitives (Container's
-   * maxWidth mechanism today; future primitives that need one raw CSS
-   * declaration Box's own prop surface doesn't cover) — NOT part of Box's
-   * public contract for application code. Box's plain `style` prop is
-   * deliberately not exposed at all: an inline style silently outranks
-   * Box's own computed atomic classes via CSS specificity, the same risk
-   * Razorpay Blade's BaseBox cites for the identical design choice
-   * (rfcs/2023-01-06-layout.md: "a padding property on CSS can mess up the
-   * built-in spacing on a component"). App code that finds itself reaching
-   * for `unsafeStyle` should add the missing prop to atomicConfig.mjs
-   * instead — see decisions/decision-box-style-prop-locked-down.md.
-   */
+
   unsafeStyle?: CSSProperties;
 }
 
-// One merged lookup, built once at module load — NOT per render. Box's
-// resolver below walks Object.entries(props) (bounded by what a given
-// instance actually sets) and does an O(1) map lookup per prop, rather than
-// looping the full ~27-key schema on every render regardless of how many
-// props are actually used. The first version of this file did the latter
-// and measured SLOWER than a naive per-render inline-style object build in
-// scratch-bench.mjs — the same class of mistake Blade's own real BaseBox
-// made (walking its whole prop schema every render) before being flagged
-// for it. See decisions/decision-box-atomic-css-over-inline-styles.md.
 const PROP_CONFIG = new Map<string, { prefix: string; responsive: boolean; varCategory?: string }>();
 for (const [key, cfg] of Object.entries(SPACE_PROPS)) PROP_CONFIG.set(key, { prefix: cfg.prefix, responsive: true });
 for (const [key, cfg] of Object.entries(KEYWORD_PROPS)) PROP_CONFIG.set(key, { prefix: cfg.prefix, responsive: true });
@@ -106,18 +85,6 @@ function isResponsiveObject(value: unknown): value is { base?: unknown; md?: unk
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-// Dev-mode-only guard for Box's color/radius/borderWidth props specifically
-// (decisions/decision-box-runtime-token-validation.md) — TypeScript already
-// restricts these to a closed union at compile time, so this only matters
-// for a type-bypass or non-TypeScript caller. Without it, an invalid value
-// silently produces a class name with no matching CSS rule in
-// build/css/atomic.css — the exact same failure shape as the
-// RESPONSIVE_PROP_KEYS bug found earlier, just reachable a different way.
-// Matches Blade's own equivalent guard on its public Box component
-// (validateBackgroundString), which throws in dev; this warns instead, to
-// stay consistent with every other dev-mode guard already in this file
-// (warnIfDisallowedTag, the dropped-"style"-prop warning) rather than
-// introducing a throw as the one exception.
 function warnIfInvalidTokenValue(propKey: string, varCategory: string | undefined, value: unknown): void {
   if (process.env.NODE_ENV === "production") return;
   if (!varCategory || typeof value !== "string") return;
@@ -133,8 +100,21 @@ function warnIfInvalidTokenValue(propKey: string, varCategory: string | undefine
 /** Resolves BoxOwnProps to the pre-generated class name list — no style
  * object, no CSS computation, just string lookups against a naming
  * convention shared with generate-atomic-css.mjs (atomicClassName). Cost
- * scales with props actually passed, not with the size of the prop schema. */
-function resolveBoxClassNames(props: BoxOwnProps): string[] {
+ * scales with props actually passed, not with the size of the prop schema.
+ *
+ * Exported (not just used internally by Box itself) — the same seam
+ * Blade's own `makeBoxProps` exists for: a future component that can't
+ * just render `<Box as="...">` (ALLOWED_AS_TAGS excludes interactive/
+ * semantic elements like button/a/input, same reasoning as Blade's own
+ * validBoxAsValues) but still wants to accept Box-style layout props
+ * (padding, margin, ...) on its own render tree can resolve them to real
+ * class names the same way Box itself does, without duplicating this
+ * function. No real consumer yet (Phase 7's Button/Input haven't been
+ * built) — exported now anyway since it's a zero-behavior-change, cheap
+ * seam to have ready, not a new public-package API commitment (not
+ * re-exported from index.tsx yet; that's a separate decision for whenever
+ * a real external consumer need shows up). */
+export function resolveBoxClassNames(props: BoxOwnProps): string[] {
   const classes: string[] = [];
 
   for (const [propKey, value] of Object.entries(props)) {
@@ -154,28 +134,8 @@ function resolveBoxClassNames(props: BoxOwnProps): string[] {
   return classes;
 }
 
-// Deliberately NOT including "children" — it's a style prop's opposite (a
-// pass-through prop), and needs to flow into `rest` below so Component
-// actually renders it. The first version of this file excluded it here,
-// which meant Box never rendered any children at all — caught by the real
-// browser check in this chunk's verification, not by tsc or eslint (a
-// completely valid TS type, an empty <div>, nothing to statically flag).
 const BOX_OWN_PROP_KEYS = new Set(PROP_CONFIG.keys());
 
-// Dev-mode-only guard against passing an arbitrary/unsafe element to `as` —
-// validated pattern from Blade (real allowlist, not a speculative addition
-// here). Only runs when NODE_ENV !== "production", stripped by the
-// consuming app's own bundler dead-code elimination in a production build.
-// h1-h6 added in Phase 5 Chunk 04: Heading.tsx renders `<Box as={tag}>`
-// internally for its real, structural h1-h6 tag — caught by this exact
-// warning firing on every single Heading render before the fix (verified
-// via a real renderToString probe, not assumed), since the allowlist
-// hadn't been told about the one first-party component that now legitimately
-// needs these tags. Unlike `button` (deliberately still excluded — a real
-// interactive element needs its own dedicated component with keyboard/ARIA
-// handling that doesn't exist yet), heading tags are purely structural, and
-// the "dedicated component instead of Box's as prop" the warning message
-// itself asks for now exists (Heading) and is exactly what produces this.
 const ALLOWED_AS_TAGS = new Set([
   "div", "span", "section", "article", "header", "footer", "nav", "main",
   "aside", "ul", "ol", "li", "figure", "figcaption", "label", "form",
@@ -194,35 +154,10 @@ function warnIfDisallowedTag(as: ElementType): void {
   }
 }
 
-// "color" excluded explicitly, not just via keyof BoxOwnProps (which no
-// longer lists it) — React's own base HTMLAttributes<T> declares a generic,
-// non-standard `color?: string` attribute every element inherits (see the
-// "Non-standard Attributes" section of @types/react's index.d.ts). Without
-// this exclusion, removing `color` from BoxOwnProps let it silently leak
-// back in from React's own types: untyped, unvalidated, and — worse than a
-// type gap — it would render as a literal HTML `color` DOM attribute (not
-// CSS), which has no visual effect on a div/span at all. Caught by a real
-// throwaway type-error probe (a directive comment expecting a compile
-// error) that unexpectedly stayed silent, not assumed safe just because
-// BoxOwnProps itself looked right. Same shape as the "style" exclusion
-// just above it.
 export type BoxProps<T extends ElementType = "div"> = BoxOwnProps & {
   as?: T;
 } & Omit<ComponentPropsWithoutRef<T>, keyof BoxOwnProps | "as" | "style" | "color">;
 
-// React.forwardRef is not itself generic — the render function's props type
-// gets fixed at definition time, so `forwardRef<HTMLElement, BoxProps<ElementType>>`
-// locked every *call site* to the widest possible `T = ElementType`,
-// regardless of the actual `as` value passed there. `ComponentPropsWithoutRef`
-// over that wide a union includes an effectively-`any`-shaped branch (from
-// `ComponentType<any>`), which silently disabled excess-property checking
-// for every Box usage in the whole project — confirmed by testing, not
-// assumed: a deliberately made-up prop name (`thisIsCompletelyMadeUp={12345}`)
-// typechecked with zero errors before this fix. The standard, well-known
-// workaround (used by most polymorphic-`as` component libraries, since
-// forwardRef itself can't be generic) is casting the forwardRef result to a
-// hand-written generic call signature below, restoring real per-call-site
-// type inference for `T`.
 const BoxImpl = forwardRef<HTMLElement, BoxProps<ElementType>>(function Box(
   { as, className, unsafeStyle, ...props },
   ref,
