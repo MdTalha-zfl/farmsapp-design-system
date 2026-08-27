@@ -1,0 +1,62 @@
+/**
+ * Page-level base/reset — the gap flagged (and deliberately deferred) back
+ * in decisions/decision-box-atomic-css-over-inline-styles.md: nothing in
+ * this project established a theme-aware default text/background color at
+ * the page level, so every consuming app was responsible for manually
+ * setting `color`/`backgroundColor` on some root element (see
+ * apps/playground's own former root-wrapper workaround). See
+ * decisions/decision-base-reset-stylesheet.md for why this lives here
+ * (not @farmsapp/tokens, which is values-only, no element selectors) and
+ * why it's hand-written rather than generated (a handful of fixed
+ * declarations referencing specific token names, not a scale being
+ * iterated — same reasoning KEYWORD_PROPS' own hand-listing already
+ * established in atomicConfig.mjs).
+ *
+ * Deliberately minimal — box-sizing (so Box's own padding/border props
+ * behave predictably against an author-supplied width) and the specific
+ * text/background color gap this was written to close. Not a full
+ * Tailwind-preflight-style opinionated reset (headings, lists, links,
+ * form elements) — nothing in this codebase needs that yet, and adding it
+ * speculatively is exactly the kind of scope this project avoids.
+ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+  }
+
+  body {
+    background-color: var(--ds-color-surface-base);
+    color: var(--ds-color-text-primary);
+    font-family: var(--ds-font-family-body);
+  }
+
+  /* VisuallyHidden's own class — the canonical WebAIM "invisible content"
+   * recipe (https://webaim.org/techniques/css/invisiblecontent/#techniques),
+   * the same one Blade's real VisuallyHidden uses. `clip` (legacy) and
+   * `clip-path` (modern) are both set deliberately, not redundantly — browsers
+   * ignore whichever one they don't support. `overflow: hidden` + a 1px box
+   * pushed off-screen (`left: -10000px`), never `display: none`/
+   * `visibility: hidden`, which would also remove the content from the
+   * accessibility tree — the opposite of the point. See
+   * decisions/decision-visually-hidden-minimal-scope.md. */
+  .ds-visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    width: 1px;
+    margin: 0 -1px -1px 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    left: -10000px;
+    white-space: nowrap;
+  }
+}

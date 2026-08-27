@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Box, Stack, Inline, Container } from "@farmsapp/design-system";
+import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, type TextCaptionOwnProps } from "@farmsapp/design-system";
 import { ThemeProvider, useTheme } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
 import "@farmsapp/design-system/css";
@@ -20,7 +20,7 @@ const RADIUS_STEPS = ["none", "sm", "md", "lg", "xl", "full"] as const;
 const BORDER_WIDTH_STEPS = ["thin", "thick", "heavy"] as const;
 const SURFACE_COLORS = ["base", "raised", "sunken", "overlay"] as const;
 const BORDER_COLORS = ["subtle", "default", "strong"] as const;
-const TEXT_COLORS = ["primary", "secondary", "disabled", "inverse"] as const;
+const TEXT_COLORS = ["primary", "secondary", "disabled", "inverse", "danger", "warning", "success"] as const;
 const DISPLAY_VALUES = ["block", "inline-block", "flex", "inline-flex", "grid"] as const;
 const FLEX_DIRECTIONS = ["row", "column", "row-reverse", "column-reverse"] as const;
 const FLEX_WRAPS = ["wrap", "nowrap", "wrap-reverse"] as const;
@@ -30,9 +30,9 @@ const JUSTIFY_CONTENTS = ["start", "center", "end", "between", "around", "evenly
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <Box as="section" padding="4" borderColor="subtle" borderWidth="thin" borderRadius="lg" display="flex" flexDirection="column" gap="3">
-      <Box as="h2" padding="0" color="primary">
+      <Heading level="2" variant="heading-md" padding="0" color="primary">
         {title}
-      </Box>
+      </Heading>
       {children}
     </Box>
   );
@@ -40,9 +40,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <Box as="span" color="secondary" padding="0">
+    <Text as="span" variant="caption" color="secondary" padding="0">
       {children}
-    </Box>
+    </Text>
   );
 }
 
@@ -107,12 +107,12 @@ function DirectionalSpacingGallery() {
 
 function ColorGallery() {
   return (
-    <Section title="Semantic color props — backgroundColor / borderColor / color">
+    <Section title="Semantic color props — backgroundColor / borderColor (Box), color (Text)">
       <Box display="flex" flexDirection="column" gap="2">
         <Box display="flex" flexWrap="wrap" gap="2">
           {SURFACE_COLORS.map((c) => (
-            <Box key={c} padding="3" backgroundColor={c} borderColor="strong" borderWidth="thin" borderRadius="md" color="primary">
-              bg={c}
+            <Box key={c} padding="3" backgroundColor={c} borderColor="strong" borderWidth="thin" borderRadius="md">
+              <Text variant="body" color="primary">bg={c}</Text>
             </Box>
           ))}
         </Box>
@@ -126,22 +126,25 @@ function ColorGallery() {
         <Box display="flex" flexWrap="wrap" gap="2">
           {TEXT_COLORS.map((c) =>
             c === "inverse" ? (
-              // No Box prop for this — backgroundColor only exposes surface
-              // tokens (base/raised/sunken/overlay), never dark action colors.
-              // text.inverse's real, only intended pairing is a solid action
-              // background (e.g. a primary button) per semantic-color.json's
-              // own description ("text on solid dark backgrounds"). Nothing
-              // in Box's current surface-only color scope can demonstrate
-              // that pairing, so this one swatch reaches past Box's props to
-              // prove the token itself round-trips correctly — a real, open
-              // question about whether Box should eventually expose action
-              // colors too, or whether that's Button's job (Phase 7).
-              <Box key={c} padding="3" borderRadius="md" color={c} className="demo-inverse-swatch-bg">
-                color={c} (bg: action.primary, not a Box prop — see comment)
+              // No backgroundColor step for this — Box's backgroundColor only
+              // exposes surface tokens (base/raised/sunken/overlay), never
+              // dark action colors. text.inverse's real, only intended
+              // pairing is a solid action background (e.g. a primary
+              // button) per semantic-color.json's own description ("text on
+              // solid dark backgrounds"). Nothing in Box's current
+              // surface-only backgroundColor scope can demonstrate that
+              // pairing, so this one swatch reaches past Box's props
+              // (a plain className carrying the raw action-primary var())
+              // to prove the token itself round-trips correctly — a real,
+              // open question about whether Box should eventually expose
+              // action-colored backgrounds too, or whether that's Button's
+              // job (Phase 7).
+              <Box key={c} padding="3" borderRadius="md" className="demo-inverse-swatch-bg">
+                <Text variant="body" color={c}>color={c} (bg: action.primary, not a Box prop — see comment)</Text>
               </Box>
             ) : (
-              <Box key={c} padding="3" backgroundColor="sunken" borderRadius="md" color={c}>
-                color={c}
+              <Box key={c} padding="3" backgroundColor="sunken" borderRadius="md">
+                <Text variant="body" color={c}>color={c}</Text>
               </Box>
             ),
           )}
@@ -327,12 +330,14 @@ function ComposedExample() {
       >
         <Box backgroundColor="sunken" borderRadius="md" className="demo-w-96 demo-h-96 demo-flex-shrink-0" />
         <Box display="flex" flexDirection="column" gap="1">
-          <Box as="strong" color="primary" padding="0">
+          {/* "strong" isn't in Text's as union (decisions/decision-text-as-tag-and-variant-narrowed.md)
+              — weight="semibold" gets the same visual emphasis within it. */}
+          <Text variant="body" weight="semibold" color="primary" padding="0">
             Card title
-          </Box>
-          <Box color="secondary" padding="0">
+          </Text>
+          <Text variant="body" color="secondary" padding="0">
             Card body text, using color=secondary for the deemphasized read.
-          </Box>
+          </Text>
           <Box display="flex" gap="2" marginTop="2">
             <Box as="button" paddingX="3" paddingY="1" backgroundColor="base" borderColor="strong" borderWidth="thin" borderRadius="sm">
               Action
@@ -399,30 +404,235 @@ function ContainerGallery() {
   );
 }
 
+function TextGallery() {
+  const TEXT_VARIANTS = ["body", "caption"] as const;
+  const TEXT_WEIGHTS = ["regular", "medium", "semibold"] as const;
+  const TEXT_SIZES = ["xsmall", "small", "medium", "large", "xlarge", "2xlarge"] as const;
+  const TEXT_DECORATIONS = ["none", "underline", "line-through", "dotted"] as const;
+  const WORD_BREAKS = ["normal", "break-all", "keep-all", "break-word"] as const;
+  const TEXT_ALIGNS = ["left", "center", "right", "justify"] as const;
+  const TEXT_TRANSFORMS = ["none", "capitalize", "uppercase", "lowercase"] as const;
+  return (
+    <Section title="Text — variant scale + letterSpacing + lang">
+      <Box display="flex" flexDirection="column" gap="2">
+        {TEXT_VARIANTS.map((v) => (
+          <Box key={v} display="flex" alignItems="center" gap="2">
+            <Label>variant={v}</Label>
+            <Text variant={v}>The quick brown fox jumps over the lazy dog.</Text>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Box display="flex" alignItems="center" gap="2">
+          <Label>letterSpacing=tight (Latin, lang unset)</Label>
+          <Text variant="body" letterSpacing="tight">Tracked text — English only.</Text>
+        </Box>
+        <Box display="flex" alignItems="center" gap="2">
+          <Label>lang=&quot;hi&quot; + letterSpacing=&quot;tight&quot; — guard should force it to normal (check console)</Label>
+          <Text variant="body" letterSpacing="tight" lang="hi">नमस्ते दुनिया — देवनागरी पाठ।</Text>
+        </Box>
+        <Box display="flex" alignItems="center" gap="2">
+          <Label>lang=&quot;hi&quot; alone, no letterSpacing override — no warning expected</Label>
+          <Text variant="body" lang="hi">नमस्ते दुनिया — देवनागरी पाठ, बिना ट्रैकिंग के।</Text>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {TEXT_WEIGHTS.map((w) => (
+          <Box key={w} display="flex" alignItems="center" gap="2">
+            <Label>weight={w}</Label>
+            <Text variant="body" weight={w}>The quick brown fox jumps over the lazy dog.</Text>
+          </Box>
+        ))}
+        <Box display="flex" alignItems="center" gap="2">
+          <Label>
+            variant=&quot;caption&quot; + weight=&quot;semibold&quot; (bypassing the type guard) — captions are always
+            weight &quot;regular&quot;, guard should ignore it (check console + computed font-weight stays 500, caption&apos;s own weight)
+          </Label>
+          <Text {...({ variant: "caption", weight: "semibold" } as TextCaptionOwnProps)}>Caption text, forced weight ignored.</Text>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {TEXT_SIZES.map((s) => (
+          <Box key={s} display="flex" alignItems="center" gap="2">
+            <Label>size={s}</Label>
+            <Text variant="body" size={s}>The quick brown fox jumps over the lazy dog.</Text>
+          </Box>
+        ))}
+        <Box display="flex" alignItems="center" gap="2">
+          <Label>variant=&quot;caption&quot; + size=&quot;small&quot; — caption&apos;s own scoped size range, size should win over caption&apos;s own default (check computed style)</Label>
+          <Text variant="caption" size="small">Caption text, stepped up within its own scale.</Text>
+        </Box>
+        <Box display="flex" alignItems="center" gap="2">
+          <Label>
+            variant=&quot;caption&quot; + size=&quot;2xlarge&quot; (bypassing the type guard, simulating a non-TypeScript caller) — out of
+            caption&apos;s scoped range, guard should ignore it and fall back to caption&apos;s own default size (check console)
+          </Label>
+          <Text {...({ variant: "caption", size: "2xlarge" } as unknown as TextCaptionOwnProps)}>Caption text, invalid size ignored.</Text>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {TEXT_DECORATIONS.map((d) => (
+          <Box key={d} display="flex" alignItems="center" gap="2">
+            <Label>textDecorationLine={d}</Label>
+            <Text variant="body" textDecorationLine={d}>The quick brown fox jumps over the lazy dog.</Text>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {WORD_BREAKS.map((wb) => (
+          <Box key={wb} display="flex" alignItems="center" gap="2">
+            <Label>wordBreak={wb}</Label>
+            <Text variant="body" wordBreak={wb} className="demo-w-200">Supercalifragilisticexpialidocious antidisestablishmentarianism</Text>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {TEXT_ALIGNS.map((ta) => (
+          <Box key={ta} display="flex" alignItems="center" gap="2">
+            <Label>textAlign={ta}</Label>
+            <Text variant="body" textAlign={ta} className="demo-w-200">Aligned text sample.</Text>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {TEXT_TRANSFORMS.map((tt) => (
+          <Box key={tt} display="flex" alignItems="center" gap="2">
+            <Label>textTransform={tt}</Label>
+            <Text variant="body" textTransform={tt}>The Quick Brown Fox</Text>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" alignItems="center" gap="2" marginTop="3">
+        <Label>truncateAfterLines=2</Label>
+        <Text variant="body" truncateAfterLines={2} className="demo-w-200">
+          This is a deliberately long sentence meant to wrap across several lines so the truncateAfterLines line-clamp behavior actually has something real to clip in the browser check.
+        </Text>
+      </Box>
+    </Section>
+  );
+}
+
+function HeadingGallery() {
+  const HEADING_VARIANTS = ["display", "heading-lg", "heading-md", "heading-sm"] as const;
+  const HEADING_WEIGHTS = ["regular", "medium", "semibold"] as const;
+  const HEADING_DECORATIONS = ["none", "underline", "line-through", "dotted"] as const;
+  const HEADING_WORD_BREAKS = ["normal", "break-all", "keep-all", "break-word"] as const;
+  const HEADING_ALIGNS = ["left", "center", "right", "justify"] as const;
+  const HEADING_TRANSFORMS = ["none", "capitalize", "uppercase", "lowercase"] as const;
+  return (
+    <Section title="Heading — level/variant decoupled (real tag vs visual size, independently)">
+      <Box display="flex" flexDirection="column" gap="2">
+        {HEADING_VARIANTS.map((v, i) => (
+          <Box key={v} display="flex" alignItems="center" gap="2">
+            <Label>level={String(i + 1)}, variant={v} (matched, the common case)</Label>
+            <Heading level={String(i + 1) as "1" | "2" | "3" | "4"} variant={v}>Heading sample</Heading>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Box display="flex" alignItems="center" gap="2">
+          <Label>level=2 (real &lt;h2&gt;) but variant=&quot;display&quot; — visually huge, structurally still an h2</Label>
+          <Heading level="2" variant="display">Deliberately mismatched heading</Heading>
+        </Box>
+        <Box display="flex" alignItems="center" gap="2">
+          <Label>level=1 (real &lt;h1&gt;) but variant=&quot;heading-sm&quot; — visually modest, structurally still an h1</Label>
+          <Heading level="1" variant="heading-sm">Modest-looking h1</Heading>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {HEADING_WEIGHTS.map((w) => (
+          <Box key={w} display="flex" alignItems="center" gap="2">
+            <Label>level=3, variant=&quot;heading-md&quot;, weight={w}</Label>
+            <Heading level="3" variant="heading-md" weight={w}>Weighted heading</Heading>
+          </Box>
+        ))}
+        <Box display="flex" alignItems="center" gap="2">
+          <Label>level=1, variant=&quot;display&quot;, no weight override — should stay bold (700), not display&apos;s own semibold-default sibling variants</Label>
+          <Heading level="1" variant="display">Display heading, own default weight</Heading>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {HEADING_DECORATIONS.map((d) => (
+          <Box key={d} display="flex" alignItems="center" gap="2">
+            <Label>level=4, variant=&quot;heading-sm&quot;, textDecorationLine={d}</Label>
+            <Heading level="4" variant="heading-sm" textDecorationLine={d}>Decorated heading</Heading>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {HEADING_WORD_BREAKS.map((wb) => (
+          <Box key={wb} display="flex" alignItems="center" gap="2">
+            <Label>level=4, variant=&quot;heading-sm&quot;, wordBreak={wb}</Label>
+            <Heading level="4" variant="heading-sm" wordBreak={wb} className="demo-w-200">Supercalifragilisticexpialidocious</Heading>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {HEADING_ALIGNS.map((ta) => (
+          <Box key={ta} display="flex" alignItems="center" gap="2">
+            <Label>level=4, variant=&quot;heading-sm&quot;, textAlign={ta}</Label>
+            <Heading level="4" variant="heading-sm" textAlign={ta} className="demo-w-200">Aligned heading</Heading>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        {HEADING_TRANSFORMS.map((tt) => (
+          <Box key={tt} display="flex" alignItems="center" gap="2">
+            <Label>level=4, variant=&quot;heading-sm&quot;, textTransform={tt}</Label>
+            <Heading level="4" variant="heading-sm" textTransform={tt}>The Quick Brown Fox</Heading>
+          </Box>
+        ))}
+      </Box>
+    </Section>
+  );
+}
+
+function VisuallyHiddenGallery() {
+  return (
+    <Section title="VisuallyHidden — present in the DOM/accessibility tree, never visually rendered">
+      <Box display="flex" alignItems="center" gap="2">
+        <Label>Plain native &lt;button&gt; whose only accessible name comes from a nested VisuallyHidden — verifies the technique for real, not just visually</Label>
+        {/* A plain native button, not the not-yet-built Button primitive —
+            deliberately, per decisions/decision-visually-hidden-minimal-scope.md's
+            own verification plan. The "×" is purely decorative/visual; the
+            real accessible name comes entirely from the hidden text. */}
+        <button type="button">
+          <span aria-hidden="true">×</span>
+          <VisuallyHidden>Close dialog</VisuallyHidden>
+        </button>
+      </Box>
+      <Box display="flex" alignItems="center" gap="2" marginTop="2">
+        <Label>The same text, unhidden, for visual comparison — should read identically to a screen reader, look completely different to the eye</Label>
+        <Text variant="body">Close dialog</Text>
+      </Box>
+    </Section>
+  );
+}
+
 function App() {
   const [renderCount, setRenderCount] = useState(0);
   return (
     <ThemeProvider>
       <Box
+        as="div"
         padding="4"
         display="flex"
         flexDirection="column"
         gap="4"
-        color="primary"
-        backgroundColor="base"
         className="demo-max-w-960-centered"
       >
-        {/* color="primary" here is deliberate, not decorative: `color` inherits
-            by default in CSS, so setting it once on the root Box is what
-            makes every nested Box below legible in dark mode without each one
-            needing its own `color` prop. Found the hard way — every gallery
-            section below was invisible-black-text-on-dark-background in dark
-            mode before this line existed. Nothing about Box itself was wrong;
-            this project has no page-level base/reset rule yet (real gap,
-            flagged separately), so nothing set a default text color at all. */}
-        <Box as="h1" padding="1" marginTop={"0"} color="secondary" backgroundColor="raised">
+        {/* No color/backgroundColor here anymore — @farmsapp/design-system's
+            new base.css now sets both on <body> (theme-aware, via
+            var(--ds-color-text-primary)/var(--ds-color-surface-base)), and
+            `color` inherits from there through this transparent wrapper down
+            to every nested Box/Text/Heading below, exactly like the former
+            per-page workaround did manually. See
+            decisions/decision-base-reset-stylesheet.md. This wrapper is back
+            to a plain Box (no longer needs to be a Text) since it no longer
+            sets `color` itself. */}
+        <Heading level="1" variant="heading-lg" padding="1" marginTop={"0"} color="secondary" backgroundColor="raised">
           Box variant gallery
-        </Box>
+        </Heading>
         <ThemeToggle />
         <button onClick={() => setRenderCount((n) => n + 1)}>Force re-render ({renderCount})</button>
         <SpacingGallery />
@@ -438,6 +648,9 @@ function App() {
         <StackGallery />
         <InlineGallery />
         <ContainerGallery />
+        <TextGallery />
+        <HeadingGallery />
+        <VisuallyHiddenGallery />
       </Box>
     </ThemeProvider>
   );

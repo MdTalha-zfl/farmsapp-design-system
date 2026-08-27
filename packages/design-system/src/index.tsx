@@ -39,6 +39,7 @@ export {
   type HeadingLevel,
   type HeadingVariant,
 } from "./components/Heading/Heading";
+export { VisuallyHidden, type VisuallyHiddenProps } from "./components/VisuallyHidden/VisuallyHidden";
 export type {
   LetterSpacingStep,
   TypographyLang,
