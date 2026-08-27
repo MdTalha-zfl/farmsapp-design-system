@@ -18,7 +18,10 @@
         "$value": "{color.neutral-dark.1}",
         "$type": "color",
         "$description": "NOT a mechanical re-point of the light value's neutral.1 (light scale's near-white). Verified by real WCAG contrast against every dark-scale step-9 solid action color (brand/danger/warning/success): near-white text fails AA on all four (2.17-2.77:1) because Theme Runtime Chunk 02 deliberately brightened dark step 9 for legibility against a dark page, which flips which text polarity actually reads. Near-black (neutral-dark.1) passes comfortably on all four (5.59-7.16:1). See Theme Runtime roadmap Chunk 03."
-      }
+      },
+      "danger": { "$value": "{color.danger-dark.11}", "$type": "color", "$description": "10.16:1 against dark surface.base (#0a0c0a) — real WCAG contrast computed, not assumed. See decisions/decision-feedback-text-colors.md." },
+      "warning": { "$value": "{color.warning-dark.11}", "$type": "color", "$description": "11.13:1 against dark surface.base." },
+      "success": { "$value": "{color.success-dark.11}", "$type": "color", "$description": "10.52:1 against dark surface.base." }
     },
     "action": {
       "primary": { "$value": "{color.brand-dark.9}", "$type": "color" },
