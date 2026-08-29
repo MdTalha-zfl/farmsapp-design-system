@@ -75,6 +75,23 @@
  * value there, not var(--x) — so a breakpoint token is only ever usable as
  * a JS/TS value. Generating it into tokens.css anyway would produce a
  * custom property that looks usable but silently isn't.
+ *
+ * DIMENSION UNITS — unitless in JS, "px" only in CSS: dimension-typed
+ * tokens (spacing/radius/borderWidth) are authored as "16px" etc. because
+ * that's what the CSS platform needs verbatim. The stock `js` transform
+ * group's `size/rem` transform turns that into a rem-string, and Style
+ * Dictionary has no built-in transform that emits a bare unitless number —
+ * confirmed by reading its transform source directly. React Native's
+ * StyleSheet wants plain numbers (no unit, not even "px"), matching Blade's
+ * own real convention (`makeSpace()` appends "px" only for its web output;
+ * native consumes the raw unitless number directly — confirmed from
+ * Blade's actual pasted `BaseButton.tsx` source). `size/pxToNumber` below
+ * is a small custom transform doing exactly that, used only by the `js`
+ * platform — the `css` platform's dimension tokens are untouched and keep
+ * their "px" suffix. This is the fix for `@farmsapp/design-system`'s
+ * `Badge.native.tsx` needing its own local `pxToNumber` helper to undo the
+ * "px" suffix at every native call site — the unit now never gets added in
+ * the first place for JS/TS consumers.
  */
 const isSemanticFile = (token) => token.filePath.includes("semantic-");
 const isSemanticDarkFile = (token) => {
@@ -92,6 +109,21 @@ export const lightConfig = {
   // predicted from the config API.
   source: [],
   usesDtcg: true,
+  hooks: {
+    transforms: {
+      "size/pxToNumber": {
+        type: "value",
+        filter: (token) => token.$type === "dimension",
+        transform: (token) => {
+          const parsed = Number.parseFloat(token.$value);
+          if (Number.isNaN(parsed)) {
+            throw new Error(`size/pxToNumber: could not parse "${token.$value}" for token "${token.path.join(".")}"`);
+          }
+          return parsed;
+        },
+      },
+    },
+  },
   platforms: {
     css: {
       transformGroup: "css",
@@ -113,7 +145,10 @@ export const lightConfig = {
       ],
     },
     js: {
-      transformGroup: "js",
+      // Same as the stock "js" transformGroup (attribute/cti, name/pascal,
+      // color/hex) but size/pxToNumber replaces size/rem — see the file
+      // header comment for why.
+      transforms: ["attribute/cti", "name/pascal", "size/pxToNumber", "color/hex"],
       buildPath: "src/generated/",
       files: [
         {
