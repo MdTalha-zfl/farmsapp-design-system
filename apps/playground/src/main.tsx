@@ -1,9 +1,11 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, type TextCaptionOwnProps } from "@farmsapp/design-system";
+import { XIcon, ChevronDownIcon, CheckIcon, LoaderCircleIcon, AlertCircleIcon, EyeIcon, EyeOffIcon, SearchIcon } from "@farmsapp/icons";
 import { ThemeProvider, useTheme } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
 import "@farmsapp/design-system/css";
+import "@farmsapp/icons/css";
 import "./demo.css";
 
 /**
@@ -609,6 +611,62 @@ function VisuallyHiddenGallery() {
   );
 }
 
+function IconGallery() {
+  const ICON_SIZES = ["small", "medium", "large"] as const;
+  const ICON_COLORS = ["primary", "secondary", "disabled", "inverse", "danger", "warning", "success"] as const;
+  const ALL_ICONS = [
+    ["XIcon", XIcon],
+    ["ChevronDownIcon", ChevronDownIcon],
+    ["CheckIcon", CheckIcon],
+    ["LoaderCircleIcon", LoaderCircleIcon],
+    ["AlertCircleIcon", AlertCircleIcon],
+    ["EyeIcon", EyeIcon],
+    ["EyeOffIcon", EyeOffIcon],
+    ["SearchIcon", SearchIcon],
+  ] as const;
+  return (
+    <Section title="Icon — Lucide-sourced, aria-hidden unconditional, size/color reuse existing tokens">
+      <Box display="flex" flexWrap="wrap" gap="3">
+        {ALL_ICONS.map(([name, IconComponent]) => (
+          <Box key={name} display="flex" flexDirection="column" alignItems="center" gap="1">
+            <IconComponent />
+            <Label>{name}</Label>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" flexWrap="wrap" gap="3" marginTop="3">
+        {ICON_SIZES.map((s) => (
+          <Box key={s} display="flex" flexDirection="column" alignItems="center" gap="1">
+            <XIcon size={s} />
+            <Label>size={s}</Label>
+          </Box>
+        ))}
+      </Box>
+      <Box display="flex" flexWrap="wrap" gap="3" marginTop="3">
+        {ICON_COLORS.map((c) =>
+          c === "inverse" ? (
+            <Box key={c} display="flex" flexDirection="column" alignItems="center" gap="1" backgroundColor="sunken" padding="2" borderRadius="sm" className="demo-inverse-swatch-bg">
+              <AlertCircleIcon color={c} />
+              <Label>color={c} (on action bg)</Label>
+            </Box>
+          ) : (
+            <Box key={c} display="flex" flexDirection="column" alignItems="center" gap="1">
+              <AlertCircleIcon color={c} />
+              <Label>color={c}</Label>
+            </Box>
+          ),
+        )}
+      </Box>
+      <Box display="flex" alignItems="center" gap="2" marginTop="3">
+        <Label>No color prop, nested inside &lt;Text color=&quot;danger&quot;&gt; — icon should inherit currentColor from its ancestor, not stay unstyled</Label>
+        <Text color="danger">
+          <SearchIcon /> inherits danger via currentColor
+        </Text>
+      </Box>
+    </Section>
+  );
+}
+
 function App() {
   const [renderCount, setRenderCount] = useState(0);
   return (
@@ -651,6 +709,7 @@ function App() {
         <TextGallery />
         <HeadingGallery />
         <VisuallyHiddenGallery />
+        <IconGallery />
       </Box>
     </ThemeProvider>
   );

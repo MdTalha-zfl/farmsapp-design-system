@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "description": "Individually tree-shakable icon components, generated from SVG source via SVGR — System Blueprint §01.",
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": ["./build/icon.css"],
   "exports": {
     ".": {
       "types": "./build/index.d.ts",
       "default": "./build/index.js"
     },
+    "./css": "./build/icon.css",
     "./package.json": "./package.json"
   },
   "files": ["build"],
@@ -16,17 +17,24 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "node scripts/generate-icons.mjs && rollup -c",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
     "react": "^18 || ^19"
   },
+  "dependencies": {
+    "@farmsapp/tokens": "workspace:*"
+  },
   "devDependencies": {
     "@farmsapp/eslint-config": "workspace:*",
     "@types/react": "^18.3.0",
     "typescript": "^5.7.0",
-    "rollup": "^4.28.0"
+    "rollup": "^4.28.0",
+    "lucide-static": "^1.34.0",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0"
   }
 }

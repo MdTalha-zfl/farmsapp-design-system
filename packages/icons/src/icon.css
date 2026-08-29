@@ -1,0 +1,60 @@
+/**
+ * Icon's own size/color classes — small, fixed, hand-written CSS, not
+ * generated (a handful of declarations referencing specific
+ * @farmsapp/tokens custom properties directly, not a scale being iterated —
+ * same reasoning @farmsapp/design-system's base.css already established
+ * for its own hand-written rules). Deliberately references
+ * @farmsapp/tokens's custom properties directly, never
+ * @farmsapp/design-system's atomicConfig.mjs/resolveTypographyClasses.ts,
+ * which are internal to that package — this keeps @farmsapp/icons coupled
+ * only to the most foundational, stable layer. See
+ * decisions/decision-icon-css-own-package.md and
+ * decisions/decision-icon-size-color-reuse-tokens.md.
+ *
+ * Copied verbatim into build/icon.css by scripts/generate-icons.mjs, same
+ * "hand-written fixed CSS gets read and passed through, not generated"
+ * discipline design-system's own base.css established.
+ */
+
+.ds-icon-size-small {
+  width: var(--ds-space-2);
+  height: var(--ds-space-2);
+}
+
+.ds-icon-size-medium {
+  width: var(--ds-space-3);
+  height: var(--ds-space-3);
+}
+
+.ds-icon-size-large {
+  width: var(--ds-space-4);
+  height: var(--ds-space-4);
+}
+
+.ds-icon-color-primary {
+  color: var(--ds-color-text-primary);
+}
+
+.ds-icon-color-secondary {
+  color: var(--ds-color-text-secondary);
+}
+
+.ds-icon-color-disabled {
+  color: var(--ds-color-text-disabled);
+}
+
+.ds-icon-color-inverse {
+  color: var(--ds-color-text-inverse);
+}
+
+.ds-icon-color-danger {
+  color: var(--ds-color-text-danger);
+}
+
+.ds-icon-color-warning {
+  color: var(--ds-color-text-warning);
+}
+
+.ds-icon-color-success {
+  color: var(--ds-color-text-success);
+}
