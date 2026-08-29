@@ -1,9 +1,7 @@
-import { forwardRef, type ComponentPropsWithoutRef, type CSSProperties, type ReactElement, type Ref } from "react";
-import { Box, type BoxOwnProps } from "../Box/Box";
+import { forwardRef, type ComponentPropsWithoutRef, type ReactElement, type Ref } from "react";
+import type { BoxOwnProps } from "../Box/Box";
 import { TOKEN_TEXT_PROPS, className as atomicClassName } from "../Box/atomicConfig.mjs";
 import {
-  resolveTypographyClasses,
-  resolveExtraTypographyClasses,
   warnIfInvalidStep,
   type TextVariantStep,
   type LetterSpacingStep,
@@ -15,6 +13,7 @@ import {
   type TextAlign,
   type TextTransform,
 } from "../Box/resolveTypographyClasses";
+import { BaseText } from "../BaseText/BaseText";
 
 /**
  * Text — body/caption-level typography. Phase 5 Primitives roadmap, Chunk 04.
@@ -28,7 +27,10 @@ import {
  * variant-scoped shape, and decisions/decision-heading-blade-parity-props.md
  * for `weight`/`textDecorationLine`/`wordBreak`/`textAlign`/`textTransform`
  * moving into the shared `resolveExtraTypographyClasses` (also used by
- * Heading) rather than staying Text-only.
+ * Heading). The actual render (variant/letterSpacing/color -> classes,
+ * truncateAfterLines -> line-clamp style, Box render) now lives in the
+ * shared `BaseText` — this file keeps only what's genuinely Text-exclusive:
+ * `size`'s discriminated, caption-scoped shape.
  */
 
 export type TextVariant = "body" | "caption";
@@ -126,9 +128,7 @@ const TextImpl = forwardRef<HTMLElement, TextProps>(function Text(
   ref,
 ) {
   const variantStep = VARIANT_TO_TOKEN_STEP[variant];
-  const typographyClasses = resolveTypographyClasses(variantStep, letterSpacing, lang, color);
 
-  const extraClasses: string[] = [];
   // Captions never carry a weight override — forced to "regular" via
   // variant's own composite font shorthand. Blocked at the type level
   // already (TextCaptionOwnProps' weight is `never`); this only fires for a
@@ -143,6 +143,8 @@ const TextImpl = forwardRef<HTMLElement, TextProps>(function Text(
     }
     effectiveWeight = undefined;
   }
+
+  const sizeClasses: string[] = [];
   if (size !== undefined && variant === "caption" && !CAPTION_SIZES.includes(size as CaptionTextSize)) {
     if (process.env.NODE_ENV !== "production") {
       console.warn(
@@ -152,33 +154,24 @@ const TextImpl = forwardRef<HTMLElement, TextProps>(function Text(
     }
   } else if (size !== undefined) {
     if (process.env.NODE_ENV !== "production") warnIfInvalidStep("size", TOKEN_TEXT_PROPS.size.varCategory, size);
-    extraClasses.push(atomicClassName(TOKEN_TEXT_PROPS.size.prefix, size));
+    sizeClasses.push(atomicClassName(TOKEN_TEXT_PROPS.size.prefix, size));
   }
-  extraClasses.push(resolveExtraTypographyClasses({ weight: effectiveWeight, textDecorationLine, wordBreak, textAlign, textTransform }));
-
-  const finalClassName = [typographyClasses, ...extraClasses, className].filter(Boolean).join(" ");
-
-  // -webkit-line-clamp requires this exact combination to actually clip —
-  // a real, well-known CSS pattern, still requiring the -webkit- prefix in
-  // every current browser.
-  const truncateStyle: CSSProperties | undefined =
-    truncateAfterLines !== undefined
-      ? {
-          display: "-webkit-box",
-          WebkitBoxOrient: "vertical",
-          WebkitLineClamp: truncateAfterLines,
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-        }
-      : undefined;
 
   return (
-    <Box
+    <BaseText
       ref={ref}
       as={as ?? "span"}
+      variant={variantStep}
+      letterSpacing={letterSpacing}
       lang={lang}
-      className={finalClassName}
-      {...(truncateStyle ? { unsafeStyle: truncateStyle } : {})}
+      color={color}
+      weight={effectiveWeight}
+      textDecorationLine={textDecorationLine}
+      wordBreak={wordBreak}
+      textAlign={textAlign}
+      textTransform={textTransform}
+      truncateAfterLines={truncateAfterLines}
+      className={[...sizeClasses, className].filter(Boolean).join(" ")}
       {...props}
     />
   );

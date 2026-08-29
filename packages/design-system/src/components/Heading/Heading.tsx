@@ -1,8 +1,6 @@
 import { forwardRef, type ComponentPropsWithoutRef } from "react";
-import { Box, type BoxOwnProps } from "../Box/Box";
+import type { BoxOwnProps } from "../Box/Box";
 import {
-  resolveTypographyClasses,
-  resolveExtraTypographyClasses,
   type HeadingVariant,
   type LetterSpacingStep,
   type TypographyLang,
@@ -13,6 +11,7 @@ import {
   type TextAlign,
   type TextTransform,
 } from "../Box/resolveTypographyClasses";
+import { BaseText } from "../BaseText/BaseText";
 
 /**
  * Heading — see decisions/decision-heading-level-variant-decoupled.md for
@@ -20,7 +19,10 @@ import {
  * deliberate divergence from Blade's own Heading, which derives a default
  * tag from `size`) and decisions/decision-heading-blade-parity-props.md for
  * `weight`/`textDecorationLine`/`wordBreak`/`textAlign`/`textTransform`,
- * added after tracing Blade's real Heading component.
+ * added after tracing Blade's real Heading component. The actual render
+ * (variant/letterSpacing/color -> classes, Box render) now lives in the
+ * shared `BaseText` — this file keeps only what's genuinely
+ * Heading-exclusive: `level`'s tag mapping.
  */
 
 export type { HeadingVariant, LetterSpacingStep, TextColor, TextWeight, TextDecorationLine, TextWordBreak, TextAlign, TextTransform };
@@ -71,10 +73,23 @@ const HeadingImpl = forwardRef<HTMLHeadingElement, HeadingProps>(function Headin
   ref,
 ) {
   const tag = LEVEL_TO_TAG[level];
-  const typographyClasses = resolveTypographyClasses(variant, letterSpacing, lang, color);
-  const extraClasses = resolveExtraTypographyClasses({ weight, textDecorationLine, wordBreak, textAlign, textTransform });
-  const finalClassName = [typographyClasses, extraClasses, className].filter(Boolean).join(" ");
-  return <Box ref={ref} as={tag} lang={lang} className={finalClassName} {...props} />;
+  return (
+    <BaseText
+      ref={ref}
+      as={tag}
+      variant={variant}
+      letterSpacing={letterSpacing}
+      lang={lang}
+      color={color}
+      weight={weight}
+      textDecorationLine={textDecorationLine}
+      wordBreak={wordBreak}
+      textAlign={textAlign}
+      textTransform={textTransform}
+      className={className}
+      {...props}
+    />
+  );
 });
 
 export const Heading = HeadingImpl;
