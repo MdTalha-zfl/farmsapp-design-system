@@ -18,6 +18,7 @@
   },
   "scripts": {
     "build": "node scripts/generate-atomic-css.mjs && rollup -c",
+    "dev": "node scripts/watch-atomic-css.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
