@@ -17,18 +17,18 @@
  */
 
 .ds-icon-size-small {
-  width: var(--ds-space-2);
-  height: var(--ds-space-2);
+  width: var(--ds-space-4);
+  height: var(--ds-space-4);
 }
 
 .ds-icon-size-medium {
-  width: var(--ds-space-3);
-  height: var(--ds-space-3);
+  width: var(--ds-space-5);
+  height: var(--ds-space-5);
 }
 
 .ds-icon-size-large {
-  width: var(--ds-space-4);
-  height: var(--ds-space-4);
+  width: var(--ds-space-6);
+  height: var(--ds-space-6);
 }
 
 .ds-icon-color-primary {
