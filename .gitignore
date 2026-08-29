@@ -13,3 +13,5 @@ storybook-static/
 .env.local
 .vscode/*
 !.vscode/extensions.json
+
+*storybook.log

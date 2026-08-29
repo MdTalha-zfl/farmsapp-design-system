@@ -8,6 +8,7 @@ export default [
       "**/dist/**",
       "**/.next/**",
       "**/.turbo/**",
+      "**/storybook-static/**",
       "**/next-env.d.ts",
       "pnpm-lock.yaml",
     ],

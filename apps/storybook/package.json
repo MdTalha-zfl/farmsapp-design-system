@@ -1,0 +1,32 @@
+{
+  "name": "@farmsapp/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Storybook catalog for @farmsapp/design-system components and @farmsapp/tokens — the visual reference for the design system.",
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@farmsapp/design-system": "workspace:*",
+    "@farmsapp/themes": "workspace:*",
+    "@farmsapp/tokens": "workspace:*",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "@farmsapp/eslint-config": "workspace:*",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0",
+    "storybook": "^10.5.10",
+    "@storybook/react-vite": "^10.5.10",
+    "@storybook/addon-a11y": "^10.5.10",
+    "@storybook/addon-docs": "^10.5.10",
+    "eslint-plugin-storybook": "^10.5.10"
+  }
+}
