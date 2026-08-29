@@ -66,6 +66,18 @@
         "$value": "{color.action.tertiary-hover}",
         "$type": "color",
         "$description": "Reuses hover's value — same convention as action.primary-active/action.secondary-active."
+      },
+      "negative": { "$value": "{color.danger.10}", "$type": "color" },
+      "negative-hover": { "$value": "{color.danger.11}", "$type": "color" },
+      "negative-active": {
+        "$value": "{color.danger.11}",
+        "$type": "color",
+        "$description": "Reuses hover's value — the primitive step convention has no dedicated pressed step (9-10 are solid bg default/hover, 11-12 are reserved for text). Pressed feedback comes from motion, not a third color. See Semantic Layer roadmap Chunk 02."
+      },
+      "negative-disabled": {
+        "$value": "{color.danger.6}",
+        "$type": "color",
+        "$description": "Flattened to neutral, not a dimmed brand color — a washed-out brand green still reads as \"branded\"; flat neutral reads unambiguously as \"not interactive\"."
       }
     },
     "feedback": {
