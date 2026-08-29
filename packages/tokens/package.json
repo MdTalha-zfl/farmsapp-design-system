@@ -18,6 +18,7 @@
   },
   "scripts": {
     "build": "node scripts/check-contrast.mjs && node scripts/build-tokens.mjs && node scripts/assemble-layers.mjs && rollup -c",
+    "dev": "node scripts/watch-tokens.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "generate:scales": "node scripts/generate-scale.mjs",
