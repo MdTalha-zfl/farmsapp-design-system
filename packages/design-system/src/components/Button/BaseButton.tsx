@@ -2,12 +2,8 @@ import { forwardRef, type ComponentType, type ElementType, type MouseEvent, type
 import type { IconOwnProps } from "@farmsapp/icons";
 import { Text } from "../Text/Text";
 import { Spinner } from "../Spinner/Spinner";
-import {
-  buttonSizeToIconSizeMap,
-  buttonIconOnlySizeToIconSizeMap,
-  buttonSizeToSpinnerSizeMap,
-  buttonSizeToTextSizeMap,
-} from "./buttonTokens";
+import { resolveBoxClassNames, type MarginProps } from "../Box/Box";
+import { resolveBaseButtonState } from "./resolveBaseButtonState";
 
 
 export type ButtonVariant = "primary" | "secondary" | "tertiary" | "negative";
@@ -18,7 +14,7 @@ export type ButtonIconPosition = "left" | "right";
 // component shape is identical for both, no reason to duplicate it.
 export type ButtonIconComponent = ComponentType<IconOwnProps>;
 
-interface BaseButtonCommonOwnProps {
+interface BaseButtonCommonOwnProps extends MarginProps {
   /** Defaults to "primary". */
   variant?: ButtonVariant;
   /** Defaults to "medium". */
@@ -54,16 +50,6 @@ export interface BaseButtonIconOnlyOwnProps extends BaseButtonCommonOwnProps {
 }
 export type BaseButtonOwnProps = BaseButtonWithChildrenOwnProps | BaseButtonIconOnlyOwnProps;
 
-function warnIfMissingAccessibilityLabel(isIconOnly: boolean, accessibilityLabel: string | undefined): void {
-  if (process.env.NODE_ENV === "production") return;
-  if (isIconOnly && !accessibilityLabel) {
-    console.warn(
-      "@farmsapp/design-system: Button received an icon with no visible text and no accessibilityLabel — " +
-        "an icon-only button needs accessibilityLabel to have a real accessible name.",
-    );
-  }
-}
-
 export const BaseButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, BaseButtonOwnProps>(function BaseButton(
   {
     variant = "primary",
@@ -81,16 +67,23 @@ export const BaseButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Base
     className,
     children,
     accessibilityLabel,
+    ...marginProps
   },
   ref,
 ) {
   const childrenString = typeof children === "string" ? children : undefined;
-  const isIconOnly = Boolean(Icon) && (!childrenString || childrenString.trim().length === 0);
-  if (process.env.NODE_ENV !== "production") warnIfMissingAccessibilityLabel(isIconOnly, accessibilityLabel);
-
   const isLink = Boolean(href);
 
-  const disabled = isLoading || (isDisabled && !isLink);
+  const { disabled, isIconOnly, iconSize, spinnerSize, textSize } = resolveBaseButtonState({
+    size,
+    hasIcon: Boolean(Icon),
+    childrenString,
+    isDisabled,
+    isLoading,
+    isLink,
+    accessibilityLabel,
+  });
+
   // Untyped as ElementType (matching Box.tsx's own `const Component = as ??
   // "div"` pattern) — a literal "a" | "button" union tag would make JSX's
   // per-attribute type-checking intersect each element's own allowed props
@@ -99,14 +92,13 @@ export const BaseButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Base
   // record and spread, same reason Box.tsx's own `rest` is untyped.
   const Component = (isLink ? "a" : "button") as ElementType;
 
-  const iconSize = isIconOnly ? buttonIconOnlySizeToIconSizeMap[size] : buttonSizeToIconSizeMap[size];
-
   const classes = [
     "ds-button",
     `ds-button--variant-${variant}`,
     `ds-button--size-${size}`,
     isIconOnly && "ds-button--icon-only",
     isFullWidth && "ds-button--full-width",
+    ...resolveBoxClassNames(marginProps),
     className,
   ]
     .filter(Boolean)
@@ -128,18 +120,13 @@ export const BaseButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Base
     <Component {...nativeProps}>
       {isLoading ? (
         <span className="ds-button__spinner-overlay">
-          <Spinner size={buttonSizeToSpinnerSizeMap[size]} accessibilityLabel="Loading" />
+          <Spinner size={spinnerSize} accessibilityLabel="Loading" />
         </span>
       ) : null}
       <span className={["ds-button__content", isLoading && "ds-button__content--hidden"].filter(Boolean).join(" ")}>
         {Icon && iconPosition === "left" ? <Icon size={iconSize} /> : null}
         {!isIconOnly ? (
-          <Text
-            as="span"
-            variant="body"
-            size={buttonSizeToTextSizeMap[size]}
-            padding="0"
-          >
+          <Text as="span" variant="body" size={textSize} padding="0">
             {children}
           </Text>
         ) : null}
