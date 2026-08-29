@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, type TextCaptionOwnProps } from "@farmsapp/design-system";
+import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, type TextCaptionOwnProps } from "@farmsapp/design-system";
 import { XIcon, ChevronDownIcon, CheckIcon, LoaderCircleIcon, AlertCircleIcon, EyeIcon, EyeOffIcon, SearchIcon } from "@farmsapp/icons";
 import { ThemeProvider, useTheme } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
@@ -683,6 +683,135 @@ function SpinnerGallery() {
   );
 }
 
+function ButtonGallery() {
+  const BUTTON_VARIANTS = ["primary", "secondary", "tertiary"] as const;
+  const BUTTON_SIZES = ["xsmall", "small", "medium", "large"] as const;
+  const [loading, setLoading] = useState(false);
+  return (
+    <Section title="Button — BaseButton/Button split, variant + size + disabled/loading + icon combos">
+      <Box display="flex" flexDirection="column" gap="2">
+        <Label>variant (primary/secondary/tertiary)</Label>
+        <Box display="flex" gap="2" flexWrap="wrap">
+          {BUTTON_VARIANTS.map((v) => (
+            <Button key={v} variant={v}>{v}</Button>
+          ))}
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>size (xsmall/small/medium/large)</Label>
+        <Box display="flex" gap="2" flexWrap="wrap" alignItems="center">
+          {BUTTON_SIZES.map((s) => (
+            <Button key={s} size={s}>{`size ${s}`}</Button>
+          ))}
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>isDisabled — click should no-op, no hover feedback</Label>
+        <Box display="flex" gap="2" flexWrap="wrap">
+          {BUTTON_VARIANTS.map((v) => (
+            <Button key={v} variant={v} isDisabled onClick={() => alert("should never fire")}>{`disabled ${v}`}</Button>
+          ))}
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>icon + iconPosition (left/right)</Label>
+        <Box display="flex" gap="2" flexWrap="wrap">
+          <Button icon={SearchIcon} iconPosition="left">
+            Search
+          </Button>
+          <Button icon={ChevronDownIcon} iconPosition="right" variant="secondary">
+            More
+          </Button>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>icon-only — requires accessibilityLabel (aria-label, not VisuallyHidden)</Label>
+        <Box display="flex" gap="2" flexWrap="wrap" alignItems="center">
+          {BUTTON_SIZES.map((s) => (
+            <Button key={s} size={s} icon={XIcon} accessibilityLabel="Close" variant="tertiary" />
+          ))}
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>isLoading — toggle, content hidden not unmounted (no layout shift), Spinner overlay</Label>
+        <Box display="flex" gap="2" alignItems="center">
+          <Button icon={CheckIcon} isLoading={loading}>
+            Submit
+          </Button>
+          <Button size="small" variant="tertiary" onClick={() => setLoading((v) => !v)}>
+            Toggle loading
+          </Button>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>isFullWidth</Label>
+        <Box className="demo-w-320">
+          <Button isFullWidth variant="secondary">
+            Full width
+          </Button>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>
+          href — renders as real &lt;a&gt;. isDisabled is deliberately ignored on a link (matches Blade&apos;s real, confirmed behavior —
+          a link-rendered button can&apos;t be truly disabled without breaking link semantics), so this one below still opens on click.
+        </Label>
+        <Box display="flex" gap="2" flexWrap="wrap">
+          <Button href="https://example.com" target="_blank" rel="noreferrer">
+            Real link
+          </Button>
+          <Button href="https://example.com" target="_blank" rel="noreferrer" isDisabled>
+            isDisabled + href (still opens — see label above)
+          </Button>
+        </Box>
+      </Box>
+    </Section>
+  );
+}
+
+function IconButtonGallery() {
+  const EMPHASES = ["subtle", "intense", "moderate"] as const;
+  const SIZES = ["small", "medium", "large"] as const;
+  return (
+    <Section title="IconButton — genuinely separate from Button, emphasis + isHighlighted model">
+      <Box display="flex" flexDirection="column" gap="2">
+        <Label>emphasis (subtle/intense/moderate) — moderate shows a persistent background, subtle/intense stay transparent</Label>
+        <Box display="flex" gap="2" flexWrap="wrap" alignItems="center">
+          {EMPHASES.map((e) => (
+            <IconButton key={e} emphasis={e} icon={XIcon} accessibilityLabel={`emphasis ${e}`} />
+          ))}
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>isHighlighted — transparent at rest, gains a background container on hover/focus</Label>
+        <Box display="flex" gap="2" flexWrap="wrap" alignItems="center">
+          <IconButton isHighlighted icon={SearchIcon} accessibilityLabel="Search (highlighted)" />
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>size (small/medium/large)</Label>
+        <Box display="flex" gap="2" flexWrap="wrap" alignItems="center">
+          {SIZES.map((s) => (
+            <IconButton key={s} size={s} icon={CheckIcon} accessibilityLabel={`size ${s}`} />
+          ))}
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>size=&quot;large&quot; + isHighlighted — no large container exists; falls back to no container (check console for the dev warning)</Label>
+        <Box display="flex" gap="2" flexWrap="wrap" alignItems="center">
+          <IconButton size="large" isHighlighted icon={AlertCircleIcon} accessibilityLabel="large highlighted (falls back)" />
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>isDisabled — real disabled attribute, no click, no hover feedback</Label>
+        <Box display="flex" gap="2" flexWrap="wrap" alignItems="center">
+          <IconButton isDisabled icon={ChevronDownIcon} accessibilityLabel="Disabled icon button" onClick={() => alert("should never fire")} />
+        </Box>
+      </Box>
+    </Section>
+  );
+}
+
 function App() {
   const [renderCount, setRenderCount] = useState(0);
   return (
@@ -727,6 +856,8 @@ function App() {
         <VisuallyHiddenGallery />
         <IconGallery />
         <SpinnerGallery />
+        <ButtonGallery />
+        <IconButtonGallery />
       </Box>
     </ThemeProvider>
   );

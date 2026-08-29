@@ -41,6 +41,21 @@ export {
 } from "./components/Heading/Heading";
 export { VisuallyHidden, type VisuallyHiddenProps } from "./components/VisuallyHidden/VisuallyHidden";
 export { Spinner, type SpinnerProps, type SpinnerSize } from "./components/Spinner/Spinner";
+export {
+  Button,
+  type ButtonOwnProps,
+  type ButtonWithChildrenOwnProps,
+  type ButtonIconOnlyOwnProps,
+  type ButtonVariant,
+  type ButtonSize,
+  type ButtonIconPosition,
+} from "./components/Button/Button";
+export {
+  IconButton,
+  type IconButtonProps,
+  type IconButtonEmphasis,
+  type IconButtonSize,
+} from "./components/IconButton/IconButton";
 export type {
   LetterSpacingStep,
   TypographyLang,

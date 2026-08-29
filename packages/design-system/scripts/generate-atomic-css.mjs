@@ -192,7 +192,11 @@ const baseCss = readFileSync(new URL("../src/base.css", import.meta.url), "utf8"
 // consumers still only need the one @farmsapp/design-system/css import. See
 // decisions/decision-button-css-hand-written-not-generated.md. New entries
 // join this list as each component ships its own hand-written stylesheet.
-const componentCssFiles = ["../src/components/Spinner/spinner.css"];
+const componentCssFiles = [
+  "../src/components/Spinner/spinner.css",
+  "../src/components/Button/button.css",
+  "../src/components/IconButton/icon-button.css",
+];
 const componentCss = componentCssFiles
   .map((path) => readFileSync(new URL(path, import.meta.url), "utf8"))
   .join("\n");

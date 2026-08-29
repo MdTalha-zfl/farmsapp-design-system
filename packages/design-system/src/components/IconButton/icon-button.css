@@ -1,0 +1,69 @@
+@layer components {
+  .ds-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+    border-radius: var(--ds-radius-sm);
+    color: var(--ds-color-text-primary); /* intense, default emphasis */
+    transition:
+      background-color var(--ds-duration-fast) var(--ds-easing-standard),
+      color var(--ds-duration-fast) var(--ds-easing-standard);
+  }
+  .ds-icon-button--emphasis-subtle {
+    color: var(--ds-color-text-secondary);
+  }
+  .ds-icon-button--emphasis-moderate {
+    color: var(--ds-color-text-primary);
+  }
+
+  /* Dims to text-secondary regardless of emphasis — matches Blade's real
+     focus-visible rule (icon color always dims to the "subtle" tone on
+     focus, even for "intense"), extended here to :hover too for a
+     consistent, single feedback mechanism on the non-container path. */
+  .ds-icon-button:hover,
+  .ds-icon-button:focus-visible {
+    color: var(--ds-color-text-secondary);
+  }
+
+  .ds-icon-button:disabled {
+    color: var(--ds-color-text-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .ds-icon-button:focus-visible {
+    outline: var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);
+    outline-offset: var(--ds-focus-ring-offset);
+  }
+
+  /* Container presence (background + fixed square) is gated ONLY by
+     isHighlighted/moderate, never by emphasis alone — plain subtle/intense
+     stay fully transparent at every state. small/medium only; no large
+     entry (guarded in IconButton.tsx, falls back to no container). */
+  .ds-icon-button--has-container.ds-icon-button--size-small {
+    width: var(--ds-space-3);
+    height: var(--ds-space-3);
+  }
+  .ds-icon-button--has-container.ds-icon-button--size-medium {
+    width: var(--ds-space-4);
+    height: var(--ds-space-4);
+  }
+
+  .ds-icon-button--emphasis-moderate.ds-icon-button--has-container {
+    background-color: var(--ds-color-action-tertiary-hover);
+  }
+  .ds-icon-button--highlighted.ds-icon-button--has-container:hover,
+  .ds-icon-button--highlighted.ds-icon-button--has-container:focus-visible {
+    background-color: var(--ds-color-action-secondary);
+  }
+
+  /* Disabled always flattens to "not interactive" — no persistent
+     moderate background either, matching Button's own disabled treatment. */
+  .ds-icon-button:disabled.ds-icon-button--has-container {
+    background-color: transparent;
+  }
+}
