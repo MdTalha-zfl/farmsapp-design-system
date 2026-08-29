@@ -36,6 +36,36 @@
         "$value": "{color.neutral.6}",
         "$type": "color",
         "$description": "Flattened to neutral, not a dimmed brand color — a washed-out brand green still reads as \"branded\"; flat neutral reads unambiguously as \"not interactive\"."
+      },
+      "secondary": {
+        "$value": "{color.neutral.4}",
+        "$type": "color",
+        "$description": "Filled gray chrome, not a dimmed brand color — matches Blade's real base.secondary/base.tertiary background tokens (confirmed directly from Blade's source: they point at a gray-intense surface, not interactive.background.primary.*, when color=\"primary\"). One step darker than surface.raised (neutral.2) and surface.sunken (neutral.3) so a secondary button reads as a distinct filled control, not just another surface. See decisions/decision-button-flat-border-not-bevel.md."
+      },
+      "secondary-hover": {
+        "$value": "{color.neutral.5}",
+        "$type": "color",
+        "$description": "One step darker than action.secondary, matching action.primary-hover's own one-step-darker convention (brand.9 -> brand.10)."
+      },
+      "secondary-active": {
+        "$value": "{color.action.secondary-hover}",
+        "$type": "color",
+        "$description": "Reuses hover's value — same 'no dedicated pressed step, pressed feedback comes from motion' convention as action.primary-active."
+      },
+      "secondary-disabled": {
+        "$value": "{color.action.primary-disabled}",
+        "$type": "color",
+        "$description": "Same flattened neutral.6 disabled treatment as action.primary-disabled — every variant converges to one unambiguous \"not interactive\" fill regardless of which variant it started as."
+      },
+      "tertiary-hover": {
+        "$value": "{color.neutral.3}",
+        "$type": "color",
+        "$description": "Tertiary has no background fill at rest (transparent, a structural CSS value, not a token) — this is the subtle gray wash shown only on hover/focus/active, one step lighter than action.secondary so tertiary continues to read as the lightest-weight of the three button variants even when its background does appear. See decisions/decision-button-flat-border-not-bevel.md."
+      },
+      "tertiary-active": {
+        "$value": "{color.action.tertiary-hover}",
+        "$type": "color",
+        "$description": "Reuses hover's value — same convention as action.primary-active/action.secondary-active."
       }
     },
     "feedback": {

@@ -40,6 +40,7 @@ export {
   type HeadingVariant,
 } from "./components/Heading/Heading";
 export { VisuallyHidden, type VisuallyHiddenProps } from "./components/VisuallyHidden/VisuallyHidden";
+export { Spinner, type SpinnerProps, type SpinnerSize } from "./components/Spinner/Spinner";
 export type {
   LetterSpacingStep,
   TypographyLang,

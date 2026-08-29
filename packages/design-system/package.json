@@ -22,6 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@farmsapp/icons": "workspace:*",
     "@farmsapp/tokens": "workspace:*",
     "@farmsapp/utilities": "workspace:*"
   },

@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, type TextCaptionOwnProps } from "@farmsapp/design-system";
+import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, type TextCaptionOwnProps } from "@farmsapp/design-system";
 import { XIcon, ChevronDownIcon, CheckIcon, LoaderCircleIcon, AlertCircleIcon, EyeIcon, EyeOffIcon, SearchIcon } from "@farmsapp/icons";
 import { ThemeProvider, useTheme } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
@@ -667,6 +667,22 @@ function IconGallery() {
   );
 }
 
+function SpinnerGallery() {
+  const SPINNER_SIZES = ["small", "medium", "large"] as const;
+  return (
+    <Section title="Spinner — wraps LoaderCircleIcon, CSS rotation, role=status accessible name">
+      <Box display="flex" flexWrap="wrap" gap="3">
+        {SPINNER_SIZES.map((s) => (
+          <Box key={s} display="flex" flexDirection="column" alignItems="center" gap="1">
+            <Spinner size={s} accessibilityLabel="Loading" />
+            <Label>size={s}</Label>
+          </Box>
+        ))}
+      </Box>
+    </Section>
+  );
+}
+
 function App() {
   const [renderCount, setRenderCount] = useState(0);
   return (
@@ -710,6 +726,7 @@ function App() {
         <HeadingGallery />
         <VisuallyHiddenGallery />
         <IconGallery />
+        <SpinnerGallery />
       </Box>
     </ThemeProvider>
   );

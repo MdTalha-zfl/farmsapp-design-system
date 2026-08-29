@@ -27,7 +27,13 @@
       "primary": { "$value": "{color.brand-dark.9}", "$type": "color" },
       "primary-hover": { "$value": "{color.brand-dark.10}", "$type": "color" },
       "primary-active": { "$value": "{color.brand-dark.10}", "$type": "color" },
-      "primary-disabled": { "$value": "{color.neutral-dark.6}", "$type": "color" }
+      "primary-disabled": { "$value": "{color.neutral-dark.6}", "$type": "color" },
+      "secondary": { "$value": "{color.neutral-dark.4}", "$type": "color" },
+      "secondary-hover": { "$value": "{color.neutral-dark.5}", "$type": "color" },
+      "secondary-active": { "$value": "{color.action.secondary-hover}", "$type": "color" },
+      "secondary-disabled": { "$value": "{color.action.primary-disabled}", "$type": "color" },
+      "tertiary-hover": { "$value": "{color.neutral-dark.3}", "$type": "color" },
+      "tertiary-active": { "$value": "{color.action.tertiary-hover}", "$type": "color" }
     },
     "feedback": {
       "success": { "$value": "{color.success-dark.9}", "$type": "color" },
