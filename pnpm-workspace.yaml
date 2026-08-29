@@ -15,6 +15,14 @@ packages:
 overrides:
   react: 18.3.1
   react-dom: 18.3.1
+  # NativePlayground (React Native 0.87.1) needs React 19, not the web apps'
+  # pinned 18.3.1 above -- confirmed directly: the blanket override was
+  # force-downgrading it, the exact class of react-instance-mismatch bug the
+  # override above exists to prevent, just triggered from the RN side this
+  # time. Scoped exceptions, not a workspace-wide bump, so the web apps keep
+  # their own single-react-instance guarantee.
+  NativePlayground>react: 19.2.3
+  NativePlayground>react-test-renderer: 19.2.3
 allowBuilds:
   '@bundled-es-modules/glob': true
   esbuild: true
