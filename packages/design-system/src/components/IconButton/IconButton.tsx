@@ -1,5 +1,6 @@
 import { forwardRef, type MouseEvent } from "react";
 import type { ButtonIconComponent } from "../Button/BaseButton";
+import { resolveBoxClassNames, type MarginProps } from "../Box/Box";
 
 /**
  * IconButton — genuinely separate from BaseButton/Button, matching Blade's
@@ -18,7 +19,7 @@ import type { ButtonIconComponent } from "../Button/BaseButton";
 export type IconButtonEmphasis = "subtle" | "intense" | "moderate";
 export type IconButtonSize = "small" | "medium" | "large";
 
-export interface IconButtonProps {
+export interface IconButtonProps extends MarginProps {
   icon: ButtonIconComponent;
   /** Defaults to "medium". Maps 1:1 to the rendered Icon's own `size` prop
    * — no indirection map like Button's, since there's no text label
@@ -59,7 +60,17 @@ function warnIfLargeWithContainer(size: IconButtonSize, wantsContainer: boolean)
 }
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  { icon: Icon, size = "medium", emphasis = "intense", isHighlighted = false, accessibilityLabel, isDisabled = false, onClick, className },
+  {
+    icon: Icon,
+    size = "medium",
+    emphasis = "intense",
+    isHighlighted = false,
+    accessibilityLabel,
+    isDisabled = false,
+    onClick,
+    className,
+    ...marginProps
+  },
   ref,
 ) {
   const wantsContainer = isHighlighted || emphasis === "moderate";
@@ -72,6 +83,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
     hasContainer && "ds-icon-button--has-container",
     hasContainer && `ds-icon-button--size-${size}`,
     isHighlighted && "ds-icon-button--highlighted",
+    ...resolveBoxClassNames(marginProps),
     className,
   ]
     .filter(Boolean)

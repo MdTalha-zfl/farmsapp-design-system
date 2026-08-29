@@ -17,6 +17,7 @@ export {
   type BorderColor,
   type Radius,
   type BorderWidth,
+  type MarginProps,
 } from "./components/Box/Box";
 export { Stack, type StackProps, type StackOwnProps } from "./components/Stack/Stack";
 export { Inline, type InlineProps, type InlineOwnProps } from "./components/Inline/Inline";
@@ -56,6 +57,13 @@ export {
   type IconButtonEmphasis,
   type IconButtonSize,
 } from "./components/IconButton/IconButton";
+export {
+  Badge,
+  type BadgeOwnProps,
+  type BadgeColor,
+  type BadgeEmphasis,
+  type BadgeSize,
+} from "./components/Badge/Badge";
 export type {
   LetterSpacingStep,
   TypographyLang,

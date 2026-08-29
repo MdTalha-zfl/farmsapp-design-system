@@ -196,6 +196,7 @@ const componentCssFiles = [
   "../src/components/Spinner/spinner.css",
   "../src/components/Button/button.css",
   "../src/components/IconButton/icon-button.css",
+  "../src/components/Badge/badge.css",
 ];
 const componentCss = componentCssFiles
   .map((path) => readFileSync(new URL(path, import.meta.url), "utf8"))

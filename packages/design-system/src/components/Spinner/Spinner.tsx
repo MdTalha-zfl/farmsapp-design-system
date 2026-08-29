@@ -1,4 +1,5 @@
 import { LoaderCircleIcon } from "@farmsapp/icons";
+import { resolveBoxClassNames, type MarginProps } from "../Box/Box";
 
 /**
  * Spinner — a Phase 7 prerequisite pulled in specifically for Button's
@@ -27,16 +28,23 @@ import { LoaderCircleIcon } from "@farmsapp/icons";
 
 export type SpinnerSize = "small" | "medium" | "large";
 
-export interface SpinnerProps {
+export interface SpinnerProps extends MarginProps {
   /** Default "medium" — matches @farmsapp/icons' IconSize scale exactly. */
   size?: SpinnerSize;
   /** Required, no default — matches Blade's real BaseSpinner. */
   accessibilityLabel: string;
 }
 
-export function Spinner({ size = "medium", accessibilityLabel }: SpinnerProps) {
+// Blade's own real BaseSpinner wraps its output in an extra BaseBox and
+// spreads getStyledProps(styledProps) onto it, for exactly this reason —
+// confirmed directly from source. See decisions/decision-margin-props-shared-across-components.md
+// for why this project reuses resolveBoxClassNames directly on the existing
+// root element instead of introducing a second wrapper element the way
+// Blade's runtime-styled Box requires.
+export function Spinner({ size = "medium", accessibilityLabel, ...marginProps }: SpinnerProps) {
+  const classes = ["ds-spinner", ...resolveBoxClassNames(marginProps)].join(" ");
   return (
-    <span role="status" aria-label={accessibilityLabel} className="ds-spinner">
+    <span role="status" aria-label={accessibilityLabel} className={classes}>
       <LoaderCircleIcon size={size} className="ds-spinner__icon" />
     </span>
   );

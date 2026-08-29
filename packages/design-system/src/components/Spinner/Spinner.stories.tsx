@@ -37,3 +37,9 @@ export const Sizes: Story = {
     </Inline>
   ),
 };
+
+/** Spinner accepts the margin family directly — no wrapper `Box` needed.
+ * See decisions/decision-margin-props-shared-across-components.md. */
+export const WithMargin: Story = {
+  render: () => <Spinner accessibilityLabel="Loading" marginLeft="6" />,
+};

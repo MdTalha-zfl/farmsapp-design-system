@@ -73,6 +73,31 @@ export interface BoxOwnProps {
   unsafeStyle?: CSSProperties;
 }
 
+// The curated subset of BoxOwnProps a fixed-CSS "leaf" component (Button,
+// IconButton, Spinner, Badge — hand-written component CSS, not an atomic
+// Box-prop consumer) can accept without adopting Box's entire prop surface.
+// Matches Blade's own real, deliberately narrow `StyledPropsBlade` in spirit
+// (confirmed directly from Blade's source: Badge/BaseSpinner/BaseButton all
+// intersect it and spread `getStyledProps(props)` onto their own root
+// `BaseBox`) — but scoped to just the margin family here, not Blade's full
+// ~20-prop list (position, zIndex, grid*, flexWrap, visibility). No cited
+// need for those yet on this project's Button/IconButton/Spinner/Badge —
+// same "don't build ahead of a real consumer" discipline applied everywhere
+// else in this codebase. Extend later if a real need shows up.
+//
+// No wrapper element needed to apply it, unlike Blade: Blade's Box is a
+// runtime styled-components layer that needs a real DOM node to attach a
+// computed style object to, so it wraps in a second BaseBox. This project's
+// Box only ever resolves to class-name strings (decisions/decision-box-atomic-css-over-inline-styles.md),
+// so margin classes can be concatenated straight onto the same root element
+// a component already renders — reusing `resolveBoxClassNames` below, the
+// exact seam its own doc comment anticipated. See
+// decisions/decision-margin-props-shared-across-components.md.
+export type MarginProps = Pick<
+  BoxOwnProps,
+  "margin" | "marginTop" | "marginRight" | "marginBottom" | "marginLeft" | "marginX" | "marginY"
+>;
+
 const PROP_CONFIG = new Map<string, { prefix: string; responsive: boolean; varCategory?: string }>();
 for (const [key, cfg] of Object.entries(SPACE_PROPS)) PROP_CONFIG.set(key, { prefix: cfg.prefix, responsive: true });
 for (const [key, cfg] of Object.entries(KEYWORD_PROPS)) PROP_CONFIG.set(key, { prefix: cfg.prefix, responsive: true });
