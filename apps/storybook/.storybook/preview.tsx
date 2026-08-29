@@ -2,6 +2,7 @@ import type { Preview, Decorator } from "@storybook/react-vite";
 import { ThemeProvider } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
 import "@farmsapp/design-system/css";
+import "@farmsapp/icons/css";
 
 /**
  * Theme/brand switching mirrors how ThemeProvider actually works in a real
