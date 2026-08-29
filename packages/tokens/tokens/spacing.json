@@ -2,16 +2,16 @@
   "space": {
     "0": { "$value": "0px", "$type": "dimension" },
     "0-5": { "$value": "4px", "$type": "dimension", "$description": "Half-step, for fine-grained cases like icon padding." },
-    "1": { "$value": "8px", "$type": "dimension" },
-    "2": { "$value": "16px", "$type": "dimension" },
-    "3": { "$value": "24px", "$type": "dimension" },
-    "4": { "$value": "32px", "$type": "dimension" },
-    "5": { "$value": "40px", "$type": "dimension" },
-    "6": { "$value": "48px", "$type": "dimension" },
-    "8": { "$value": "64px", "$type": "dimension" },
-    "10": { "$value": "80px", "$type": "dimension" },
-    "12": { "$value": "96px", "$type": "dimension" },
-    "16": { "$value": "128px", "$type": "dimension" }
+    "1": { "$value": "4px", "$type": "dimension" },
+    "2": { "$value": "8px", "$type": "dimension" },
+    "3": { "$value": "12px", "$type": "dimension" },
+    "4": { "$value": "16px", "$type": "dimension" },
+    "5": { "$value": "20px", "$type": "dimension" },
+    "6": { "$value": "24px", "$type": "dimension" },
+    "8": { "$value": "28px", "$type": "dimension" },
+    "10": { "$value": "34px", "$type": "dimension" },
+    "12": { "$value": "36px", "$type": "dimension" },
+    "16": { "$value": "42px", "$type": "dimension" }
   },
   "radius": {
     "none": { "$value": "0px", "$type": "dimension" },
