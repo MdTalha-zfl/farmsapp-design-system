@@ -1,0 +1,5 @@
+@layer components {
+  .ds-form-hint {
+    margin-top: var(--ds-space-1);
+  }
+}

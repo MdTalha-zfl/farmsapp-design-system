@@ -197,6 +197,10 @@ const componentCssFiles = [
   "../src/components/Button/button.css",
   "../src/components/IconButton/icon-button.css",
   "../src/components/Badge/badge.css",
+  "../src/components/Divider/divider.css",
+  "../src/components/FormLabel/formLabel.css",
+  "../src/components/FormHint/formHint.css",
+  "../src/components/Input/input.css",
 ];
 const componentCss = componentCssFiles
   .map((path) => readFileSync(new URL(path, import.meta.url), "utf8"))

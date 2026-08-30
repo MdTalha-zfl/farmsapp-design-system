@@ -1,0 +1,33 @@
+@layer components {
+  .ds-form-label-row {
+    width: 100%;
+  }
+
+  .ds-form-label {
+    display: inline-flex;
+    align-items: baseline;
+    cursor: pointer;
+  }
+
+  .ds-form-label__necessity {
+    white-space: nowrap;
+  }
+
+  .ds-form-label__suffix,
+  .ds-form-label__trailing {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* "left" label positioning is a desktop-only affordance (spec: falls back
+     to "top" on mobile) — the row itself always stacks; a field wrapper
+     that wants the true side-by-side layout opts in at its own breakpoint
+     via this class rather than this component reimplementing a responsive
+     grid it has no page-layout context to justify. */
+  @media (min-width: 768px) {
+    .ds-form-label-row--position-left {
+      width: auto;
+      flex-shrink: 0;
+    }
+  }
+}
