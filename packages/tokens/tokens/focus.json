@@ -1,12 +1,12 @@
 {
   "focusRing": {
     "width": {
-      "$value": "2px",
+      "$value": "1px",
       "$type": "dimension",
       "$description": "Clearly visible per WCAG 2.2's focus-appearance guidance — not a 1px hairline."
     },
     "offset": {
-      "$value": "2px",
+      "$value": "0px",
       "$type": "dimension",
       "$description": "Gap between the ring and the element it outlines, for visibility against varied backgrounds."
     }
