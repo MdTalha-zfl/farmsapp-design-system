@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactElement } from "react";
-import type { TestID } from "src/utils/types";
+import type { TestID } from "../../utils/types";
 import { resolveBoxClassNames, type MarginProps } from "../Box/Box";
 
 export type DividerOrientation = "horizontal" | "vertical";
