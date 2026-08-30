@@ -64,6 +64,14 @@ export {
   type BadgeEmphasis,
   type BadgeSize,
 } from "./components/Badge/Badge";
+export {
+  Divider,
+  type DividerOwnProps,
+  type DividerOrientation,
+  type DividerStyle,
+  type DividerVariant,
+  type DividerThickness,
+} from "./components/Divider/Divider";
 export type {
   LetterSpacingStep,
   TypographyLang,

@@ -1,0 +1,74 @@
+@layer components {
+  .ds-divider {
+    flex-shrink: 0;
+    border: none;
+  }
+
+  .ds-divider--orientation-horizontal {
+    width: 100%;
+    border-bottom-style: solid;
+  }
+  .ds-divider--orientation-vertical {
+    height: 100%;
+    border-right-style: solid;
+  }
+
+  .ds-divider--style-solid {
+    border-bottom-style: solid;
+    border-right-style: solid;
+  }
+  .ds-divider--style-dashed {
+    border-bottom-style: dashed;
+    border-right-style: dashed;
+  }
+
+  /* Thickness is expressed on whichever side is the "drawn" edge for the
+     current orientation — horizontal draws its bottom edge, vertical draws
+     its right edge — so the same thickness/style classes work for both. */
+  .ds-divider--orientation-horizontal.ds-divider--thickness-thinner {
+    border-bottom-width: var(--ds-border-width-thin);
+  }
+  .ds-divider--orientation-horizontal.ds-divider--thickness-thin {
+    border-bottom-width: var(--ds-border-width-thin);
+  }
+  .ds-divider--orientation-horizontal.ds-divider--thickness-thick {
+    border-bottom-width: var(--ds-border-width-thick);
+  }
+  .ds-divider--orientation-horizontal.ds-divider--thickness-thicker {
+    border-bottom-width: var(--ds-border-width-heavy);
+  }
+
+  .ds-divider--orientation-vertical.ds-divider--thickness-thinner {
+    border-right-width: var(--ds-border-width-thin);
+  }
+  .ds-divider--orientation-vertical.ds-divider--thickness-thin {
+    border-right-width: var(--ds-border-width-thin);
+  }
+  .ds-divider--orientation-vertical.ds-divider--thickness-thick {
+    border-right-width: var(--ds-border-width-thick);
+  }
+  .ds-divider--orientation-vertical.ds-divider--thickness-thicker {
+    border-right-width: var(--ds-border-width-heavy);
+  }
+
+  .ds-divider--variant-normal {
+    border-color: var(--ds-color-border-default);
+  }
+  .ds-divider--variant-subtle {
+    border-color: var(--ds-color-border-subtle);
+  }
+  .ds-divider--variant-muted {
+    border-color: var(--ds-color-border-subtle);
+    opacity: 0.6;
+  }
+}
+
+/* Windows High Contrast Mode / forced-colors: a border-color driven purely
+   by opacity (variant-muted) can vanish entirely once colors are forced to
+   the system palette — pin a real, always-visible border there instead. */
+@media (forced-colors: active) {
+  .ds-divider {
+    border-color: CanvasText !important;
+    opacity: 1 !important;
+  }
+}
