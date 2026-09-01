@@ -1,6 +1,6 @@
 {
   "name": "@farmsapp/storybook",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Storybook catalog for @farmsapp/design-system components and @farmsapp/tokens — the visual reference for the design system.",
   "type": "module",

@@ -1,4 +1,4 @@
-@layer components {
+@layer ds-components {
   .ds-divider {
     flex-shrink: 0;
     border: none;

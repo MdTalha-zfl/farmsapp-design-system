@@ -216,7 +216,7 @@ const output = `/**
  * ${rules.length} base rules, ${Object.keys(breakpoints).length} responsive breakpoint tiers.
  */
 
-@layer base, tokens.component, components;
+@layer ds-base, tokens.component, ds-components;
 
 ${baseCss}
 @layer tokens.component {

@@ -19,7 +19,7 @@
  * form elements) — nothing in this codebase needs that yet, and adding it
  * speculatively is exactly the kind of scope this project avoids.
  */
-@layer base {
+@layer ds-base {
   *,
   *::before,
   *::after {

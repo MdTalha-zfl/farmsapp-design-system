@@ -1,5 +1,11 @@
 # @farmsapp/design-system
 
+## 0.1.1
+
+### Patch Changes
+
+- Fix: rename internal CSS layers from `base`/`components` to `ds-base`/`ds-components` to avoid colliding with Tailwind CSS's reserved layer names, which was causing all component styles to be silently dropped in Tailwind-based consuming apps
+
 ## 0.1.0
 
 ### Minor Changes
