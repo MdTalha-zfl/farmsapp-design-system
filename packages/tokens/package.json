@@ -1,6 +1,6 @@
 {
   "name": "@farmsapp/tokens",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Primitive and semantic design tokens — Style Dictionary source, compiled to CSS custom properties and typed TS constants. See System Blueprint §05.",
   "type": "module",
   "sideEffects": false,
@@ -12,7 +12,9 @@
     "./css": "./build/css/tokens.css",
     "./package.json": "./package.json"
   },
-  "files": ["build"],
+  "files": [
+    "build"
+  ],
   "publishConfig": {
     "access": "public"
   },

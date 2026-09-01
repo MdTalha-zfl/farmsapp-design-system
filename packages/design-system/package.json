@@ -1,9 +1,11 @@
 {
   "name": "@farmsapp/design-system",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Box, Stack, Inline, Container, Text, Heading, Icon, VisuallyHidden, Button, Input, Dialog, Menu, and the rest of the component library — the single published package, merged from the former packages/primitives and packages/components. See decisions/decision-merge-components-into-design-system.md.",
   "type": "module",
-  "sideEffects": ["./build/css/atomic.css"],
+  "sideEffects": [
+    "./build/css/atomic.css"
+  ],
   "exports": {
     ".": {
       "types": "./build/index.d.ts",
@@ -12,7 +14,9 @@
     "./css": "./build/css/atomic.css",
     "./package.json": "./package.json"
   },
-  "files": ["build"],
+  "files": [
+    "build"
+  ],
   "publishConfig": {
     "access": "public"
   },
