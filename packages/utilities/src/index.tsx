@@ -14,3 +14,4 @@ export {
 } from "./useControllableState";
 export { useCallbackRef } from "./useCallbackRef";
 export { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+export { useMergeRefs } from "./useMergeRefs";

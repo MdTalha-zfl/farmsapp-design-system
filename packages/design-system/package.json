@@ -29,7 +29,8 @@
   "dependencies": {
     "@farmsapp/icons": "workspace:*",
     "@farmsapp/tokens": "workspace:*",
-    "@farmsapp/utilities": "workspace:*"
+    "@farmsapp/utilities": "workspace:*",
+    "@floating-ui/react": "^0.27.20"
   },
   "peerDependencies": {
     "react": "^18 || ^19",

@@ -1,0 +1,21 @@
+@layer ds-components {
+  .ds-tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-0-5);
+    background-color: var(--ds-color-text-primary);
+    color: var(--ds-color-text-inverse);
+    padding: var(--ds-space-1) var(--ds-space-2);
+    border-radius: var(--ds-radius-sm);
+    font: var(--ds-text-body-sm);
+    pointer-events: none;
+  }
+
+  .ds-tooltip__title {
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .ds-tooltip-interactive-wrapper {
+    display: inline-block;
+  }
+}

@@ -201,6 +201,7 @@ const componentCssFiles = [
   "../src/components/FormLabel/formLabel.css",
   "../src/components/FormHint/formHint.css",
   "../src/components/Input/input.css",
+  "../src/components/Tooltip/tooltip.css",
 ];
 const componentCss = componentCssFiles
   .map((path) => readFileSync(new URL(path, import.meta.url), "utf8"))

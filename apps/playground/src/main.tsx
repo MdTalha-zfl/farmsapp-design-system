@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, type TextCaptionOwnProps } from "@farmsapp/design-system";
+import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, type TextCaptionOwnProps } from "@farmsapp/design-system";
 import { XIcon, ChevronDownIcon, CheckIcon, LoaderCircleIcon, AlertCircleIcon, EyeIcon, EyeOffIcon, SearchIcon } from "@farmsapp/icons";
 import { ThemeProvider, useTheme } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
@@ -716,7 +716,7 @@ function ButtonGallery() {
       <Box display="flex" flexDirection="column" gap="2" marginTop="3">
         <Label>icon + iconPosition (left/right)</Label>
         <Box display="flex" gap="2" flexWrap="wrap">
-          <Button icon={SearchIcon} iconPosition="left">
+          <Button aria-controls='id' icon={SearchIcon} iconPosition="left">
             Search
           </Button>
           <Button icon={ChevronDownIcon} iconPosition="right" variant="secondary">
@@ -812,6 +812,70 @@ function IconButtonGallery() {
   );
 }
 
+function TooltipGallery() {
+  const [controlledOpen, setControlledOpen] = useState(false);
+  return (
+    <Section title="Tooltip — floating-ui, aria-describedby, real useDismiss (Escape/click-outside)">
+      <Box display="flex" flexDirection="column" gap="2">
+        <Label>Hover/focus a real Button trigger (300ms open delay, 100ms close delay, immediate on keyboard focus)</Label>
+        <Box display="flex" gap="4" flexWrap="wrap">
+          <Tooltip content="Hello world">
+            <Button variant="secondary">Hover or Tab to me</Button>
+          </Tooltip>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>title + content, placement=&quot;bottom-start&quot;</Label>
+        <Box display="flex" gap="4" flexWrap="wrap">
+          <Tooltip title="Refunds" content="Refunds typically take 5-7 business days to process." placement="bottom-start">
+            <Button variant="tertiary">Titled tooltip</Button>
+          </Tooltip>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>IconButton trigger — aria-describedby composes with IconButton&apos;s own required accessibilityLabel (check accessibility tree: both name AND description present)</Label>
+        <Box display="flex" gap="4" flexWrap="wrap">
+          <Tooltip content="Search records" placement="top">
+            <IconButton icon={SearchIcon} accessibilityLabel="Search records action" />
+          </Tooltip>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Non-interactive trigger (plain Icon) — requires TooltipInteractiveWrapper</Label>
+        <Box display="flex" gap="4" flexWrap="wrap" alignItems="center">
+          <Tooltip content="This field is required">
+            <TooltipInteractiveWrapper>
+              <AlertCircleIcon color="warning" />
+            </TooltipInteractiveWrapper>
+          </Tooltip>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Controlled (isOpen/onOpenChange) — external toggle button</Label>
+        <Box display="flex" gap="2" alignItems="center">
+          <Tooltip content="Controlled tooltip" isOpen={controlledOpen} onOpenChange={setControlledOpen}>
+            <Button variant="primary">Controlled trigger</Button>
+          </Tooltip>
+          {/* Two explicit buttons, not one functional-updater toggle — a
+              functional toggle here races with useDismiss's own real
+              outsidePress close (a native pointerdown listener that fires
+              before React's synthetic onClick): clicking this button while
+              the tooltip is open is itself an "outside click", so dismiss
+              closes it first, then the toggle's (v) => !v update — queued
+              in the same batch — flips it back open, netting no visible
+              change. Setting state explicitly sidesteps the race entirely. */}
+          <Button size="small" variant="tertiary" onClick={() => setControlledOpen(true)}>
+            Open externally
+          </Button>
+          <Button size="small" variant="tertiary" onClick={() => setControlledOpen(false)}>
+            Close externally
+          </Button>
+        </Box>
+      </Box>
+    </Section>
+  );
+}
+
 function App() {
   const [renderCount, setRenderCount] = useState(0);
   return (
@@ -858,6 +922,7 @@ function App() {
         <SpinnerGallery />
         <ButtonGallery />
         <IconButtonGallery />
+        <TooltipGallery />
       </Box>
     </ThemeProvider>
   );

@@ -80,6 +80,8 @@ export { PasswordInput, type PasswordInputProps } from "./components/Input/Passw
 export { SearchInput, type SearchInputProps } from "./components/Input/SearchInput/SearchInput";
 export { TextArea, type TextAreaProps } from "./components/Input/TextArea/TextArea";
 export type { InputSize, ValidationState, NecessityIndicator, FormInputLabelProps, FormInputValidationProps } from "./components/Input/types";
+export { Tooltip, type TooltipProps, type TooltipPlacement } from "./components/Tooltip/Tooltip";
+export { TooltipInteractiveWrapper, type TooltipInteractiveWrapperProps } from "./components/Tooltip/TooltipInteractiveWrapper";
 export type {
   LetterSpacingStep,
   TypographyLang,
