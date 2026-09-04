@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, type TextCaptionOwnProps } from "@farmsapp/design-system";
+import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, Tabs, TabList, TabItem, TabPanel, type TextCaptionOwnProps } from "@farmsapp/design-system";
 import { XIcon, ChevronDownIcon, CheckIcon, LoaderCircleIcon, AlertCircleIcon, EyeIcon, EyeOffIcon, SearchIcon } from "@farmsapp/icons";
 import { ThemeProvider, useTheme } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
@@ -876,6 +876,117 @@ function TooltipGallery() {
   );
 }
 
+function TabsGallery() {
+  const [lazyMounted, setLazyMounted] = useState<string[]>([]);
+  return (
+    <Section title="Tabs — Composite-driven keyboard nav, animated indicator, isLazy panels">
+      <Box display="flex" flexDirection="column" gap="2">
+        <Label>variant=&quot;bordered&quot; (default) — arrow keys/Home/End to navigate, click or focus to select</Label>
+        <Tabs defaultValue="account">
+          <TabList>
+            <TabItem value="account">Account</TabItem>
+            <TabItem value="security">Security</TabItem>
+            <TabItem value="notifications" isDisabled>
+              Notifications (disabled)
+            </TabItem>
+            <TabItem value="billing">Billing</TabItem>
+          </TabList>
+          <TabPanel value="account">
+            <Text as="p" padding="2">Account settings panel.</Text>
+          </TabPanel>
+          <TabPanel value="security">
+            <Text as="p" padding="2">Security settings panel.</Text>
+          </TabPanel>
+          <TabPanel value="notifications">
+            <Text as="p" padding="2">Notifications settings panel.</Text>
+          </TabPanel>
+          <TabPanel value="billing">
+            <Text as="p" padding="2">Billing settings panel.</Text>
+          </TabPanel>
+        </Tabs>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>variant=&quot;filled&quot;, icon + label tabs, isFullWidthTabItem</Label>
+        <Tabs defaultValue="search" variant="filled" isFullWidthTabItem>
+          <TabList>
+            <TabItem value="search" leading={SearchIcon}>
+              Search
+            </TabItem>
+            <TabItem value="verify" leading={CheckIcon}>
+              Verify
+            </TabItem>
+          </TabList>
+          <TabPanel value="search">
+            <Text as="p" padding="2">Search panel.</Text>
+          </TabPanel>
+          <TabPanel value="verify">
+            <Text as="p" padding="2">Verify panel.</Text>
+          </TabPanel>
+        </Tabs>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>variant=&quot;borderless&quot;, orientation=&quot;vertical&quot;</Label>
+        <Box display="flex">
+          <Tabs defaultValue="one" variant="borderless" orientation="vertical">
+            <TabList>
+              <TabItem value="one">One</TabItem>
+              <TabItem value="two">Two</TabItem>
+              <TabItem value="three">Three</TabItem>
+            </TabList>
+            <Box marginLeft="4">
+              <TabPanel value="one">
+                <Text as="p">Vertical panel one.</Text>
+              </TabPanel>
+              <TabPanel value="two">
+                <Text as="p">Vertical panel two.</Text>
+              </TabPanel>
+              <TabPanel value="three">
+                <Text as="p">Vertical panel three.</Text>
+              </TabPanel>
+            </Box>
+          </Tabs>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>isLazy — panel children only mount after first selection (mounted so far: {lazyMounted.join(", ") || "none"})</Label>
+        <Tabs
+          defaultValue="lazy-a"
+          isLazy
+          onChange={(value) => setLazyMounted((prev) => (prev.includes(value) ? prev : [...prev, value]))}
+        >
+          <TabList>
+            <TabItem value="lazy-a">Lazy A</TabItem>
+            <TabItem value="lazy-b">Lazy B</TabItem>
+          </TabList>
+          <TabPanel value="lazy-a">
+            <Text as="p" padding="2">Lazy A mounted.</Text>
+          </TabPanel>
+          <TabPanel value="lazy-b">
+            <Text as="p" padding="2">Lazy B mounted.</Text>
+          </TabPanel>
+        </Tabs>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Link-as-tab (real &lt;a href&gt;, still keyboard-navigable via Composite)</Label>
+        <Tabs defaultValue="ext">
+          <TabList>
+            <TabItem value="ext" href="#tabs-gallery">
+              External-style link tab
+            </TabItem>
+            <TabItem value="normal">Normal tab</TabItem>
+          </TabList>
+          <TabPanel value="ext">
+            <Text as="p" padding="2">Reached via link-as-tab.</Text>
+          </TabPanel>
+          <TabPanel value="normal">
+            <Text as="p" padding="2">Normal panel.</Text>
+          </TabPanel>
+        </Tabs>
+      </Box>
+    </Section>
+  );
+}
+
 function App() {
   const [renderCount, setRenderCount] = useState(0);
   return (
@@ -923,6 +1034,7 @@ function App() {
         <ButtonGallery />
         <IconButtonGallery />
         <TooltipGallery />
+        <TabsGallery />
       </Box>
     </ThemeProvider>
   );
