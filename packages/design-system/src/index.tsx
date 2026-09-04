@@ -82,6 +82,10 @@ export { TextArea, type TextAreaProps } from "./components/Input/TextArea/TextAr
 export type { InputSize, ValidationState, NecessityIndicator, FormInputLabelProps, FormInputValidationProps } from "./components/Input/types";
 export { Tooltip, type TooltipProps, type TooltipPlacement } from "./components/Tooltip/Tooltip";
 export { TooltipInteractiveWrapper, type TooltipInteractiveWrapperProps } from "./components/Tooltip/TooltipInteractiveWrapper";
+export { Tabs, type TabsProps, type TabsOrientation, type TabsSize, type TabsVariant } from "./components/Tabs/Tabs";
+export { TabList, type TabListProps } from "./components/Tabs/TabList";
+export { TabItem, type TabItemProps, type TabItemIconComponent } from "./components/Tabs/TabItem";
+export { TabPanel, type TabPanelProps } from "./components/Tabs/TabPanel";
 export type {
   LetterSpacingStep,
   TypographyLang,
