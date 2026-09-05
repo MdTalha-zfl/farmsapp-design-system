@@ -13,9 +13,11 @@
       background-color var(--ds-duration-fast) var(--ds-easing-standard),
       color var(--ds-duration-fast) var(--ds-easing-standard);
   }
+
   .ds-icon-button--emphasis-subtle {
     color: var(--ds-color-text-secondary);
   }
+
   .ds-icon-button--emphasis-moderate {
     color: var(--ds-color-text-primary);
   }
@@ -48,6 +50,7 @@
     width: var(--ds-space-3);
     height: var(--ds-space-3);
   }
+
   .ds-icon-button--has-container.ds-icon-button--size-medium {
     width: var(--ds-space-4);
     height: var(--ds-space-4);
@@ -56,6 +59,7 @@
   .ds-icon-button--emphasis-moderate.ds-icon-button--has-container {
     background-color: var(--ds-color-action-tertiary-hover);
   }
+
   .ds-icon-button--highlighted.ds-icon-button--has-container:hover,
   .ds-icon-button--highlighted.ds-icon-button--has-container:focus-visible {
     background-color: var(--ds-color-action-secondary);

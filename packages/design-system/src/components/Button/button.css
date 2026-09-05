@@ -33,13 +33,16 @@
     background-color: var(--ds-color-action-primary);
     color: var(--ds-color-text-inverse);
   }
+
   .ds-button--variant-primary:hover {
     background-color: var(--ds-color-action-primary-hover);
   }
+
   .ds-button--variant-primary:active,
   .ds-button--variant-primary:focus-visible {
     background-color: var(--ds-color-action-primary-active);
   }
+
   .ds-button--variant-primary:disabled {
     background-color: var(--ds-color-action-primary-disabled);
     color: var(--ds-color-text-disabled);
@@ -50,13 +53,16 @@
     background-color: var(--ds-color-action-secondary);
     color: var(--ds-color-text-primary);
   }
+
   .ds-button--variant-secondary:hover {
     background-color: var(--ds-color-action-secondary-hover);
   }
+
   .ds-button--variant-secondary:active,
   .ds-button--variant-secondary:focus-visible {
     background-color: var(--ds-color-action-secondary-active);
   }
+
   .ds-button--variant-secondary:disabled {
     background-color: var(--ds-color-action-secondary-disabled);
     color: var(--ds-color-text-disabled);
@@ -68,13 +74,16 @@
     border-color: var(--ds-color-border-default);
     color: var(--ds-color-text-primary);
   }
+
   .ds-button--variant-tertiary:hover {
     background-color: var(--ds-color-action-tertiary-hover);
   }
+
   .ds-button--variant-tertiary:active,
   .ds-button--variant-tertiary:focus-visible {
     background-color: var(--ds-color-action-tertiary-active);
   }
+
   .ds-button--variant-tertiary:disabled {
     border-color: var(--ds-color-border-subtle);
     color: var(--ds-color-text-disabled);
@@ -85,29 +94,36 @@
     background-color: var(--ds-color-action-negative);
     color: var(--ds-color-text-inverse);
   }
+
   .ds-button--variant-negative:hover {
     background-color: var(--ds-color-action-negative-hover);
   }
+
   .ds-button--variant-negative:active,
   .ds-button--variant-negative:focus-visible {
     background-color: var(--ds-color-action-negative-active);
   }
+
   .ds-button--variant-negative:disabled {
     border-color: var(--ds-color-border-subtle);
     color: var(--ds-color-text-disabled);
   }
+
   .ds-button--size-xsmall {
     min-height: 26px;
     padding: 0 var(--ds-space-2);
   }
+
   .ds-button--size-small {
     min-height: 30px;
     padding: 0 var(--ds-space-2);
   }
+
   .ds-button--size-medium {
     min-height: 32px;
     padding: 0 var(--ds-space-3);
   }
+
   .ds-button--size-large {
     min-height: 36px;
     padding: 0 var(--ds-space-4);
@@ -120,11 +136,13 @@
     min-width: 32px;
     padding: 0;
   }
+
   .ds-button--icon-only.ds-button--size-medium {
     width: 36px;
     min-width: 36px;
     padding: 0;
   }
+
   .ds-button--icon-only.ds-button--size-large {
     width: 48px;
     min-width: 48px;
@@ -141,9 +159,11 @@
     justify-content: center;
     gap: var(--ds-space-1);
   }
+
   .ds-button__content--hidden {
     opacity: 0;
   }
+
   .ds-button__spinner-overlay {
     position: absolute;
     inset: 0;

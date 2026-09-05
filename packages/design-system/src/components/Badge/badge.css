@@ -11,6 +11,7 @@
   .ds-badge--shape-rounded {
     border-radius: var(--ds-radius-full);
   }
+
   .ds-badge--shape-square {
     border-radius: var(--ds-radius-sm);
   }
@@ -20,11 +21,13 @@
     padding: 0 var(--ds-space-2);
     gap: var(--ds-space-1);
   }
+
   .ds-badge--size-medium {
     min-height: var(--ds-space-5);
     padding: 0 var(--ds-space-2);
     gap: var(--ds-space-2);
   }
+
   .ds-badge--size-large {
     min-height: var(--ds-space-6);
     padding: 0 var(--ds-space-3);
@@ -36,6 +39,7 @@
     background-color: var(--ds-color-feedback-success-subtle);
     color: var(--ds-color-text-success);
   }
+
   .ds-badge--color-success.ds-badge--emphasis-intense {
     background-color: var(--ds-color-feedback-success);
     color: var(--ds-color-text-inverse);
@@ -46,6 +50,7 @@
     background-color: var(--ds-color-feedback-warning-subtle);
     color: var(--ds-color-text-warning);
   }
+
   .ds-badge--color-warning.ds-badge--emphasis-intense {
     background-color: var(--ds-color-feedback-warning);
     color: var(--ds-color-text-inverse);
@@ -56,6 +61,7 @@
     background-color: var(--ds-color-feedback-danger-subtle);
     color: var(--ds-color-text-danger);
   }
+
   .ds-badge--color-danger.ds-badge--emphasis-intense {
     background-color: var(--ds-color-feedback-danger);
     color: var(--ds-color-text-inverse);

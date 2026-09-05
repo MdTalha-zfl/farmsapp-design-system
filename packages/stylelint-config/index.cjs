@@ -12,7 +12,18 @@ module.exports = {
     "scale-unlimited/declaration-strict-value": [
       ["/color$/", "background", "border-color", "box-shadow", "fill", "stroke"],
       {
-        ignoreValues: ["transparent", "currentColor", "inherit", "unset", "none"],
+        // CanvasText/Highlight are OS-owned forced-colors-mode system
+        // keywords (Windows High Contrast Mode), not literals that belong
+        // in the design token scale.
+        ignoreValues: [
+          "transparent",
+          "currentColor",
+          "inherit",
+          "unset",
+          "none",
+          "CanvasText",
+          "Highlight",
+        ],
         expandShorthand: true,
         disableFix: true,
       },
