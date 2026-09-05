@@ -24,7 +24,7 @@
      that wants the true side-by-side layout opts in at its own breakpoint
      via this class rather than this component reimplementing a responsive
      grid it has no page-layout context to justify. */
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .ds-form-label-row--position-left {
       width: auto;
       flex-shrink: 0;

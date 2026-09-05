@@ -33,36 +33,29 @@
     gap: var(--ds-space-1);
     padding: 0 var(--ds-space-2);
   }
+
   .ds-input-row--size-small {
     min-height: 32px;
     gap: var(--ds-space-1);
     padding: 0 var(--ds-space-2);
   }
+
   .ds-input-row--size-medium {
     min-height: 36px;
     gap: var(--ds-space-2);
     padding: 0 var(--ds-space-3);
   }
+
   .ds-input-row--size-large {
     min-height: 48px;
     gap: var(--ds-space-2);
     padding: 0 var(--ds-space-4);
   }
   
-  .ds-input-row--size-xsmall .ds-input,
-  .ds-input-row--size-small .ds-input {
-    font-size: 12px;
-  }
-  .ds-input-row--size-medium .ds-input {
-    font-size: 14px;
-  }
-  .ds-input-row--size-large .ds-input {
-    font-size: 18px;
-  }
-
   .ds-input-row--validation-error {
     border-color: var(--ds-color-feedback-danger);
   }
+
   .ds-input-row--validation-success {
     border-color: var(--ds-color-feedback-success);
   }
@@ -91,6 +84,19 @@
   .ds-input:disabled {
     color: var(--ds-color-text-disabled);
     cursor: not-allowed;
+  }
+
+  .ds-input-row--size-xsmall .ds-input,
+  .ds-input-row--size-small .ds-input {
+    font-size: 12px;
+  }
+
+  .ds-input-row--size-medium .ds-input {
+    font-size: 14px;
+  }
+
+  .ds-input-row--size-large .ds-input {
+    font-size: 18px;
   }
 
   textarea.ds-input {
@@ -123,6 +129,7 @@
   .ds-input-row:has(.ds-input:focus-visible) {
     outline: 2px solid Highlight;
   }
+
   .ds-input-row--validation-error {
     outline: 1px solid CanvasText;
   }
