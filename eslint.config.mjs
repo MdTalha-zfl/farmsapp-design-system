@@ -21,4 +21,10 @@ export default [
     files: ["**/scripts/**/*.mjs"],
     rules: { "no-console": "off" },
   },
+  {
+    // RN CLI config files — CommonJS by convention, not shipped app code.
+    // Same cascade caveat as above: needed here too for a root `eslint .`.
+    files: ["**/metro.config.js", "**/babel.config.js", "**/jest.config.js"],
+    rules: { "@typescript-eslint/no-require-imports": "off" },
+  },
 ];
