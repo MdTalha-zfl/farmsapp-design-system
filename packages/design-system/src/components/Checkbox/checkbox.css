@@ -1,0 +1,128 @@
+@layer ds-components {
+  .ds-checkbox {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--ds-space-1);
+  }
+
+  .ds-checkbox__box {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    border: var(--ds-border-width-thin) solid var(--ds-color-border-default);
+    border-radius: var(--ds-radius-sm);
+    background-color: transparent;
+    transition:
+      background-color var(--ds-duration-fast) var(--ds-easing-standard),
+      border-color var(--ds-duration-fast) var(--ds-easing-standard);
+  }
+
+  .ds-selector--size-small .ds-checkbox__box {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ds-selector--size-medium .ds-checkbox__box {
+    width: 20px;
+    height: 20px;
+  }
+
+  .ds-selector--size-large .ds-checkbox__box {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ds-selector--invalid .ds-checkbox__box {
+    border-color: var(--ds-color-feedback-danger);
+  }
+
+  .ds-selector--disabled .ds-checkbox__box {
+    border-color: var(--ds-color-border-subtle);
+  }
+
+  .ds-selector:hover .ds-checkbox__box {
+    border-color: var(--ds-color-border-strong);
+  }
+
+  .ds-checkbox__icon {
+    position: absolute;
+    opacity: 0;
+    transform: scale(0.5);
+    transition:
+      opacity var(--ds-duration-fast) var(--ds-easing-standard),
+      transform var(--ds-duration-fast) var(--ds-easing-standard);
+  }
+
+  /* Checked: real native :checked pseudo-class on the sibling input,
+     driving background/border/icon directly — no JS className toggling. */
+  .ds-selector__input:checked + .ds-checkbox__box {
+    background-color: var(--ds-color-action-primary);
+    border-color: var(--ds-color-action-primary);
+  }
+
+  .ds-selector__input:checked + .ds-checkbox__box .ds-checkbox__icon--check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Indeterminate: real :indeterminate pseudo-class, set via the DOM IDL
+     property (no HTML attribute exists for it) — see Checkbox.tsx's
+     useEffect. Takes precedence over :checked's icon (mutually exclusive
+     in practice: a native input can't be both checked and indeterminate
+     visually meaningfully, but the dash always wins if both are set). */
+  .ds-selector__input:indeterminate + .ds-checkbox__box {
+    background-color: var(--ds-color-action-primary);
+    border-color: var(--ds-color-action-primary);
+  }
+
+  .ds-selector__input:indeterminate + .ds-checkbox__box .ds-checkbox__icon--check {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  .ds-selector__input:indeterminate + .ds-checkbox__box .ds-checkbox__icon--indeterminate {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .ds-selector__input:focus-visible + .ds-checkbox__box {
+    outline: var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);
+    outline-offset: var(--ds-focus-ring-offset);
+  }
+
+  .ds-selector__input:disabled:checked + .ds-checkbox__box,
+  .ds-selector__input:disabled:indeterminate + .ds-checkbox__box {
+    background-color: var(--ds-color-action-primary-disabled);
+    border-color: var(--ds-color-action-primary-disabled);
+  }
+
+  .ds-checkbox-group {
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-2);
+  }
+
+  .ds-checkbox-group__legend {
+    padding: 0;
+  }
+
+  .ds-checkbox-group__items {
+    display: flex;
+    gap: var(--ds-space-2);
+  }
+
+  .ds-checkbox-group__items--vertical {
+    flex-direction: column;
+  }
+
+  .ds-checkbox-group__items--horizontal {
+    flex-flow: row wrap;
+    gap: var(--ds-space-4);
+  }
+}

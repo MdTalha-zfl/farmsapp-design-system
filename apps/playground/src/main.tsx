@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, Tabs, TabList, TabItem, TabPanel, type TextCaptionOwnProps } from "@farmsapp/design-system";
+import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, Tabs, TabList, TabItem, TabPanel, Checkbox, CheckboxGroup, type TextCaptionOwnProps } from "@farmsapp/design-system";
 import { XIcon, ChevronDownIcon, CheckIcon, LoaderCircleIcon, AlertCircleIcon, EyeIcon, EyeOffIcon, SearchIcon } from "@farmsapp/icons";
 import { ThemeProvider, useTheme } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
@@ -987,6 +987,70 @@ function TabsGallery() {
   );
 }
 
+function CheckboxGallery() {
+  const [selectAll, setSelectAll] = useState<string[]>(["apple"]);
+  const fruits = ["apple", "banana", "cherry"];
+  const isAllSelected = selectAll.length === fruits.length;
+  const isPartiallySelected = selectAll.length > 0 && !isAllSelected;
+  return (
+    <Section title="Checkbox — real :checked/:indeterminate CSS, shared Selector primitive">
+      <Box display="flex" flexDirection="column" gap="2">
+        <Label>Sizes (small/medium/large), default unchecked</Label>
+        <Box display="flex" gap="4" alignItems="center">
+          <Checkbox size="small">Small</Checkbox>
+          <Checkbox size="medium">Medium</Checkbox>
+          <Checkbox size="large">Large</Checkbox>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Checked, indeterminate, disabled, disabled+checked</Label>
+        <Box display="flex" gap="4" alignItems="center">
+          <Checkbox defaultChecked>Checked</Checkbox>
+          <Checkbox isIndeterminate>Indeterminate</Checkbox>
+          <Checkbox isDisabled>Disabled</Checkbox>
+          <Checkbox isDisabled defaultChecked>
+            Disabled + checked
+          </Checkbox>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>validationState=&quot;error&quot; with errorText</Label>
+        <Checkbox validationState="error" errorText="You must accept the terms to continue.">
+          I accept the terms
+        </Checkbox>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>
+          CheckboxGroup — &quot;select all&quot; indeterminate is NOT automatic (Blade&apos;s real behavior); computed
+          manually here from the group&apos;s own children state
+        </Label>
+        <Checkbox
+          isIndeterminate={isPartiallySelected}
+          isChecked={isAllSelected}
+          onChange={({ isChecked }) => setSelectAll(isChecked ? fruits : [])}
+        >
+          Select all
+        </Checkbox>
+        <CheckboxGroup label="Favorite fruits" value={selectAll} onChange={({ values }) => setSelectAll(values)}>
+          {fruits.map((fruit) => (
+            <Checkbox key={fruit} value={fruit}>
+              {fruit.charAt(0).toUpperCase() + fruit.slice(1)}
+            </Checkbox>
+          ))}
+        </CheckboxGroup>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>CheckboxGroup, orientation=&quot;horizontal&quot;, group-level isDisabled</Label>
+        <CheckboxGroup label="Notification channels (disabled)" orientation="horizontal" isDisabled defaultValue={["email"]}>
+          <Checkbox value="email">Email</Checkbox>
+          <Checkbox value="sms">SMS</Checkbox>
+          <Checkbox value="push">Push</Checkbox>
+        </CheckboxGroup>
+      </Box>
+    </Section>
+  );
+}
+
 function App() {
   const [renderCount, setRenderCount] = useState(0);
   return (
@@ -1035,6 +1099,7 @@ function App() {
         <IconButtonGallery />
         <TooltipGallery />
         <TabsGallery />
+        <CheckboxGallery />
       </Box>
     </ThemeProvider>
   );

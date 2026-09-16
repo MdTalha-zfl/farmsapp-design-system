@@ -1,0 +1,50 @@
+@layer ds-components {
+  .ds-selector {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--ds-space-2);
+    cursor: pointer;
+  }
+
+  .ds-selector--disabled {
+    cursor: not-allowed;
+  }
+
+  /* Real input, positioned exactly over the visual box (the box is always
+     the first element rendered after the input, sized to match) — not
+     off-screen-clipped like VisuallyHidden, since this must still receive
+     real clicks/focus/keyboard input. */
+  .ds-selector__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  .ds-selector--size-small .ds-selector__input {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ds-selector--size-medium .ds-selector__input {
+    width: 20px;
+    height: 20px;
+  }
+
+  .ds-selector--size-large .ds-selector__input {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ds-selector__label-text {
+    color: var(--ds-color-text-primary);
+    font: var(--ds-text-body-md);
+  }
+
+  .ds-selector--disabled .ds-selector__label-text {
+    color: var(--ds-color-text-disabled);
+  }
+}
