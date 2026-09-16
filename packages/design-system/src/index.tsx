@@ -88,6 +88,15 @@ export { TabItem, type TabItemProps, type TabItemIconComponent } from "./compone
 export { TabPanel, type TabPanelProps } from "./components/Tabs/TabPanel";
 export { Checkbox, type CheckboxProps } from "./components/Checkbox/Checkbox";
 export { CheckboxGroup, type CheckboxGroupProps } from "./components/Checkbox/CheckboxGroup/CheckboxGroup";
+export { Radio, type RadioProps } from "./components/Radio/Radio";
+export { RadioGroup, type RadioGroupProps } from "./components/Radio/RadioGroup/RadioGroup";
+export {
+  Switch,
+  type SwitchProps,
+  type SwitchWithChildrenProps,
+  type SwitchWithoutChildrenProps,
+  type SwitchSize,
+} from "./components/Switch/Switch";
 export type {
   LetterSpacingStep,
   TypographyLang,
