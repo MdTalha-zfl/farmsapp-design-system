@@ -8,8 +8,9 @@
  *
  * Covers: close/dismiss, a select/dropdown chevron, checkbox/success, an
  * async-loading spinner, Input error-state messaging, the password-
- * visibility-toggle pattern, and a search affordance — real near-term
- * needs (Button/Input), not a speculative full icon set.
+ * visibility-toggle pattern, a search affordance, and an indeterminate-
+ * checkbox dash — real near-term needs (Button/Input/Checkbox), not a
+ * speculative full icon set.
  */
 export const ICON_LIST = [
   { lucideName: "x", componentName: "XIcon" },
@@ -20,4 +21,5 @@ export const ICON_LIST = [
   { lucideName: "eye", componentName: "EyeIcon" },
   { lucideName: "eye-off", componentName: "EyeOffIcon" },
   { lucideName: "search", componentName: "SearchIcon" },
+  { lucideName: "minus", componentName: "MinusIcon" },
 ];

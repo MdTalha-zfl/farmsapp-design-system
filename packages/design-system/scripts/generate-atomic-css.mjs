@@ -203,6 +203,8 @@ const componentCssFiles = [
   "../src/components/Input/input.css",
   "../src/components/Tooltip/tooltip.css",
   "../src/components/Tabs/tabs.css",
+  "../src/components/Selector/selector.css",
+  "../src/components/Checkbox/checkbox.css",
 ];
 const componentCss = componentCssFiles
   .map((path) => readFileSync(new URL(path, import.meta.url), "utf8"))
