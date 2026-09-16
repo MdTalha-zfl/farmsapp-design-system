@@ -19,17 +19,28 @@
       background-color var(--ds-duration-fast) var(--ds-easing-standard),
       border-color var(--ds-duration-fast) var(--ds-easing-standard);
   }
+
   .ds-selector--size-small .ds-checkbox__box {
     width: 16px;
     height: 16px;
   }
+
   .ds-selector--size-medium .ds-checkbox__box {
     width: 20px;
     height: 20px;
   }
+
   .ds-selector--size-large .ds-checkbox__box {
     width: 24px;
     height: 24px;
+  }
+
+  .ds-selector--invalid .ds-checkbox__box {
+    border-color: var(--ds-color-feedback-danger);
+  }
+
+  .ds-selector--disabled .ds-checkbox__box {
+    border-color: var(--ds-color-border-subtle);
   }
 
   .ds-selector:hover .ds-checkbox__box {
@@ -51,6 +62,7 @@
     background-color: var(--ds-color-action-primary);
     border-color: var(--ds-color-action-primary);
   }
+
   .ds-selector__input:checked + .ds-checkbox__box .ds-checkbox__icon--check {
     opacity: 1;
     transform: scale(1);
@@ -65,10 +77,12 @@
     background-color: var(--ds-color-action-primary);
     border-color: var(--ds-color-action-primary);
   }
+
   .ds-selector__input:indeterminate + .ds-checkbox__box .ds-checkbox__icon--check {
     opacity: 0;
     transform: scale(0.5);
   }
+
   .ds-selector__input:indeterminate + .ds-checkbox__box .ds-checkbox__icon--indeterminate {
     opacity: 1;
     transform: scale(1);
@@ -79,13 +93,6 @@
     outline-offset: var(--ds-focus-ring-offset);
   }
 
-  .ds-selector--invalid .ds-checkbox__box {
-    border-color: var(--ds-color-feedback-danger);
-  }
-
-  .ds-selector--disabled .ds-checkbox__box {
-    border-color: var(--ds-color-border-subtle);
-  }
   .ds-selector__input:disabled:checked + .ds-checkbox__box,
   .ds-selector__input:disabled:indeterminate + .ds-checkbox__box {
     background-color: var(--ds-color-action-primary-disabled);
@@ -100,19 +107,22 @@
     flex-direction: column;
     gap: var(--ds-space-2);
   }
+
   .ds-checkbox-group__legend {
     padding: 0;
   }
+
   .ds-checkbox-group__items {
     display: flex;
     gap: var(--ds-space-2);
   }
+
   .ds-checkbox-group__items--vertical {
     flex-direction: column;
   }
+
   .ds-checkbox-group__items--horizontal {
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     gap: var(--ds-space-4);
   }
 }

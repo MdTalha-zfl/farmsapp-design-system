@@ -6,6 +6,7 @@
     gap: var(--ds-space-2);
     cursor: pointer;
   }
+
   .ds-selector--disabled {
     cursor: not-allowed;
   }
@@ -22,14 +23,17 @@
     opacity: 0;
     cursor: inherit;
   }
+
   .ds-selector--size-small .ds-selector__input {
     width: 16px;
     height: 16px;
   }
+
   .ds-selector--size-medium .ds-selector__input {
     width: 20px;
     height: 20px;
   }
+
   .ds-selector--size-large .ds-selector__input {
     width: 24px;
     height: 24px;
@@ -39,6 +43,7 @@
     color: var(--ds-color-text-primary);
     font: var(--ds-text-body-md);
   }
+
   .ds-selector--disabled .ds-selector__label-text {
     color: var(--ds-color-text-disabled);
   }
