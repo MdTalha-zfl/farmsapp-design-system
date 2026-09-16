@@ -1,0 +1,117 @@
+@layer ds-components {
+  .ds-switch__track {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    border-radius: var(--ds-radius-full);
+    background-color: var(--ds-color-action-secondary);
+    transition: background-color var(--ds-duration-fast) var(--ds-easing-standard);
+  }
+
+  .ds-switch__track--size-small {
+    width: 28px;
+    height: 20px;
+  }
+
+  .ds-switch__track--size-medium {
+    width: 36px;
+    height: 24px;
+  }
+
+  .ds-selector--disabled .ds-switch__track {
+    background-color: var(--ds-color-border-subtle);
+  }
+
+  .ds-selector__input:checked + .ds-switch__track {
+    background-color: var(--ds-color-action-primary);
+  }
+
+  .ds-selector__input:focus-visible + .ds-switch__track {
+    outline: var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);
+    outline-offset: var(--ds-focus-ring-offset);
+  }
+
+  .ds-selector__input:disabled:checked + .ds-switch__track {
+    background-color: var(--ds-color-action-primary-disabled);
+  }
+
+  .ds-selector:hover .ds-selector__input:not(:checked) + .ds-switch__track {
+    background-color: var(--ds-color-action-tertiary-hover);
+  }
+
+  .ds-selector:hover .ds-selector__input:checked + .ds-switch__track {
+    background-color: var(--ds-color-action-primary-hover);
+  }
+
+  .ds-switch__thumb {
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: var(--ds-radius-full);
+    background-color: var(--ds-color-surface-base);
+    border: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+    transform: translateY(-50%) translateX(0);
+    transition:
+      transform var(--ds-duration-fast) var(--ds-easing-standard),
+      width var(--ds-duration-fast) var(--ds-easing-standard),
+      left var(--ds-duration-fast) var(--ds-easing-standard);
+  }
+
+  .ds-switch__track--size-small .ds-switch__thumb {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ds-switch__track--size-medium .ds-switch__thumb {
+    width: 20px;
+    height: 20px;
+  }
+
+  .ds-selector__input:checked + .ds-switch__track--size-small .ds-switch__thumb {
+    transform: translateY(-50%) translateX(8px);
+  }
+
+  .ds-selector__input:checked + .ds-switch__track--size-medium .ds-switch__thumb {
+    transform: translateY(-50%) translateX(12px);
+  }
+
+  /* Press-and-stretch — cosmetic only, driven by Switch.tsx's local
+     isPressed state (Space/pointer press), not a CSS pseudo-class. The
+     thumb grows ~25% wider, anchored at whichever edge it's already
+     resting at (left when unchecked, right when checked) so the stretch
+     reads as "reaching toward" the direction of travel. */
+  .ds-switch__track--size-small .ds-switch__thumb--pressed-unchecked {
+    width: 20px;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .ds-switch__track--size-small .ds-switch__thumb--pressed-checked {
+    width: 20px;
+    transform: translateY(-50%) translateX(4px);
+  }
+
+  .ds-switch__track--size-medium .ds-switch__thumb--pressed-unchecked {
+    width: 25px;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .ds-switch__track--size-medium .ds-switch__thumb--pressed-checked {
+    width: 25px;
+    transform: translateY(-50%) translateX(7px);
+  }
+
+  .ds-switch__thumb-icon {
+    opacity: 0;
+    transition: opacity var(--ds-duration-fast) var(--ds-easing-standard);
+  }
+
+  .ds-selector__input:checked + .ds-switch__track .ds-switch__thumb-icon {
+    opacity: 1;
+  }
+}
