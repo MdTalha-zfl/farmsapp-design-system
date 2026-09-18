@@ -18,6 +18,7 @@
     "overlay": { "$value": 200, "$type": "number" },
     "modal": { "$value": 300, "$type": "number" },
     "toast": { "$value": 400, "$type": "number" },
+    "popover": { "$value": 450, "$type": "number", "$description": "Above modal/toast (can hold interactive content), below tooltip — a tooltip triggered from inside an open popover must still win." },
     "tooltip": { "$value": 500, "$type": "number", "$description": "Highest in the scale — a tooltip must be able to render above everything, including a toast. Matches Blade's own real default (1100, also its own scale's highest value) in relative position, not absolute number." }
   }
 }

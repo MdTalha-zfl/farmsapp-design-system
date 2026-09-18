@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, Tabs, TabList, TabItem, TabPanel, Checkbox, CheckboxGroup, type TextCaptionOwnProps } from "@farmsapp/design-system";
+import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, Popover, PopoverInteractiveWrapper, Tabs, TabList, TabItem, TabPanel, Checkbox, CheckboxGroup, Radio, RadioGroup, Switch, type TextCaptionOwnProps } from "@farmsapp/design-system";
 import { XIcon, ChevronDownIcon, CheckIcon, LoaderCircleIcon, AlertCircleIcon, EyeIcon, EyeOffIcon, SearchIcon } from "@farmsapp/icons";
 import { ThemeProvider, useTheme } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
@@ -876,6 +876,99 @@ function TooltipGallery() {
   );
 }
 
+function PopoverGallery() {
+  const [controlledOpen, setControlledOpen] = useState(false);
+  const PLACEMENTS = ["top", "top-start", "top-end", "bottom", "bottom-start", "bottom-end", "left", "right"] as const;
+  return (
+    <Section title="Popover — floating-ui, click-triggered, focus trap, dismiss">
+      <Box display="flex" flexDirection="column" gap="2">
+        <Label>Default — no title/titleLeading, close button floats top-right</Label>
+        <Box display="flex" gap="4" flexWrap="wrap">
+          <Popover content={<Text variant="body">Popover content goes here.</Text>}>
+            <Button variant="secondary">Click me</Button>
+          </Popover>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>title + titleLeading, placement=&quot;bottom-start&quot;</Label>
+        <Box display="flex" gap="4" flexWrap="wrap">
+          <Popover
+            title="Refund policy"
+            titleLeading={<AlertCircleIcon color="warning" />}
+            content={<Text variant="body">Refunds typically take 5-7 business days to process.</Text>}
+            placement="bottom-start"
+          >
+            <Button variant="tertiary">Titled popover</Button>
+          </Popover>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>placement — each button should open its popover right next to itself, in the requested direction</Label>
+        <Box display="flex" gap="6" flexWrap="wrap" className="demo-max-w-960-centered">
+          {PLACEMENTS.map((placement) => (
+            <Popover key={placement} content={<Text variant="body">{placement}</Text>} placement={placement}>
+              <Button variant="secondary">{placement}</Button>
+            </Popover>
+          ))}
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>IconButton trigger — already focusable, no wrapper needed</Label>
+        <Box display="flex" gap="4" flexWrap="wrap">
+          <Popover content={<Text variant="body">Search across all records.</Text>}>
+            <IconButton icon={SearchIcon} accessibilityLabel="Search" />
+          </Popover>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Non-interactive trigger (plain Icon) — requires PopoverInteractiveWrapper</Label>
+        <Box display="flex" gap="4" flexWrap="wrap" alignItems="center">
+          <Popover content={<Text variant="body">This field is required.</Text>}>
+            <PopoverInteractiveWrapper aria-label="Field info">
+              <AlertCircleIcon color="warning" />
+            </PopoverInteractiveWrapper>
+          </Popover>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>footer — rendered as-is below the body</Label>
+        <Box display="flex" gap="4" flexWrap="wrap">
+          <Popover
+            title="Delete item"
+            content={<Text variant="body">This action can&apos;t be undone.</Text>}
+            footer={
+              <Inline gap="2">
+                <Button size="small" variant="tertiary">
+                  Cancel
+                </Button>
+                <Button size="small" variant="primary">
+                  Delete
+                </Button>
+              </Inline>
+            }
+          >
+            <Button variant="secondary">Open with footer</Button>
+          </Popover>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Controlled (isOpen/onOpenChange) — external toggle buttons</Label>
+        <Box display="flex" gap="2" alignItems="center">
+          <Popover content={<Text variant="body">Controlled popover</Text>} isOpen={controlledOpen} onOpenChange={setControlledOpen}>
+            <Button variant="primary">Controlled trigger</Button>
+          </Popover>
+          <Button size="small" variant="tertiary" onClick={() => setControlledOpen(true)}>
+            Open externally
+          </Button>
+          <Button size="small" variant="tertiary" onClick={() => setControlledOpen(false)}>
+            Close externally
+          </Button>
+        </Box>
+      </Box>
+    </Section>
+  );
+}
+
 function TabsGallery() {
   const [lazyMounted, setLazyMounted] = useState<string[]>([]);
   return (
@@ -1051,6 +1144,89 @@ function CheckboxGallery() {
   );
 }
 
+function RadioGallery() {
+  const [plan, setPlan] = useState("basic");
+  return (
+    <Section title="Radio — always group-controlled, native <input type=&quot;radio&quot; name=&quot;...&quot;> grouping">
+      <Box display="flex" flexDirection="column" gap="2">
+        <Label>Sizes (small/medium/large)</Label>
+        <RadioGroup label="Size demo" orientation="horizontal" defaultValue="medium">
+          <Radio value="small" size="small">
+            Small
+          </Radio>
+          <Radio value="medium" size="medium">
+            Medium
+          </Radio>
+          <Radio value="large" size="large">
+            Large
+          </Radio>
+        </RadioGroup>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>
+          Real grouped example — arrow keys move selection between radios natively (try Tab then Arrow Down/Up), a
+          per-Radio isDisabled, and trailing content
+        </Label>
+        <RadioGroup label="Choose a plan" value={plan} onChange={({ value }) => setPlan(value)}>
+          <Radio value="basic" trailing={<Text as="span" size="xsmall" color="secondary">Free</Text>}>
+            Basic
+          </Radio>
+          <Radio value="pro" trailing={<Text as="span" size="xsmall" color="secondary">₹499/mo</Text>}>
+            Pro
+          </Radio>
+          <Radio value="enterprise" isDisabled trailing={<Text as="span" size="xsmall" color="secondary">Contact us</Text>}>
+            Enterprise (disabled)
+          </Radio>
+        </RadioGroup>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>validationState=&quot;error&quot; with errorText, group-level isDisabled</Label>
+        <RadioGroup label="Payment method" validationState="error" errorText="Select a payment method to continue.">
+          <Radio value="upi">UPI</Radio>
+          <Radio value="card">Card</Radio>
+        </RadioGroup>
+        <RadioGroup label="Disabled group" isDisabled defaultValue="a">
+          <Radio value="a">A</Radio>
+          <Radio value="b">B</Radio>
+        </RadioGroup>
+      </Box>
+    </Section>
+  );
+}
+
+function SwitchGallery() {
+  const [notifications, setNotifications] = useState(true);
+  return (
+    <Section title="Switch — role=&quot;switch&quot;, real nested track/thumb/icon, press-and-stretch effect">
+      <Box display="flex" flexDirection="column" gap="2">
+        <Label>Sizes (small/medium), both label modes</Label>
+        <Box display="flex" gap="4" alignItems="center">
+          <Switch size="small" accessibilityLabel="Small switch, no visible text" />
+          <Switch size="medium">Medium, with visible label</Switch>
+          <Switch size="medium" defaultChecked>
+            Defaults checked
+          </Switch>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Disabled (unchecked / checked)</Label>
+        <Box display="flex" gap="4" alignItems="center">
+          <Switch isDisabled>Disabled</Switch>
+          <Switch isDisabled defaultChecked>
+            Disabled + checked
+          </Switch>
+        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Controlled — try Space/pointer press-and-hold to see the thumb stretch</Label>
+        <Switch isChecked={notifications} onChange={({ isChecked }) => setNotifications(isChecked)}>
+          {`Notifications ${notifications ? "on" : "off"}`}
+        </Switch>
+      </Box>
+    </Section>
+  );
+}
+
 function App() {
   const [renderCount, setRenderCount] = useState(0);
   return (
@@ -1098,8 +1274,11 @@ function App() {
         <ButtonGallery />
         <IconButtonGallery />
         <TooltipGallery />
+        <PopoverGallery />
         <TabsGallery />
         <CheckboxGallery />
+        <RadioGallery />
+        <SwitchGallery />
       </Box>
     </ThemeProvider>
   );
