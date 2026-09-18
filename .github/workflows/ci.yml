@@ -16,7 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          # 0, not 2 — `changeset status --since=origin/main` below needs
+          # real history against main to diff, not just the last commit.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -27,6 +29,14 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      # Fails the PR if it touches a non-ignored package (see
+      # .changeset/config.json's own "ignore" list — apps/playground,
+      # apps/docs are exempt) without adding a changeset file. Doesn't run
+      # on push-to-main, since main is already merged by then.
+      - name: Require a changeset
+        if: github.event_name == 'pull_request'
+        run: pnpm exec changeset status --since=origin/main
 
       # Fail fast on cheap checks before spending time on the build.
       - name: Lint
