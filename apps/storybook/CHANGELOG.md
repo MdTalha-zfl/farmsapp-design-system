@@ -1,5 +1,12 @@
 # @farmsapp/storybook
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [c8fa8bc]
+  - @farmsapp/design-system@0.2.0
+
 ## 0.0.2
 
 ### Patch Changes
