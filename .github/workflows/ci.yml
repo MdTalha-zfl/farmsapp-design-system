@@ -35,7 +35,11 @@ jobs:
       # apps/docs are exempt) without adding a changeset file. Doesn't run
       # on push-to-main, since main is already merged by then.
       - name: Require a changeset
-        if: github.event_name == 'pull_request'
+        # Skipped for the "Version Packages" PR opened by changesets/action
+        # (release.yml): its whole purpose is to *consume* changesets —
+        # deleting the .changeset/*.md files and bumping versions — so it
+        # can never contain one, and would always fail this check.
+        if: github.event_name == 'pull_request' && github.head_ref != 'changeset-release/main'
         run: pnpm exec changeset status --since=origin/main
 
       # Fail fast on cheap checks before spending time on the build.
