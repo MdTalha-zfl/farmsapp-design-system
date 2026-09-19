@@ -87,6 +87,10 @@ export {
   PopoverInteractiveWrapper,
   type PopoverInteractiveWrapperProps,
 } from "./components/Popover/PopoverInteractiveWrapper";
+export { Modal, type ModalProps, type ModalSize } from "./components/Modal/Modal";
+export { ModalHeader, type ModalHeaderProps } from "./components/Modal/ModalHeader";
+export { ModalBody, type ModalBodyProps } from "./components/Modal/ModalBody";
+export { ModalFooter, type ModalFooterProps } from "./components/Modal/ModalFooter";
 export { Tabs, type TabsProps, type TabsOrientation, type TabsSize, type TabsVariant } from "./components/Tabs/Tabs";
 export { TabList, type TabListProps } from "./components/Tabs/TabList";
 export { TabItem, type TabItemProps, type TabItemIconComponent } from "./components/Tabs/TabItem";
