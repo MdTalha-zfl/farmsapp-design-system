@@ -1,0 +1,88 @@
+@layer ds-components {
+  .ds-modal-overlay {
+    z-index: var(--ds-z-index-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--ds-color-surface-overlay);
+    padding: var(--ds-space-6);
+  }
+
+  .ds-modal__panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 320px;
+    background-color: var(--ds-color-surface-raised);
+    border-radius: var(--ds-radius-lg);
+    box-shadow: var(--ds-elevation-dialog);
+    outline: none;
+    overflow: hidden;
+
+    /* Opacity/transform values are set inline (Modal.tsx, driven by
+       useTransitionStatus's `status`) — this transition is what actually
+       animates between them. Without it, toggling the inline style values
+       alone is an instant snap, not a fade/scale. */
+    transition:
+      opacity var(--ds-duration-base) var(--ds-easing-standard),
+      transform var(--ds-duration-base) var(--ds-easing-standard);
+  }
+
+  .ds-modal__panel--size-full {
+    height: 100%;
+  }
+
+  .ds-modal__close-floating {
+    position: absolute;
+    top: var(--ds-space-2);
+    right: var(--ds-space-2);
+    z-index: 1;
+  }
+
+  .ds-modal__header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ds-space-2);
+    padding: var(--ds-space-6) var(--ds-space-6) 0;
+  }
+
+  .ds-modal__header-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-0-5);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ds-modal__close {
+    flex-shrink: 0;
+  }
+
+  .ds-modal__body {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-4);
+  }
+
+  .ds-modal__body--padding-6 {
+    padding: var(--ds-space-6);
+  }
+
+  .ds-modal__body--padding-0 {
+    padding: var(--ds-space-0);
+  }
+
+  .ds-modal__footer {
+    flex-shrink: 0;
+  }
+
+  .ds-modal__footer-content {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--ds-space-3);
+    padding: var(--ds-space-6);
+  }
+}

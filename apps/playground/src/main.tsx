@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, Popover, PopoverInteractiveWrapper, Tabs, TabList, TabItem, TabPanel, Checkbox, CheckboxGroup, Radio, RadioGroup, Switch, type TextCaptionOwnProps } from "@farmsapp/design-system";
+import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, Popover, PopoverInteractiveWrapper, Modal, ModalHeader, ModalBody, ModalFooter, Tabs, TabList, TabItem, TabPanel, Checkbox, CheckboxGroup, Radio, RadioGroup, Switch, type TextCaptionOwnProps } from "@farmsapp/design-system";
 import { XIcon, ChevronDownIcon, CheckIcon, LoaderCircleIcon, AlertCircleIcon, EyeIcon, EyeOffIcon, SearchIcon } from "@farmsapp/icons";
 import { ThemeProvider, useTheme } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
@@ -969,6 +969,202 @@ function PopoverGallery() {
   );
 }
 
+function ModalGallery() {
+  const [withHeaderOpen, setWithHeaderOpen] = useState(false);
+  const [destructiveOpen, setDestructiveOpen] = useState(false);
+  const [headerlessOpen, setHeaderlessOpen] = useState(false);
+  const [notDismissibleOpen, setNotDismissibleOpen] = useState(false);
+  const [scrollableOpen, setScrollableOpen] = useState(false);
+  const [openSize, setOpenSize] = useState<"small" | "medium" | "large" | "full" | null>(null);
+  const [stackOuterOpen, setStackOuterOpen] = useState(false);
+  const [stackInnerOpen, setStackInnerOpen] = useState(false);
+  const [controlledOpen, setControlledOpen] = useState(false);
+
+  return (
+    <Section title="Modal — floating-ui portal, scroll-locked backdrop, focus trap">
+      <Box display="flex" flexDirection="column" gap="2">
+        <Label>Template 1 — header + full-width footer buttons</Label>
+        <Button onClick={() => setWithHeaderOpen(true)}>Open modal</Button>
+        <Modal isOpen={withHeaderOpen} onDismiss={() => setWithHeaderOpen(false)} accessibilityLabel="Header title">
+          <ModalHeader title="Header title" subtitle="Header subtitle" />
+          <ModalBody>
+            <Text variant="body">Body content goes here.</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="secondary" isFullWidth onClick={() => setWithHeaderOpen(false)}>
+              Secondary
+            </Button>
+            <Button isFullWidth onClick={() => setWithHeaderOpen(false)}>
+              Primary
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Destructive confirmation — headerless (external floating close), negative variant, compact right-aligned buttons</Label>
+        <Button variant="secondary" onClick={() => setDestructiveOpen(true)}>
+          Delete item
+        </Button>
+        <Modal isOpen={destructiveOpen} onDismiss={() => setDestructiveOpen(false)} accessibilityLabel="Discard import">
+          <ModalBody>
+            <Stack gap="2">
+              <Box backgroundColor="sunken" borderRadius="md" padding="2" display="inline-flex">
+                <AlertCircleIcon color="danger" size="large" />
+              </Box>
+              <Text variant="body" weight="semibold" size="large">
+                Discard import?
+              </Text>
+              <Text variant="body" color="secondary">
+                We do not save the progress, you&apos;ll need to upload the files again.
+              </Text>
+            </Stack>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="tertiary" onClick={() => setDestructiveOpen(false)}>
+              No, go back
+            </Button>
+            <Button variant="negative" onClick={() => setDestructiveOpen(false)}>
+              Discard
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Headerless, no footer — confirms the floating close button doesn&apos;t overlap body content</Label>
+        <Button variant="secondary" onClick={() => setHeaderlessOpen(true)}>
+          Open headerless
+        </Button>
+        <Modal isOpen={headerlessOpen} onDismiss={() => setHeaderlessOpen(false)} accessibilityLabel="Headerless modal">
+          <ModalBody>
+            <Text variant="body">Self-explanatory content — no title needed. Check the top-right corner for overlap.</Text>
+          </ModalBody>
+        </Modal>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>size — small (400px) / medium (760px) / large (1024px) / full (100vw/100vh)</Label>
+        <Inline gap="2">
+          {(["small", "medium", "large", "full"] as const).map((size) => (
+            <Button key={size} variant="secondary" onClick={() => setOpenSize(size)}>
+              {size}
+            </Button>
+          ))}
+        </Inline>
+        <Modal
+          isOpen={openSize !== null}
+          onDismiss={() => setOpenSize(null)}
+          size={openSize ?? "small"}
+          accessibilityLabel="Sized modal"
+        >
+          <ModalHeader title={`size="${openSize}"`} />
+          <ModalBody>
+            <Text variant="body">Resize the browser window to see how this size behaves at different widths.</Text>
+          </ModalBody>
+        </Modal>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>isDismissible=false — no close button, no backdrop-click, no Escape. Only the in-body button closes it</Label>
+        <Button onClick={() => setNotDismissibleOpen(true)}>Open non-dismissible modal</Button>
+        <Modal
+          isOpen={notDismissibleOpen}
+          onDismiss={() => setNotDismissibleOpen(false)}
+          isDismissible={false}
+          accessibilityLabel="Required action"
+        >
+          <ModalHeader title="Accept terms to continue" />
+          <ModalBody>
+            <Text variant="body">
+              Try clicking the backdrop or pressing Escape — neither closes this. No close button is rendered
+              either.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button isFullWidth onClick={() => setNotDismissibleOpen(false)}>
+              I accept
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Long body content — scrolls independently, header/footer stay fixed, panel respects maxHeight</Label>
+        <Button onClick={() => setScrollableOpen(true)}>Open scrollable modal</Button>
+        <Modal isOpen={scrollableOpen} onDismiss={() => setScrollableOpen(false)} accessibilityLabel="Long content">
+          <ModalHeader title="Terms and conditions" />
+          <ModalBody>
+            <Stack gap="2">
+              {Array.from({ length: 30 }, (_, i) => (
+                <Text key={i} variant="body">
+                  Paragraph {i + 1} — this body scrolls independently while the header and footer stay fixed.
+                </Text>
+              ))}
+            </Stack>
+          </ModalBody>
+          <ModalFooter>
+            <Button isFullWidth onClick={() => setScrollableOpen(false)}>
+              I agree
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>
+          Stacked/nested modals — no auto z-index incrementing (both share --ds-z-index-modal, nested one stacks by
+          DOM mount order), no &quot;close only topmost&quot; arbitration. Open the nested modal then press Escape
+          once — it closes BOTH (React bubbles synthetic events through the React tree, not the DOM/portal tree),
+          a real documented v1 limitation, not a bug
+        </Label>
+        <Button onClick={() => setStackOuterOpen(true)}>Open first modal</Button>
+        <Modal isOpen={stackOuterOpen} onDismiss={() => setStackOuterOpen(false)} accessibilityLabel="First modal">
+          <ModalHeader title="First modal" />
+          <ModalBody>
+            <Text variant="body">Open a second modal on top of this one, then try Escape once.</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="secondary" onClick={() => setStackOuterOpen(false)}>
+              Close
+            </Button>
+            <Button onClick={() => setStackInnerOpen(true)}>Open nested modal</Button>
+          </ModalFooter>
+        </Modal>
+        <Modal isOpen={stackInnerOpen} onDismiss={() => setStackInnerOpen(false)} size="small" accessibilityLabel="Second modal">
+          <ModalHeader title="Second modal" />
+          <ModalBody>
+            <Text variant="body">Stacked above the first purely by DOM mount order.</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button isFullWidth onClick={() => setStackInnerOpen(false)}>
+              Close this one
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Controlled — external toggle buttons (Modal has no uncontrolled mode at all)</Label>
+        <Inline gap="2">
+          <Button size="small" variant="tertiary" onClick={() => setControlledOpen(true)}>
+            Open externally
+          </Button>
+          <Button size="small" variant="tertiary" onClick={() => setControlledOpen(false)}>
+            Close externally
+          </Button>
+        </Inline>
+        <Modal isOpen={controlledOpen} onDismiss={() => setControlledOpen(false)} accessibilityLabel="Controlled modal">
+          <ModalHeader title="Controlled modal" />
+          <ModalBody>
+            <Text variant="body">isOpen is driven entirely by the buttons above.</Text>
+          </ModalBody>
+        </Modal>
+      </Box>
+    </Section>
+  );
+}
+
 function TabsGallery() {
   const [lazyMounted, setLazyMounted] = useState<string[]>([]);
   return (
@@ -1275,6 +1471,7 @@ function App() {
         <IconButtonGallery />
         <TooltipGallery />
         <PopoverGallery />
+        <ModalGallery />
         <TabsGallery />
         <CheckboxGallery />
         <RadioGallery />
