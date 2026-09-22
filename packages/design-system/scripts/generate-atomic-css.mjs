@@ -204,6 +204,7 @@ const componentCssFiles = [
   "../src/components/Tooltip/tooltip.css",
   "../src/components/Popover/popover.css",
   "../src/components/Modal/modal.css",
+  "../src/components/BottomSheet/bottom-sheet.css",
   "../src/components/Tabs/tabs.css",
   "../src/components/Selector/selector.css",
   "../src/components/Checkbox/checkbox.css",

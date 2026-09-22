@@ -16,6 +16,7 @@
     "base": { "$value": 0, "$type": "number" },
     "sticky": { "$value": 100, "$type": "number" },
     "overlay": { "$value": 200, "$type": "number" },
+    "bottom-sheet": { "$value": 250, "$type": "number", "$description": "Above overlay/sticky, below modal — a Modal opened over a sheet must still win, and popover/tooltip opened from inside a sheet win by being higher still. Blade puts its sheet at the page-chrome tier (100) for the same reason." },
     "modal": { "$value": 300, "$type": "number" },
     "toast": { "$value": 400, "$type": "number" },
     "popover": { "$value": 450, "$type": "number", "$description": "Above modal/toast (can hold interactive content), below tooltip — a tooltip triggered from inside an open popover must still win." },

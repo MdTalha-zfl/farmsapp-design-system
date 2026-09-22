@@ -1,0 +1,133 @@
+@layer ds-components {
+  .ds-bottom-sheet-overlay {
+    z-index: var(--ds-z-index-bottom-sheet);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background-color: var(--ds-color-surface-overlay);
+  }
+
+  .ds-bottom-sheet__panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--ds-color-surface-raised);
+    border-top-left-radius: var(--ds-radius-xl);
+    border-top-right-radius: var(--ds-radius-xl);
+    box-shadow: var(--ds-elevation-dialog);
+    outline: none;
+    overflow: hidden;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+
+    /* Off-screen until BottomSheet.tsx writes the real position. The position
+       is a transform (compositor-only), not a height — Blade animates height,
+       which forces layout every frame. */
+    transform: translateY(100%);
+    will-change: transform;
+    transition: transform var(--ds-duration-slow) var(--ds-easing-standard);
+  }
+
+  /* Set directly on the element by useSheetDrag for the duration of a drag —
+     the sheet must track the pointer 1:1, not ease toward it. */
+  .ds-bottom-sheet__panel[data-dragging="true"] {
+    transition: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds-bottom-sheet__panel {
+      transition: none;
+    }
+  }
+
+  .ds-bottom-sheet__grabber {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    padding: var(--ds-space-3) 0;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .ds-bottom-sheet__grabber::before {
+    content: "";
+    width: 40px;
+    height: 4px;
+    border-radius: var(--ds-radius-full);
+    background-color: var(--ds-color-border-strong);
+  }
+
+  .ds-bottom-sheet__grabber:focus-visible {
+    outline: var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);
+    outline-offset: calc(var(--ds-focus-ring-offset) * -1);
+    border-radius: var(--ds-radius-sm);
+  }
+
+  .ds-bottom-sheet__panel[data-dragging="true"] .ds-bottom-sheet__grabber {
+    cursor: grabbing;
+  }
+
+  .ds-bottom-sheet__close-floating {
+    position: absolute;
+    top: var(--ds-space-3);
+    right: var(--ds-space-3);
+    z-index: 1;
+  }
+
+  .ds-bottom-sheet__header {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-3);
+    padding: 0 var(--ds-space-5) var(--ds-space-3);
+    touch-action: none;
+    user-select: none;
+  }
+
+  .ds-bottom-sheet__header-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ds-space-2);
+  }
+
+  .ds-bottom-sheet__header-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-0-5);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ds-bottom-sheet__close {
+    flex-shrink: 0;
+  }
+
+  .ds-bottom-sheet__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .ds-bottom-sheet__body--padding-5 {
+    padding: var(--ds-space-5);
+  }
+
+  .ds-bottom-sheet__body--padding-0 {
+    padding: var(--ds-space-0);
+  }
+
+  .ds-bottom-sheet__footer {
+    flex-shrink: 0;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .ds-bottom-sheet__footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-3);
+    padding: var(--ds-space-5);
+  }
+}
