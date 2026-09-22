@@ -23,8 +23,6 @@ import {
 import { useId } from "@farmsapp/utilities";
 import { XIcon } from "@farmsapp/icons";
 import { IconButton } from "../IconButton/IconButton";
-import { DropdownOverlay } from "../Dropdown/DropdownOverlay";
-import { useDropdownSheetGlue } from "../Dropdown/DropdownSheetGlue";
 import { BottomSheetContextProvider, type BottomSheetContextValue } from "./BottomSheetContext";
 import { BottomSheetHeader, isHeaderEmpty, type BottomSheetHeaderProps } from "./BottomSheetHeader";
 import { useSheetDrag, type SheetLatest } from "./useSheetDrag";
@@ -38,9 +36,7 @@ import {
 
 export interface BottomSheetProps {
   children: ReactNode;
-  /** Required on its own. Inside a Dropdown (in place of a DropdownOverlay) it
-   * can be left out: the sheet then opens and closes with the Dropdown. */
-  isOpen?: boolean;
+  isOpen: boolean;
   onDismiss?: () => void;
   /** Defaults to true. Gates backdrop click, Escape, swipe-to-dismiss, and
    * close-button rendering all at once — same single flag as Modal. */
@@ -66,34 +62,13 @@ const DISMISS_IGNORED_RESTORE_MS = 400;
 
 export function BottomSheet({
   children,
-  isOpen: isOpenProp,
-  onDismiss: onDismissProp,
+  isOpen,
+  onDismiss,
   isDismissible = true,
   snapPoints,
   initialFocusRef,
   accessibilityLabel,
 }: BottomSheetProps) {
-  // Inside a Dropdown the sheet is its overlay: open state comes from there.
-  // An AutoComplete's typing box lives on the page, which a modal sheet would
-  // make inert, so for that one the sheet steps aside (see DropdownSheetGlue).
-  const glue = useDropdownSheetGlue();
-  const declinesSheet = glue?.isTypeable === true;
-  const isOpen = !declinesSheet && (isOpenProp ?? glue?.isOpen ?? false);
-  const onDismiss = onDismissProp ?? glue?.close;
-  const registerSheet = glue?.registerSheet;
-  useEffect(() => {
-    if (!registerSheet || declinesSheet) return;
-    return registerSheet();
-  }, [registerSheet, declinesSheet]);
-  useEffect(() => {
-    if (declinesSheet && process.env.NODE_ENV !== "production") {
-      console.warn(
-        "@farmsapp/design-system: a BottomSheet inside a Dropdown with an AutoComplete is not supported yet " +
-          "(the sheet is modal, so the typing box on the page cannot keep focus). Showing the normal overlay instead.",
-      );
-    }
-  }, [declinesSheet]);
-
   // No placement middleware — the sheet is pinned to the bottom by CSS. Still
   // calling useFloating() for its `context`, same as Modal, which keeps every
   // overlay here on one mechanism.
@@ -272,24 +247,7 @@ export function BottomSheet({
     dragZoneProps,
   };
 
-  if (declinesSheet) {
-    return (
-      <BottomSheetContextProvider value={contextValue}>
-        <DropdownOverlay>{children}</DropdownOverlay>
-      </BottomSheetContextProvider>
-    );
-  }
-
-  // In a Dropdown the options must exist even while the sheet is closed — a
-  // select shows the chosen option's title before it is ever opened — so the
-  // content stays mounted, hidden, until the sheet takes it over.
-  if (!isMounted) {
-    return glue ? (
-      <div style={{ display: "none" }}>
-        <BottomSheetContextProvider value={contextValue}>{children}</BottomSheetContextProvider>
-      </div>
-    ) : null;
-  }
+  if (!isMounted) return null;
 
   const isAdjustable = stops.length > 1;
   const topSnap = points[points.length - 1] ?? 0.85;
@@ -302,8 +260,7 @@ export function BottomSheet({
           modal
           guards
           returnFocus
-          // Inside a Dropdown: the chosen option (else the first), not Close.
-          initialFocus={initialFocusRef ?? glue?.initialFocusRef ?? defaultInitialFocusRef}
+          initialFocus={initialFocusRef ?? defaultInitialFocusRef}
         >
           <FloatingOverlay
             ref={refs.setFloating}
