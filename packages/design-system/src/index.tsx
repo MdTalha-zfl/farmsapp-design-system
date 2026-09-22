@@ -99,6 +99,11 @@ export { Tabs, type TabsProps, type TabsOrientation, type TabsSize, type TabsVar
 export { TabList, type TabListProps } from "./components/Tabs/TabList";
 export { TabItem, type TabItemProps, type TabItemIconComponent } from "./components/Tabs/TabItem";
 export { TabPanel, type TabPanelProps } from "./components/Tabs/TabPanel";
+export { Accordion, type AccordionProps } from "./components/Accordion/Accordion";
+export { AccordionItem, type AccordionItemProps } from "./components/Accordion/AccordionItem";
+export { AccordionItemHeader, type AccordionItemHeaderProps } from "./components/Accordion/AccordionItemHeader";
+export { AccordionItemBody, type AccordionItemBodyProps } from "./components/Accordion/AccordionItemBody";
+export type { AccordionVariant, AccordionSize } from "./components/Accordion/AccordionContext";
 export { Checkbox, type CheckboxProps } from "./components/Checkbox/Checkbox";
 export { CheckboxGroup, type CheckboxGroupProps } from "./components/Checkbox/CheckboxGroup/CheckboxGroup";
 export { Radio, type RadioProps } from "./components/Radio/Radio";
