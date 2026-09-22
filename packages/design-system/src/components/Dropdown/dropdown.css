@@ -1,0 +1,111 @@
+@layer ds-components {
+  /* Position/size only — the node floating-ui measures and positions. No
+     border/shadow/background and no transition of its own: those belong to
+     `.ds-dropdown__overlay` below, a separate element, so its enter/exit
+     `transform` never fights floating-ui's positioning `transform` on this
+     one. No `overflow: hidden` here — it would clip the inner panel's
+     `box-shadow`, which paints outside that element's own box. The `size`
+     middleware's `maxHeight` (written straight onto this element) still
+     caps it; `.ds-dropdown__overlay` below is `flex: 1; min-height: 0` and
+     clips the scrollable content itself, so nothing escapes uncapped. */
+  .ds-dropdown__position {
+    z-index: var(--ds-z-index-dropdown);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-width: 240px;
+    max-width: 400px;
+    border-radius: var(--ds-radius-md);
+  }
+
+  .ds-dropdown__overlay {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    background-color: var(--ds-color-surface-base);
+    border: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+    border-radius: var(--ds-radius-md);
+    box-shadow: var(--ds-elevation-card);
+    outline: none;
+  }
+
+  .ds-dropdown__header {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: var(--ds-space-2);
+    padding: var(--ds-space-2) var(--ds-space-3);
+    border-block-end: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+  }
+
+  .ds-dropdown__header-row {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-2);
+  }
+
+  .ds-dropdown__header-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .ds-dropdown__footer {
+    display: flex;
+    flex-shrink: 0;
+    gap: var(--ds-space-2);
+    padding: var(--ds-space-2) var(--ds-space-3);
+    border-block-start: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+  }
+
+  /* Multiple select: a chosen value in the field. */
+  .ds-select-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-space-1);
+    box-sizing: border-box;
+    max-width: 100%;
+    height: 24px;
+    padding-inline: var(--ds-space-2) var(--ds-space-1);
+    background-color: var(--ds-color-action-secondary);
+    border-radius: var(--ds-radius-sm);
+    color: var(--ds-color-text-primary);
+    font: var(--ds-text-caption);
+  }
+
+  .ds-select-tag__text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ds-select-tag__remove {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: var(--ds-radius-sm);
+    color: var(--ds-color-text-secondary);
+    cursor: pointer;
+  }
+
+  .ds-select-tag__remove:focus-visible {
+    outline: var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);
+  }
+
+  .ds-select-tag__remove:disabled {
+    color: var(--ds-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .ds-select-tag__remove:hover:not(:disabled) {
+    color: var(--ds-color-text-primary);
+  }
+}
