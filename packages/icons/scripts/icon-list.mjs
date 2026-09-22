@@ -22,4 +22,5 @@ export const ICON_LIST = [
   { lucideName: "eye-off", componentName: "EyeOffIcon" },
   { lucideName: "search", componentName: "SearchIcon" },
   { lucideName: "minus", componentName: "MinusIcon" },
+  { lucideName: "chevron-left", componentName: "ChevronLeftIcon" },
 ];

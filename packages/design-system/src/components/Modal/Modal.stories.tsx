@@ -319,13 +319,12 @@ export const ZeroPaddingBody: Story = {
  * one stacks visually above the first purely because it mounts later in
  * DOM order, same as Blade's own default-tier behavior), and no "only
  * close the topmost modal" arbitration — each Modal's own Escape handler
- * is independent. Try opening the nested modal, then pressing Escape once:
- * because Escape is a plain onKeyDown on each panel and React bubbles
- * synthetic events through the *React* tree (not the DOM/portal tree), one
- * Escape press bubbles through both panels and closes both at once — a
- * real, currently-unresolved consumer-facing quirk of nesting via plain
- * JSX composition, not a rendering bug. Worth knowing before relying on
- * stacked modals for anything beyond a simple confirm-within-a-modal case. */
+ * is independent. With the two modals rendered as siblings (as here), the
+ * focus trap moves focus into the top modal, so Escape closes only that
+ * one; a second Escape closes the first (verified in a real browser). Not
+ * verified: a modal rendered *inside* another modal's JSX children, where
+ * React's synthetic-event bubbling through the React tree could reach both
+ * handlers. */
 export const StackedModals: Story = {
   render: () => {
     function Example() {
@@ -338,8 +337,8 @@ export const StackedModals: Story = {
             <ModalHeader title="First modal" />
             <ModalBody>
               <Text variant="body">
-                This is the first modal. Open a second one on top of it, then try Escape once — see the story
-                description above for what actually happens.
+                This is the first modal. Open a second one on top of it, then press Escape: only the top one
+                closes.
               </Text>
             </ModalBody>
             <ModalFooter>

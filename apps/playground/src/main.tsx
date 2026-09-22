@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, Popover, PopoverInteractiveWrapper, Modal, ModalHeader, ModalBody, ModalFooter, Tabs, TabList, TabItem, TabPanel, Checkbox, CheckboxGroup, Radio, RadioGroup, Switch, type TextCaptionOwnProps } from "@farmsapp/design-system";
+import { Box, Stack, Inline, Container, Text, Heading, VisuallyHidden, Spinner, Button, IconButton, Tooltip, TooltipInteractiveWrapper, Popover, PopoverInteractiveWrapper, Modal, ModalHeader, ModalBody, ModalFooter, BottomSheet, BottomSheetHeader, BottomSheetBody, BottomSheetFooter, Tabs, TabList, TabItem, TabPanel, Checkbox, CheckboxGroup, Radio, RadioGroup, Switch, type TextCaptionOwnProps } from "@farmsapp/design-system";
 import { XIcon, ChevronDownIcon, CheckIcon, LoaderCircleIcon, AlertCircleIcon, EyeIcon, EyeOffIcon, SearchIcon } from "@farmsapp/icons";
 import { ThemeProvider, useTheme } from "@farmsapp/themes";
 import "@farmsapp/tokens/css";
@@ -1114,9 +1114,8 @@ function ModalGallery() {
       <Box display="flex" flexDirection="column" gap="2" marginTop="3">
         <Label>
           Stacked/nested modals — no auto z-index incrementing (both share --ds-z-index-modal, nested one stacks by
-          DOM mount order), no &quot;close only topmost&quot; arbitration. Open the nested modal then press Escape
-          once — it closes BOTH (React bubbles synthetic events through the React tree, not the DOM/portal tree),
-          a real documented v1 limitation, not a bug
+          DOM mount order), no z-index stack registry. Open the nested modal then press Escape: only the top
+          modal closes (focus is trapped in it); a second Escape closes the first
         </Label>
         <Button onClick={() => setStackOuterOpen(true)}>Open first modal</Button>
         <Modal isOpen={stackOuterOpen} onDismiss={() => setStackOuterOpen(false)} accessibilityLabel="First modal">
@@ -1160,6 +1159,112 @@ function ModalGallery() {
             <Text variant="body">isOpen is driven entirely by the buttons above.</Text>
           </ModalBody>
         </Modal>
+      </Box>
+    </Section>
+  );
+}
+
+function BottomSheetGallery() {
+  const [defaultOpen, setDefaultOpen] = useState(false);
+  const [customOpen, setCustomOpen] = useState(false);
+  const [shortOpen, setShortOpen] = useState(false);
+  const [headerlessOpen, setHeaderlessOpen] = useState(false);
+  const [lockedOpen, setLockedOpen] = useState(false);
+  const [outerOpen, setOuterOpen] = useState(false);
+  const [innerOpen, setInnerOpen] = useState(false);
+  const filler = (count: number) => (
+    <Stack gap="2">
+      {Array.from({ length: count }, (_, i) => (
+        <Text key={i} variant="body">
+          Paragraph {i + 1} — only the body scrolls; header and footer stay pinned.
+        </Text>
+      ))}
+    </Stack>
+  );
+
+  return (
+    <Section title="BottomSheet — transform-driven, Pointer-Events drag, snap points, focus trap">
+      <Box display="flex" flexDirection="column" gap="2">
+        <Label>Default snap points [0.35, 0.5, 0.85] — drag the grabber/header/footer; focus the grabber and use Arrow/Home/End keys</Label>
+        <Button onClick={() => setDefaultOpen(true)}>Open bottom sheet</Button>
+        <BottomSheet isOpen={defaultOpen} onDismiss={() => setDefaultOpen(false)}>
+          <BottomSheetHeader title="Terms & conditions" subtitle="Read carefully before accepting" />
+          <BottomSheetBody>{filler(12)}</BottomSheetBody>
+          <BottomSheetFooter>
+            <Button isFullWidth onClick={() => setDefaultOpen(false)}>
+              I agree
+            </Button>
+          </BottomSheetFooter>
+        </BottomSheet>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Custom snapPoints [0.3, 0.6, 0.95]</Label>
+        <Button onClick={() => setCustomOpen(true)}>Open custom snap points</Button>
+        <BottomSheet isOpen={customOpen} onDismiss={() => setCustomOpen(false)} snapPoints={[0.3, 0.6, 0.95]}>
+          <BottomSheetHeader title="Custom snap points" />
+          <BottomSheetBody>{filler(20)}</BottomSheetBody>
+        </BottomSheet>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Short content — content-fit: the sheet is shorter than its snap points, and they collapse to one stop</Label>
+        <Button onClick={() => setShortOpen(true)}>Open short sheet</Button>
+        <BottomSheet isOpen={shortOpen} onDismiss={() => setShortOpen(false)}>
+          <BottomSheetHeader title="Quick action" />
+          <BottomSheetBody>
+            <Text variant="body">Just a sentence — the sheet hugs it.</Text>
+          </BottomSheetBody>
+          <BottomSheetFooter>
+            <Button isFullWidth onClick={() => setShortOpen(false)}>
+              Got it
+            </Button>
+          </BottomSheetFooter>
+        </BottomSheet>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Headerless — floating close button, accessibilityLabel names the dialog</Label>
+        <Button onClick={() => setHeaderlessOpen(true)}>Open headerless</Button>
+        <BottomSheet isOpen={headerlessOpen} onDismiss={() => setHeaderlessOpen(false)} accessibilityLabel="Promotion">
+          <BottomSheetBody>
+            <Text variant="body">Self-explanatory content — check the top-right corner for overlap.</Text>
+          </BottomSheetBody>
+        </BottomSheet>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>isDismissible=false — no close button, backdrop-click, Escape, or swipe-to-dismiss</Label>
+        <Button onClick={() => setLockedOpen(true)}>Open non-dismissible</Button>
+        <BottomSheet isOpen={lockedOpen} onDismiss={() => setLockedOpen(false)} isDismissible={false}>
+          <BottomSheetHeader title="Accept to continue" />
+          <BottomSheetBody>
+            <Text variant="body">Only the button below closes this.</Text>
+          </BottomSheetBody>
+          <BottomSheetFooter>
+            <Button isFullWidth onClick={() => setLockedOpen(false)}>
+              I accept
+            </Button>
+          </BottomSheetFooter>
+        </BottomSheet>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap="2" marginTop="3">
+        <Label>Nested sheets — no z-index stack registry (second stacks above the first by DOM mount order); Escape closes only the top sheet, a second Escape closes the first</Label>
+        <Button onClick={() => setOuterOpen(true)}>Open first sheet</Button>
+        <BottomSheet isOpen={outerOpen} onDismiss={() => setOuterOpen(false)}>
+          <BottomSheetHeader title="First sheet" />
+          <BottomSheetBody>{filler(3)}</BottomSheetBody>
+          <BottomSheetFooter>
+            <Button isFullWidth onClick={() => setInnerOpen(true)}>
+              Open nested sheet
+            </Button>
+          </BottomSheetFooter>
+        </BottomSheet>
+        <BottomSheet isOpen={innerOpen} onDismiss={() => setInnerOpen(false)} snapPoints={[0.4, 0.6]}>
+          <BottomSheetHeader title="Second sheet" showBackButton onBackButtonClick={() => setInnerOpen(false)} />
+          <BottomSheetBody>{filler(2)}</BottomSheetBody>
+        </BottomSheet>
       </Box>
     </Section>
   );
@@ -1472,6 +1577,7 @@ function App() {
         <TooltipGallery />
         <PopoverGallery />
         <ModalGallery />
+        <BottomSheetGallery />
         <TabsGallery />
         <CheckboxGallery />
         <RadioGallery />
