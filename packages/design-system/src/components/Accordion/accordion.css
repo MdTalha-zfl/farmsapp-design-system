@@ -1,0 +1,166 @@
+@layer ds-components {
+  .ds-accordion {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* `overflow: hidden` on the rounded card is what clips the first/last
+     header's hover background to the corners — Blade needs JS-computed
+     per-item border radii for this; a clipped parent needs none. */
+  .ds-accordion--variant-filled {
+    background-color: var(--ds-color-surface-sunken);
+    border-radius: var(--ds-radius-lg);
+    overflow: hidden;
+  }
+
+  .ds-accordion--variant-transparent .ds-accordion__item + .ds-accordion__item {
+    border-top: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+  }
+
+  .ds-accordion--variant-filled .ds-accordion__item + .ds-accordion__item {
+    border-top: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+  }
+
+  /* --- Header --- */
+
+  .ds-accordion__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-2);
+    padding-right: var(--ds-space-3);
+    transition: background-color var(--ds-duration-base) var(--ds-easing-standard);
+  }
+
+  .ds-accordion__header:hover:has(.ds-accordion__trigger:not(:disabled)) {
+    background-color: var(--ds-color-action-tertiary-hover);
+  }
+
+  .ds-accordion__heading {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font: inherit;
+  }
+
+  .ds-accordion__trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    width: 100%;
+    padding: var(--ds-space-3) 0 var(--ds-space-3) var(--ds-space-3);
+    background: transparent;
+    border: none;
+    color: var(--ds-color-text-primary);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  /* Stretched hit area: makes the whole header row (including the space
+     behind `trailing` and the chevron) toggle, while `trailing` stays a
+     sibling of the button rather than nested inside it. */
+  .ds-accordion__trigger::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .ds-accordion__trigger:focus-visible {
+    outline: none;
+  }
+
+  .ds-accordion__trigger:focus-visible::after {
+    outline: var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);
+    outline-offset: calc(var(--ds-focus-ring-width) * -1);
+  }
+
+  .ds-accordion__trigger:disabled {
+    color: var(--ds-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .ds-accordion__leading {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  .ds-accordion__number {
+    flex-shrink: 0;
+  }
+
+  .ds-accordion__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-0-5);
+    min-width: 0;
+  }
+
+  .ds-accordion__title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--ds-space-2);
+  }
+
+  /* Above the stretched ::after overlay, so it receives its own clicks. */
+  .ds-accordion__trailing {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .ds-accordion__chevron {
+    flex-shrink: 0;
+    color: var(--ds-color-text-secondary);
+    pointer-events: none;
+    transition: transform var(--ds-duration-base) var(--ds-easing-standard);
+  }
+
+  .ds-accordion__item--expanded .ds-accordion__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* --- Body --- */
+
+  .ds-accordion__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition:
+      grid-template-rows var(--ds-duration-base) var(--ds-easing-standard),
+      visibility 0s linear var(--ds-duration-base);
+  }
+
+  .ds-accordion__panel--expanded {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition:
+      grid-template-rows var(--ds-duration-base) var(--ds-easing-standard),
+      visibility 0s linear 0s;
+  }
+
+  .ds-accordion__panel-clip {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .ds-accordion__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-3);
+    padding: 0 var(--ds-space-3) var(--ds-space-3);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds-accordion__header,
+    .ds-accordion__chevron,
+    .ds-accordion__panel,
+    .ds-accordion__panel--expanded {
+      transition: none;
+    }
+  }
+}
