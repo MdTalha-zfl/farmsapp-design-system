@@ -104,6 +104,8 @@ export { AccordionItem, type AccordionItemProps } from "./components/Accordion/A
 export { AccordionItemHeader, type AccordionItemHeaderProps } from "./components/Accordion/AccordionItemHeader";
 export { AccordionItemBody, type AccordionItemBodyProps } from "./components/Accordion/AccordionItemBody";
 export type { AccordionVariant, AccordionSize } from "./components/Accordion/AccordionContext";
+export { Carousel, type CarouselProps, type CarouselImageFit } from "./components/Carousel/Carousel";
+export { CarouselItem, type CarouselItemProps } from "./components/Carousel/CarouselItem";
 export { Checkbox, type CheckboxProps } from "./components/Checkbox/Checkbox";
 export { CheckboxGroup, type CheckboxGroupProps } from "./components/Checkbox/CheckboxGroup/CheckboxGroup";
 export { Radio, type RadioProps } from "./components/Radio/Radio";
