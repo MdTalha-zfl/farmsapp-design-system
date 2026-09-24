@@ -95,6 +95,7 @@ export { BottomSheet, type BottomSheetProps } from "./components/BottomSheet/Bot
 export { BottomSheetHeader, type BottomSheetHeaderProps } from "./components/BottomSheet/BottomSheetHeader";
 export { BottomSheetBody, type BottomSheetBodyProps } from "./components/BottomSheet/BottomSheetBody";
 export { BottomSheetFooter, type BottomSheetFooterProps } from "./components/BottomSheet/BottomSheetFooter";
+export { BottomBar, type BottomBarProps } from "./components/BottomBar/BottomBar";
 export { Dropdown, type DropdownProps } from "./components/Dropdown/Dropdown";
 export { DropdownOverlay, type DropdownOverlayProps } from "./components/Dropdown/DropdownOverlay";
 export { DropdownButton, type DropdownButtonProps } from "./components/Dropdown/DropdownButton";
