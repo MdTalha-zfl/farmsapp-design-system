@@ -1,0 +1,157 @@
+@layer ds-components {
+  /* The list is the scroller (not the panel), so a header and footer stay
+     pinned while the options scroll between them. */
+  .ds-action-list {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--ds-space-1);
+    min-height: 0;
+    padding: var(--ds-space-2);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    outline: none;
+  }
+
+  .ds-action-list[hidden] {
+    display: none;
+  }
+
+  .ds-action-list__empty {
+    padding: var(--ds-space-4) var(--ds-space-3);
+    color: var(--ds-color-text-secondary);
+    font: var(--ds-text-body-md);
+    text-align: center;
+  }
+
+  .ds-action-list__section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ds-action-list__section:not(:last-child) {
+    margin-block-end: var(--ds-space-1);
+    padding-block-end: var(--ds-space-1);
+    border-block-end: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+  }
+
+  .ds-action-list__section-title {
+    margin: 0;
+    padding: var(--ds-space-2) var(--ds-space-2);
+    color: var(--ds-color-text-secondary);
+    font-size: var(--ds-font-size-small);
+    font-weight: var(--ds-font-weight-medium);
+  }
+
+  .ds-action-list__item {
+    /* box-sizing: border-box; */
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    width: 100%;
+    min-height: 30px;
+    background-color: transparent;
+    border: none;
+    border-radius: var(--ds-radius-sm);
+    color: var(--ds-color-text-primary);
+    padding: 0 var(--ds-space-2);
+    cursor: pointer;
+    font: var(--ds-text-body-md);
+    text-align: start;
+    transition: background-color var(--ds-duration-fast) var(--ds-easing-standard);
+  }
+
+  .ds-action-list__item--negative {
+    color: var(--ds-color-text-danger);
+  }
+
+  .ds-action-list__item--selected {
+    background-color: var(--ds-color-action-secondary);
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .ds-action-list__item:disabled,
+  .ds-action-list__item[aria-disabled="true"] {
+    color: var(--ds-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .ds-action-list__item:focus-visible {
+    outline: var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);
+    outline-offset: calc(var(--ds-focus-ring-offset) * -1);
+  }
+
+  /* Hovering moves real focus onto a menu item (floating-ui's
+     focusItemOnHover), so :focus covers pointer and keyboard highlight there.
+     A select keeps DOM focus on its field, so its highlighted option carries
+     data-active instead. */
+  .ds-action-list__item:hover:not(:disabled, [aria-disabled="true"]),
+  .ds-action-list__item:focus:not(:disabled, [aria-disabled="true"]),
+  .ds-action-list__item[data-active]:not([aria-disabled="true"]) {
+    background-color: var(--ds-color-action-tertiary-hover);
+  }
+
+  .ds-action-list__item--selected:hover:not([aria-disabled="true"]),
+  .ds-action-list__item--selected[data-active]:not([aria-disabled="true"]) {
+    background-color: var(--ds-color-action-secondary-hover);
+  }
+
+  /* Multiple select: a visual checkbox in front of each option. */
+  .ds-action-list__checkbox {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    border: var(--ds-border-width-thin) solid var(--ds-color-border-default);
+    border-radius: var(--ds-radius-sm);
+    transition: background-color var(--ds-duration-fast) var(--ds-easing-standard);
+  }
+
+  .ds-action-list__checkbox > svg {
+    opacity: 0;
+  }
+
+  .ds-action-list__checkbox[data-checked] {
+    background-color: var(--ds-color-action-primary);
+    border-color: var(--ds-color-action-primary);
+  }
+
+  .ds-action-list__checkbox[data-checked] > svg {
+    opacity: 1;
+  }
+
+  .ds-action-list__leading,
+  .ds-action-list__trailing {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  .ds-action-list__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .ds-action-list__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--ds-font-size-small);
+  }
+
+  .ds-action-list__description {
+    color: var(--ds-color-text-secondary);
+    font: var(--ds-text-caption);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds-action-list__item {
+      transition: none;
+    }
+  }
+}

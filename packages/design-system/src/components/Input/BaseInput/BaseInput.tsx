@@ -30,7 +30,7 @@ import type { FormInputLabelProps, FormInputValidationProps, InputSize } from ".
  * forward it — none of them re-render this structure themselves.
  */
 
-export type BaseInputFieldElement = "input" | "textarea";
+export type BaseInputFieldElement = "input" | "textarea" | "button";
 export type BaseInputNativeType = "text" | "tel" | "email" | "url" | "number" | "search" | "password";
 
 export interface BaseInputProps extends FormInputLabelProps, FormInputValidationProps {
@@ -79,6 +79,27 @@ export interface BaseInputProps extends FormInputLabelProps, FormInputValidation
 
   /** textarea only. */
   numberOfLines?: number | undefined;
+
+  /**
+   * `as="button"` only (SelectInput). The field is a `<button>` showing
+   * `buttonContent`; `buttonProps` is merged onto it (a Dropdown's trigger
+   * wiring: role, aria-expanded, key handlers, …), and `buttonRef` receives it.
+   * A separate ref rather than widening this component's forwardRef type,
+   * which would ripple into every wrapper that types its own ref.
+   */
+  buttonContent?: ReactNode;
+  buttonProps?: Record<string, unknown> | undefined;
+  buttonRef?: Ref<HTMLButtonElement> | undefined;
+  /** True when `buttonContent` is the placeholder, so it is dimmed. */
+  isPlaceholderShown?: boolean | undefined;
+  /** `as="input"` only (AutoComplete): merged onto the `<input>` after this
+   * component's own handlers, so it wins — a Dropdown's trigger wiring (role,
+   * aria-expanded, key handlers, …). */
+  inputProps?: Record<string, unknown> | undefined;
+  /** A multiple select/AutoComplete: removable tags rendered in the field
+   * before the button/input, wrapping according to `tagRows`. */
+  buttonTags?: ReactNode;
+  tagRows?: "single" | "multiple" | "expandable" | undefined;
 
   accessibilityLabel?: string | undefined;
   /** Hides the visible FormLabel text while keeping it (or
@@ -148,6 +169,13 @@ export const BaseInput = forwardRef<HTMLInputElement | HTMLTextAreaElement, Base
     trailingHeaderSlot,
     trailingFooterSlot,
     numberOfLines,
+    buttonContent,
+    buttonProps,
+    buttonRef,
+    isPlaceholderShown = false,
+    inputProps,
+    buttonTags,
+    tagRows = "multiple",
     accessibilityLabel,
     hideLabelText,
     hideFormHint,
@@ -231,12 +259,45 @@ export const BaseInput = forwardRef<HTMLInputElement | HTMLTextAreaElement, Base
     ...accessibleAttrs,
   } as const;
 
-  const field =
-    as === "textarea" ? (
+  const buttonField = (
+    <button
+      {...accessibleAttrs}
+      {...buttonProps}
+      ref={buttonRef}
+      id={id}
+      type="button"
+      disabled={isDisabled}
+      className={["ds-input", isPlaceholderShown && "ds-input--placeholder"].filter(Boolean).join(" ")}
+    >
+      <span className="ds-input-button-text">{buttonContent}</span>
+    </button>
+  );
+
+  const bareField =
+    as === "button" ? (
+      buttonField
+    ) : as === "textarea" ? (
       <textarea {...fieldElementProps} ref={ref as Ref<HTMLTextAreaElement>} rows={numberOfLines ?? 2} />
     ) : (
-      <input {...fieldElementProps} ref={ref as Ref<HTMLInputElement>} type={type} maxLength={maxCharacters} />
+      <input
+        {...fieldElementProps}
+        {...inputProps}
+        ref={ref as Ref<HTMLInputElement>}
+        type={type}
+        maxLength={maxCharacters}
+      />
     );
+  // Defined (even if empty) means multiple mode: keep the wrapper mounted so
+  // the input/button is not re-created — and focus lost — when the first tag
+  // is added or the last removed.
+  const field = buttonTags !== undefined ? (
+    <div className={`ds-input-tags ds-input-tags--${tagRows}`}>
+      {buttonTags}
+      {bareField}
+    </div>
+  ) : (
+    bareField
+  );
 
   const labelRow = hasLabel ? (
     <FormLabel

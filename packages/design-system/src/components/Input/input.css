@@ -81,6 +81,11 @@
     color: var(--ds-color-text-secondary);
   }
 
+  /* SelectInput's <button> shows its placeholder as text, not ::placeholder. */
+  .ds-input--placeholder {
+    color: var(--ds-color-text-secondary);
+  }
+
   .ds-input:disabled {
     color: var(--ds-color-text-disabled);
     cursor: not-allowed;
@@ -102,6 +107,54 @@
   textarea.ds-input {
     resize: vertical;
     padding-block: var(--ds-space-2);
+  }
+
+  /* SelectInput: a <button> inside the same bordered field shell. */
+  button.ds-input {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-align: start;
+  }
+
+  .ds-input-button-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Multiple select: removable tags sit in the field, in front of the button
+     that still opens the list. The row uses min-height, so wrapping tags grow it. */
+  .ds-input-tags {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-space-1);
+    min-width: 0;
+    padding-block: var(--ds-space-1);
+  }
+
+  .ds-input-tags > button.ds-input,
+  .ds-input-tags > input.ds-input {
+    flex: 1 1 48px;
+    align-self: stretch;
+    min-width: 48px;
+  }
+
+  .ds-input-tags--single {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .ds-input-tags--single > .ds-select-tag {
+    flex-shrink: 0;
+  }
+
+  .ds-input-tags--multiple {
+    max-height: calc(3 * 28px + 2 * var(--ds-space-1));
+    overflow-y: auto;
   }
 
   .ds-input-adornment {
