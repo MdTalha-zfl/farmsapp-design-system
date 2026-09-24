@@ -1,0 +1,104 @@
+@layer ds-components {
+  .ds-drawer-overlay {
+    z-index: var(--ds-z-index-drawer);
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--ds-color-surface-overlay);
+  }
+
+  /* showOverlay={false}: no dimming, and clicks reach the page behind. */
+  .ds-drawer-overlay--no-backdrop {
+    background-color: transparent;
+    pointer-events: none;
+  }
+
+  .ds-drawer__panel {
+    --ds-drawer-padding: var(--ds-space-3);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 420px;
+    height: 100%;
+    background-color: var(--ds-color-surface-raised);
+    box-shadow: var(--ds-elevation-dialog);
+    outline: none;
+    overflow: hidden;
+    pointer-events: auto;
+
+    /* Off-screen until Drawer.tsx sets the open position. transform and
+       opacity only — Blade's transition on `all` also animates layout
+       properties. */
+    transform: translateX(100%);
+    will-change: transform;
+    transition: transform var(--ds-duration-slow) var(--ds-easing-standard);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds-drawer__panel {
+      transition: none;
+    }
+  }
+
+  .ds-drawer__close-floating {
+    position: absolute;
+    top: var(--ds-space-3);
+    right: var(--ds-space-3);
+    z-index: 1;
+  }
+
+  .ds-drawer__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-3);
+    padding: var(--ds-drawer-padding) var(--ds-drawer-padding) var(--ds-space-3);
+  }
+
+  .ds-drawer__header-wrap {
+    flex-shrink: 0;
+  }
+
+  .ds-drawer__header-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ds-space-2);
+  }
+
+  .ds-drawer__header-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-0-5);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ds-drawer__close {
+    flex-shrink: 0;
+  }
+
+  .ds-drawer__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--ds-drawer-padding);
+  }
+
+  /* No DrawerHeader: the floating close button sits over the top-right of the
+     panel, so the body starts below it instead of running underneath. */
+  .ds-drawer__panel--headerless .ds-drawer__body {
+    padding-top: calc(var(--ds-drawer-padding) + var(--ds-space-4));
+  }
+
+  .ds-drawer__footer {
+    flex-shrink: 0;
+  }
+
+  .ds-drawer__footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-3);
+    padding: var(--ds-drawer-padding);
+  }
+}
