@@ -99,6 +99,7 @@ export { Drawer, type DrawerProps } from "./components/Drawer/Drawer";
 export { DrawerHeader, type DrawerHeaderProps } from "./components/Drawer/DrawerHeader";
 export { DrawerBody, type DrawerBodyProps } from "./components/Drawer/DrawerBody";
 export { DrawerFooter, type DrawerFooterProps } from "./components/Drawer/DrawerFooter";
+export { BottomBar, type BottomBarProps } from "./components/BottomBar/BottomBar";
 export { Dropdown, type DropdownProps } from "./components/Dropdown/Dropdown";
 export { DropdownOverlay, type DropdownOverlayProps } from "./components/Dropdown/DropdownOverlay";
 export { DropdownButton, type DropdownButtonProps } from "./components/Dropdown/DropdownButton";
