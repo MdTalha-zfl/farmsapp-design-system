@@ -1,0 +1,67 @@
+@layer ds-components {
+  .ds-menu__overlay {
+    z-index: var(--ds-z-index-dropdown);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-0-5);
+    min-width: 200px;
+    padding: var(--ds-space-2);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background-color: var(--ds-color-surface-base);
+    border: var(--ds-border-width-thin) solid var(--ds-color-border-default);
+    border-radius: var(--ds-radius-md);
+    box-shadow: var(--ds-elevation-dialog);
+    outline: none;
+  }
+
+  @media (width >= 640px) {
+    .ds-menu__overlay {
+      min-width: 240px;
+    }
+  }
+
+  /* Items share the Dropdown's item styling (ds-action-list__item); these are
+     the parts a menu adds. */
+  .ds-menu__item {
+    text-decoration: none;
+  }
+
+  .ds-menu__item[aria-expanded="true"]:not([aria-disabled="true"]) {
+    background-color: var(--ds-color-action-tertiary-hover);
+  }
+
+  /* Rules, headers and footers span the panel's full width: a negative margin
+     cancels its padding. */
+  .ds-menu__divider {
+    height: 0;
+    margin: var(--ds-space-1) calc(var(--ds-space-2) * -1);
+    border: none;
+    border-block-start: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+  }
+
+  .ds-menu__header {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-2);
+    margin: calc(var(--ds-space-2) * -1) calc(var(--ds-space-2) * -1) var(--ds-space-1);
+    padding: var(--ds-space-3) var(--ds-space-4);
+    border-block-end: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+  }
+
+  .ds-menu__header-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .ds-menu__footer {
+    display: flex;
+    gap: var(--ds-space-2);
+    margin: var(--ds-space-1) calc(var(--ds-space-2) * -1) calc(var(--ds-space-2) * -1);
+    padding: var(--ds-space-3) var(--ds-space-4);
+    border-block-start: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+  }
+}
