@@ -1,0 +1,35 @@
+@layer ds-components {
+  /* The bordered row, its radius, size, disabled/validation states and focus
+     ring all come from input.css (`ds-input-row`, which must load first); these
+     are only the parts a counter changes. */
+  .ds-counter {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    width: fit-content;
+    padding: 0;
+  }
+
+  /* Touch target: as tall as the row (the min-heights in input.css), not the
+     16-24px of a bare icon. Update together with input.css. */
+  .ds-counter--size-xsmall { --ds-counter-button-width: 28px; }
+  .ds-counter--size-small { --ds-counter-button-width: 32px; }
+  .ds-counter--size-medium { --ds-counter-button-width: 36px; }
+  .ds-counter--size-large { --ds-counter-button-width: 48px; }
+
+  .ds-counter__button {
+    flex: none;
+    align-self: stretch;
+    width: var(--ds-counter-button-width);
+    border-radius: 0;
+  }
+
+  /* The width comes from the widest allowed value (`--ds-counter-digits`, set
+     inline), so it never depends on what is typed. */
+  .ds-counter__input {
+    flex: none;
+    width: calc(var(--ds-counter-digits) * 1ch + var(--ds-space-2));
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+}
