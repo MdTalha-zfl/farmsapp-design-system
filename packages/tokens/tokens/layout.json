@@ -1,0 +1,10 @@
+{
+  "layout": {
+    "sideNav": {
+      "width": {
+        "expanded": { "$value": "240px", "$type": "dimension", "$description": "SideNav's full width — also its width while a SideNavLevel is open (the level panel shares it with the rail). Consumers offset page content by this (margin-inline-start) because SideNav is position: fixed. Blade uses 240px, or 264px from its xl breakpoint; this project's breakpoint tokens have no xl, so there is one value." },
+        "collapsed": { "$value": "56px", "$type": "dimension", "$description": "SideNav's icon-only rail: its whole width when isExpanded is false, and L1's width (on top of the level panel) while a SideNavLevel is open." }
+      }
+    }
+  }
+}
