@@ -1,0 +1,67 @@
+@layer ds-components {
+  .ds-otp {
+    display: flex;
+    gap: var(--ds-space-2);
+  }
+
+  .ds-otp__box--size-xsmall { --ds-otp-box-size: 36px; }
+  .ds-otp__box--size-small { --ds-otp-box-size: 40px; }
+  .ds-otp__box--size-medium { --ds-otp-box-size: 48px; }
+  .ds-otp__box--size-large { --ds-otp-box-size: 56px; }
+
+  /* Each box is an input row of its own (radius, validation and disabled
+     states come from input.css); these are the parts an OTP box changes: a
+     fixed square instead of a stretched row, a centred and larger character,
+     and its own flat/filled-until-focused look instead of input.css's
+     always-bordered one (overridden below). */
+  .ds-otp__box {
+    flex: none;
+    width: var(--ds-otp-box-size);
+    height: var(--ds-otp-box-size);
+    align-items: center;
+    justify-content: center;
+    padding-inline: 0;
+    background-color: var(--ds-color-surface-base);
+    border: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+  }
+
+
+  .ds-otp__box .ds-input {
+    width: 100%;
+    height: 100%;
+    font-weight: var(--ds-font-weight-medium);
+    text-align: center;
+  }
+
+  .ds-otp__box--size-xsmall .ds-input {
+    font-size: 14px;
+  }
+
+  .ds-otp__box--size-small .ds-input {
+    font-size: 16px;
+  }
+
+  .ds-otp__box--size-medium .ds-input {
+    font-size: 18px;
+  }
+
+  .ds-otp__box--size-large .ds-input {
+    font-size: 24px;
+  }
+
+  /* The box holding the caret is always marked, not only for keyboard focus:
+     the character advances the caret by itself, so a mouse or touch user
+     needs to see where the next one will land. */
+  .ds-otp__box:has(.ds-input:focus) {
+    background-color: var(--ds-color-surface-base);
+    border-color: var(--ds-color-action-primary);
+  }
+
+  .ds-otp__box:has(.ds-input:focus-visible) {
+    outline: none;
+  }
+
+  .ds-otp__box .ds-input::placeholder {
+    color: var(--ds-color-text-disabled);
+  }
+}
