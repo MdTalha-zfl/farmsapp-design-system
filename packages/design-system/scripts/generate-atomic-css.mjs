@@ -210,6 +210,7 @@ const componentCssFiles = [
   "../src/components/Carousel/carousel.css",
   "../src/components/Drawer/drawer.css",
   "../src/components/Dropdown/dropdown.css",
+  "../src/components/Menu/menu.css",
   "../src/components/ActionList/action-list.css",
   "../src/components/Selector/selector.css",
   "../src/components/Checkbox/checkbox.css",
