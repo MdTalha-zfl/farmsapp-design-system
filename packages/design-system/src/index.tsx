@@ -79,6 +79,7 @@ export { TextInput, type TextInputProps, type TextInputType } from "./components
 export { PasswordInput, type PasswordInputProps } from "./components/Input/PasswordInput/PasswordInput";
 export { SearchInput, type SearchInputProps } from "./components/Input/SearchInput/SearchInput";
 export { TextArea, type TextAreaProps } from "./components/Input/TextArea/TextArea";
+export { OTPInput, type OTPInputProps } from "./components/Input/OTPInput/OTPInput";
 export type { InputSize, ValidationState, NecessityIndicator, FormInputLabelProps, FormInputValidationProps } from "./components/Input/types";
 export { Tooltip, type TooltipProps, type TooltipPlacement } from "./components/Tooltip/Tooltip";
 export { TooltipInteractiveWrapper, type TooltipInteractiveWrapperProps } from "./components/Tooltip/TooltipInteractiveWrapper";

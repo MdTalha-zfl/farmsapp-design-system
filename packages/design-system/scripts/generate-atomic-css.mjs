@@ -201,6 +201,7 @@ const componentCssFiles = [
   "../src/components/FormLabel/formLabel.css",
   "../src/components/FormHint/formHint.css",
   "../src/components/Input/input.css",
+  "../src/components/Input/OTPInput/otp-input.css",
   "../src/components/Tooltip/tooltip.css",
   "../src/components/Popover/popover.css",
   "../src/components/Modal/modal.css",
