@@ -134,6 +134,7 @@ export { Carousel, type CarouselProps, type CarouselImageFit } from "./component
 export { CarouselItem, type CarouselItemProps } from "./components/Carousel/CarouselItem";
 export { Checkbox, type CheckboxProps } from "./components/Checkbox/Checkbox";
 export { CheckboxGroup, type CheckboxGroupProps } from "./components/Checkbox/CheckboxGroup/CheckboxGroup";
+export { CounterInput, type CounterInputProps } from "./components/Input/CounterInput/CounterInput";
 export { Radio, type RadioProps } from "./components/Radio/Radio";
 export { RadioGroup, type RadioGroupProps } from "./components/Radio/RadioGroup/RadioGroup";
 export {

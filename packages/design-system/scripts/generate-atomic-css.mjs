@@ -213,6 +213,7 @@ const componentCssFiles = [
   "../src/components/ActionList/action-list.css",
   "../src/components/Selector/selector.css",
   "../src/components/Checkbox/checkbox.css",
+  "../src/components/Input/CounterInput/counter-input.css",
   "../src/components/Radio/radio.css",
   "../src/components/Switch/switch.css",
   "../src/components/BottomBar/bottom-bar.css",
