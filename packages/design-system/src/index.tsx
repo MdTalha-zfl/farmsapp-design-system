@@ -120,6 +120,14 @@ export { MenuOverlay, type MenuOverlayProps } from "./components/Menu/MenuOverla
 export { MenuItem, type MenuItemProps } from "./components/Menu/MenuItem";
 export { MenuDivider } from "./components/Menu/MenuDivider";
 export { MenuHeader, MenuFooter, type MenuHeaderProps, type MenuFooterProps } from "./components/Menu/MenuHeaderFooter";
+export { SideNav, type SideNavProps } from "./components/SideNav/SideNav";
+export { SideNavHeader, type SideNavHeaderProps } from "./components/SideNav/SideNavHeader";
+export { SideNavBody, type SideNavBodyProps } from "./components/SideNav/SideNavBody";
+export { SideNavFooter, type SideNavFooterProps } from "./components/SideNav/SideNavFooter";
+export { SideNavSection, type SideNavSectionProps } from "./components/SideNav/SideNavSection";
+export { SideNavLink, type SideNavLinkProps } from "./components/SideNav/SideNavLink";
+export { SideNavLevel, type SideNavLevelProps } from "./components/SideNav/SideNavLevel";
+export { SideNavItem, type SideNavItemProps } from "./components/SideNav/SideNavItem";
 export {
   ActionListItem,
   ActionListItemIcon,
