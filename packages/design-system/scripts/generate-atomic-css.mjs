@@ -219,6 +219,7 @@ const componentCssFiles = [
   "../src/components/SideNav/side-nav.css",
   "../src/components/Radio/radio.css",
   "../src/components/Switch/switch.css",
+  "../src/components/Toast/toast.css",
   "../src/components/BottomBar/bottom-bar.css",
   "../src/components/BottomNav/bottom-nav.css",
 ];

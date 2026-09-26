@@ -1,0 +1,226 @@
+@layer ds-components {
+  /* Fixed column. Regions inside are always mounted (screen readers announce
+     additions to an existing live region reliably), so an empty one must
+     not take part in flow or the column's gap would show as blank space:
+     absolutely positioned = out of flow, still in the accessibility tree
+     (display:none would remove it). */
+  .ds-toaster {
+    --ds-toast-shift: var(--ds-space-2);
+    --ds-toast-gutter: var(--ds-space-4);
+
+    position: fixed;
+    z-index: var(--ds-z-index-toast);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-2);
+    width: min(calc(100% - 2 * var(--ds-toast-gutter)), 400px);
+    pointer-events: none;
+
+    /* Default: bottom-center. */
+    inset-block-end: var(--ds-toast-offset, var(--ds-toast-gutter));
+    inset-inline: 0;
+    margin-inline: auto;
+  }
+
+  .ds-toast-region {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-2);
+  }
+
+  .ds-toast-region:empty {
+    position: absolute;
+  }
+
+  /* No explicit placement: bottom-start once there is room (>= 600px, the
+     component breakpoint tier). CSS custom properties can't be used in media
+     queries, hence the literal. */
+  @media (width >= 600px) {
+    .ds-toaster:not([data-placement]) {
+      inset-inline: var(--ds-toast-gutter) auto;
+      margin-inline: 0;
+    }
+  }
+
+  /* --- explicit placement --- */
+  .ds-toaster[data-placement^="top"] {
+    --ds-toast-shift: calc(-1 * var(--ds-space-2));
+
+    inset-block: var(--ds-toast-offset, var(--ds-toast-gutter)) auto;
+  }
+
+  .ds-toaster[data-placement^="bottom"] {
+    inset-block: auto var(--ds-toast-offset, var(--ds-toast-gutter));
+  }
+
+  .ds-toaster[data-placement$="-start"] {
+    inset-inline: var(--ds-toast-gutter) auto;
+    margin-inline: 0;
+  }
+
+  .ds-toaster[data-placement$="-end"] {
+    inset-inline: auto var(--ds-toast-gutter);
+    margin-inline: 0;
+  }
+
+  .ds-toaster[data-placement$="-center"] {
+    inset-inline: 0;
+    margin-inline: auto;
+  }
+
+  /* --- toast ---
+     Each signal intent is a solid, strong background (the same step-9
+     colors a filled button uses) with inverse (near-white) text and icon
+     — no border, so the color itself is the only signal, at full
+     strength rather than a pale tint. Neutral (no signal) is the one
+     exception: plain surface, default text, no icon. */
+  .ds-toast {
+    --ds-toast-bg: var(--ds-color-surface-raised);
+    --ds-toast-text: var(--ds-color-text-primary);
+
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ds-space-3);
+    padding: var(--ds-space-3) var(--ds-space-4);
+    background-color: var(--ds-toast-bg);
+    border-radius: var(--ds-radius-md);
+    box-shadow: var(--ds-elevation-dialog);
+    pointer-events: auto;
+
+    /* Long or Devanagari text wraps; nothing here fixes a height or clamps
+       lines, and no JS measures the toast, so it can never clip. */
+    min-width: 0;
+    overflow-wrap: anywhere;
+    animation: ds-toast-in var(--ds-duration-base) var(--ds-easing-standard) both;
+  }
+
+  .ds-toast[data-state="closing"] {
+    /* `forwards` holds the last frame until the store removes the node, so
+       there is no flash of the toast between animationend and removal. */
+    animation: ds-toast-out var(--ds-duration-fast) var(--ds-easing-standard) forwards;
+    pointer-events: none;
+  }
+
+  /* No dedicated "info" hue exists — reuses the brand color, same as any
+     other informational chrome (a primary Button, a link). */
+  .ds-toast[data-intent="info"] {
+    --ds-toast-bg: var(--ds-color-action-primary);
+    --ds-toast-text: var(--ds-color-text-inverse);
+  }
+
+  .ds-toast[data-intent="success"] {
+    --ds-toast-bg: var(--ds-color-feedback-success);
+    --ds-toast-text: var(--ds-color-text-inverse);
+  }
+
+  .ds-toast[data-intent="warning"] {
+    --ds-toast-bg: var(--ds-color-feedback-warning);
+    --ds-toast-text: var(--ds-color-text-inverse);
+  }
+
+  .ds-toast[data-intent="danger"] {
+    --ds-toast-bg: var(--ds-color-feedback-danger);
+    --ds-toast-text: var(--ds-color-text-inverse);
+  }
+
+  .ds-toast__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    color: var(--ds-toast-text);
+  }
+
+  .ds-toast__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-1);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ds-toast__action {
+    display: flex;
+    margin-block-start: var(--ds-space-1);
+  }
+
+  /* The action Button is tertiary (bordered, transparent) everywhere, so it
+     needs the same text-color override as the close button. */
+  .ds-toast__action .ds-button {
+    border-color: var(--ds-toast-text);
+    color: var(--ds-toast-text);
+  }
+
+  .ds-toast__close {
+    flex-shrink: 0;
+  }
+
+  /* Overrides IconButton's own fixed text-color default (including its
+     hover/focus dim to text-secondary, which would read as low-contrast
+     on a colored background) — same later-in-cascade-wins pattern
+     Drawer's own close button uses. */
+  .ds-toast__close,
+  .ds-toast__close:hover,
+  .ds-toast__close:focus-visible {
+    color: var(--ds-toast-text);
+  }
+
+  .ds-toast__close:hover {
+    opacity: 0.8;
+  }
+
+  /* transform + opacity only: compositor-friendly, no layout per frame. */
+  @keyframes ds-toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--ds-toast-shift));
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes ds-toast-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translateY(var(--ds-toast-shift));
+    }
+  }
+
+  @keyframes ds-toast-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes ds-toast-fade-out {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* Opacity only: the animation still runs (briefly) so animationend fires
+     and the toast is removed on cue. */
+  @media (prefers-reduced-motion: reduce) {
+    .ds-toast {
+      animation-name: ds-toast-fade-in;
+    }
+
+    .ds-toast[data-state="closing"] {
+      animation-name: ds-toast-fade-out;
+    }
+  }
+}

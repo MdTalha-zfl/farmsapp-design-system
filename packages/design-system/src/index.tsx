@@ -170,3 +170,15 @@ export type {
   TextAlign,
   TextTransform,
 } from "./components/Box/resolveTypographyClasses";
+export {
+  Toaster,
+  toast,
+  useToast,
+  type ToasterProps,
+  type ToasterPlacement,
+  type ToastApi,
+  type ToastOptions,
+  type ToastIntent,
+  type ToastAction,
+  type ToastDismissReason,
+} from "./components/Toast";
