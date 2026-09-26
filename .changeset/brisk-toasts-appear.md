@@ -1,0 +1,6 @@
+---
+"@farmsapp/design-system": minor
+"@farmsapp/icons": minor
+---
+
+Add Toast (`<Toaster />`, `toast`, `useToast`) — an imperative toast queue with `neutral`/`info`/`success`/`warning`/`danger` intents, an optional single action, `update`-in-place by id, an `onDismiss` reason (`timeout`/`user`/`action`/`api`), at most 3 visible with the rest queued, and configurable placement (default bottom-center on phones, bottom-start from 600px). The queue is a framework-free module singleton, so `toast.show()` works outside React. Every non-neutral intent is a solid, full-strength background (no border) with inverse text and icon — `info` reuses the brand color, since there's no dedicated info hue — so each is unmistakable at a glance, including info versus neutral, which previously looked identical. Presentation is otherwise CSS-only (`transform`/`opacity`, no measured heights, so Devanagari and long strings wrap instead of clipping), with `prefers-reduced-motion` support, always-mounted `status`/`alert` live regions, and the existing `zIndex.toast` token. The countdown pauses while the pointer (mouse only, so a touch tap can't stick it) or keyboard focus is on a toast, or while the tab is hidden, and resumes with the remaining time. Escape dismisses the toast that has focus, and a closing toast is `inert`. Adds `InfoIcon` to `@farmsapp/icons`.
