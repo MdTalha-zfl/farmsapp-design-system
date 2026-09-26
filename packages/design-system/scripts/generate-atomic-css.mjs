@@ -220,6 +220,7 @@ const componentCssFiles = [
   "../src/components/Radio/radio.css",
   "../src/components/Switch/switch.css",
   "../src/components/BottomBar/bottom-bar.css",
+  "../src/components/BottomNav/bottom-nav.css",
 ];
 const componentCss = componentCssFiles
   .map((path) => readFileSync(new URL(path, import.meta.url), "utf8"))

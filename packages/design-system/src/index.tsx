@@ -101,6 +101,8 @@ export { DrawerHeader, type DrawerHeaderProps } from "./components/Drawer/Drawer
 export { DrawerBody, type DrawerBodyProps } from "./components/Drawer/DrawerBody";
 export { DrawerFooter, type DrawerFooterProps } from "./components/Drawer/DrawerFooter";
 export { BottomBar, type BottomBarProps } from "./components/BottomBar/BottomBar";
+export { BottomNav, type BottomNavProps } from "./components/BottomNav/BottomNav";
+export { BottomNavItem, type BottomNavItemProps } from "./components/BottomNav/BottomNavItem";
 export { Dropdown, type DropdownProps } from "./components/Dropdown/Dropdown";
 export { DropdownOverlay, type DropdownOverlayProps } from "./components/Dropdown/DropdownOverlay";
 export { DropdownButton, type DropdownButtonProps } from "./components/Dropdown/DropdownButton";
