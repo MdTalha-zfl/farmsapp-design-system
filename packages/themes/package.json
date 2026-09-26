@@ -1,6 +1,6 @@
 {
   "name": "@farmsapp/themes",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ThemeProvider and brand/theme CSS layers — System Blueprint §06.",
   "type": "module",
   "sideEffects": false,
