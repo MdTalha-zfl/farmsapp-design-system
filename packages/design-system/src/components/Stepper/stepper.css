@@ -1,0 +1,400 @@
+@layer ds-components {
+  /* Sized off the Stepper's own width, not the viewport's — it's as likely
+     to sit in an order-details side panel or a checkout column as to fill
+     the screen. Same reasoning as Carousel; see
+     decisions/decision-carousel-container-queries.md. */
+  .ds-stepper {
+    container: ds-stepper / inline-size;
+    width: 100%;
+  }
+
+  .ds-stepper__list {
+    display: flex;
+    flex-direction: var(--ds-stepper-list-direction);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* ================================================================
+     Orientation bundles
+     ----------------------------------------------------------------
+     There is ONE set of layout rules (below the bundles); everything that
+     differs between vertical and horizontal is a custom property, and an
+     orientation is just a bundle of values for them. That's what lets
+     `orientation={{ base: "vertical", md: "horizontal" }}` switch layouts
+     with container queries alone — no JS measuring, no first-paint flash
+     under SSR. Bundles sit on the list, not `.ds-stepper`: a container
+     query can't restyle the container element itself, only descendants.
+     Tier order matters — same specificity everywhere, so base, then md,
+     then lg, each later tier overriding the one before.
+     See decisions/decision-stepper-responsive-orientation.md.
+     ================================================================ */
+
+  .ds-stepper--vertical .ds-stepper__list {
+    --ds-stepper-list-direction: column;
+    --ds-stepper-item-direction: row;
+    --ds-stepper-item-align: flex-start;
+    --ds-stepper-item-flex: 0 0 auto;
+    --ds-stepper-item-gap: var(--ds-space-3);
+    --ds-stepper-item-padding-inline: 0;
+    --ds-stepper-text-align: start;
+    --ds-stepper-marker-size: var(--ds-space-6);
+    --ds-stepper-track: var(--ds-color-border-strong);
+    --ds-stepper-content-padding-bottom: var(--ds-space-10);
+    --ds-stepper-heading-direction: row;
+    --ds-stepper-heading-gap: 0 var(--ds-space-2);
+    --ds-stepper-heading-min-height: var(--ds-stepper-marker-size);
+    --ds-stepper-title-size: var(--ds-font-size-large);
+    --ds-stepper-title-weight: var(--ds-font-weight-semibold);
+    --ds-stepper-title-accent: 0%;
+    --ds-stepper-details-display: flex;
+    --ds-stepper-connector-top: var(--ds-stepper-marker-size);
+    --ds-stepper-connector-bottom: 0;
+    --ds-stepper-connector-start: calc(var(--ds-stepper-marker-size) / 2 - var(--ds-border-width-thick) / 2);
+    --ds-stepper-connector-end: auto;
+    --ds-stepper-connector-width: var(--ds-border-width-thick);
+    --ds-stepper-connector-height: auto;
+  }
+
+  .ds-stepper--horizontal .ds-stepper__list {
+    --ds-stepper-list-direction: row;
+    --ds-stepper-item-direction: column;
+    --ds-stepper-item-align: center;
+    --ds-stepper-item-flex: 1 1 0;
+    --ds-stepper-item-gap: var(--ds-space-2);
+    --ds-stepper-item-padding-inline: var(--ds-space-1);
+    --ds-stepper-text-align: center;
+    --ds-stepper-marker-size: var(--ds-space-8);
+    --ds-stepper-connector-gap: var(--ds-space-1);
+    --ds-stepper-track: var(--ds-color-border-subtle);
+    --ds-stepper-content-padding-bottom: 0;
+    --ds-stepper-heading-direction: column;
+    --ds-stepper-heading-gap: var(--ds-space-0-5);
+    --ds-stepper-heading-min-height: 0;
+    --ds-stepper-title-size: var(--ds-font-size-medium);
+    --ds-stepper-title-weight: var(--ds-font-weight-medium);
+    --ds-stepper-title-accent: 100%;
+    --ds-stepper-details-display: none;
+    --ds-stepper-connector-top: calc(var(--ds-stepper-marker-size) / 2 - var(--ds-border-width-thick) / 2);
+    --ds-stepper-connector-bottom: auto;
+    --ds-stepper-connector-start: calc(50% + var(--ds-stepper-marker-size) / 2 + var(--ds-stepper-connector-gap));
+    --ds-stepper-connector-end: calc(-50% + var(--ds-stepper-marker-size) / 2 + var(--ds-stepper-connector-gap));
+    --ds-stepper-connector-width: auto;
+    --ds-stepper-connector-height: var(--ds-border-width-thick);
+  }
+
+  /* A base-horizontal stepper on a phone-width container keeps small
+     markers and tight connector gaps; from 480px it has room for the full
+     size. The connector vars are restated because they were computed from
+     the smaller marker size on this same element. */
+  @container ds-stepper (width >= 480px) {
+    .ds-stepper--horizontal .ds-stepper__list {
+      --ds-stepper-marker-size: var(--ds-space-12);
+      --ds-stepper-connector-gap: var(--ds-space-3);
+      --ds-stepper-connector-top: calc(var(--ds-stepper-marker-size) / 2 - var(--ds-border-width-thick) / 2);
+      --ds-stepper-connector-start: calc(50% + var(--ds-stepper-marker-size) / 2 + var(--ds-stepper-connector-gap));
+      --ds-stepper-connector-end: calc(-50% + var(--ds-stepper-marker-size) / 2 + var(--ds-stepper-connector-gap));
+    }
+  }
+
+  @container ds-stepper (width >= 600px) {
+    .ds-stepper--md-vertical .ds-stepper__list {
+      --ds-stepper-list-direction: column;
+      --ds-stepper-item-direction: row;
+      --ds-stepper-item-align: flex-start;
+      --ds-stepper-item-flex: 0 0 auto;
+      --ds-stepper-item-gap: var(--ds-space-3);
+      --ds-stepper-item-padding-inline: 0;
+      --ds-stepper-text-align: start;
+      --ds-stepper-marker-size: var(--ds-space-6);
+      --ds-stepper-track: var(--ds-color-border-strong);
+      --ds-stepper-content-padding-bottom: var(--ds-space-10);
+      --ds-stepper-heading-direction: row;
+      --ds-stepper-heading-gap: 0 var(--ds-space-2);
+      --ds-stepper-heading-min-height: var(--ds-stepper-marker-size);
+      --ds-stepper-title-size: var(--ds-font-size-large);
+      --ds-stepper-title-weight: var(--ds-font-weight-semibold);
+      --ds-stepper-title-accent: 0%;
+      --ds-stepper-details-display: flex;
+      --ds-stepper-connector-top: var(--ds-stepper-marker-size);
+      --ds-stepper-connector-bottom: 0;
+      --ds-stepper-connector-start: calc(var(--ds-stepper-marker-size) / 2 - var(--ds-border-width-thick) / 2);
+      --ds-stepper-connector-end: auto;
+      --ds-stepper-connector-width: var(--ds-border-width-thick);
+      --ds-stepper-connector-height: auto;
+    }
+
+    .ds-stepper--md-horizontal .ds-stepper__list {
+      --ds-stepper-list-direction: row;
+      --ds-stepper-item-direction: column;
+      --ds-stepper-item-align: center;
+      --ds-stepper-item-flex: 1 1 0;
+      --ds-stepper-item-gap: var(--ds-space-2);
+      --ds-stepper-item-padding-inline: var(--ds-space-1);
+      --ds-stepper-text-align: center;
+      --ds-stepper-marker-size: var(--ds-space-12);
+      --ds-stepper-connector-gap: var(--ds-space-3);
+      --ds-stepper-track: var(--ds-color-border-subtle);
+      --ds-stepper-content-padding-bottom: 0;
+      --ds-stepper-heading-direction: column;
+      --ds-stepper-heading-gap: var(--ds-space-0-5);
+      --ds-stepper-heading-min-height: 0;
+      --ds-stepper-title-size: var(--ds-font-size-medium);
+      --ds-stepper-title-weight: var(--ds-font-weight-medium);
+      --ds-stepper-title-accent: 100%;
+      --ds-stepper-details-display: none;
+      --ds-stepper-connector-top: calc(var(--ds-stepper-marker-size) / 2 - var(--ds-border-width-thick) / 2);
+      --ds-stepper-connector-bottom: auto;
+      --ds-stepper-connector-start: calc(50% + var(--ds-stepper-marker-size) / 2 + var(--ds-stepper-connector-gap));
+      --ds-stepper-connector-end: calc(-50% + var(--ds-stepper-marker-size) / 2 + var(--ds-stepper-connector-gap));
+      --ds-stepper-connector-width: auto;
+      --ds-stepper-connector-height: var(--ds-border-width-thick);
+    }
+  }
+
+  @container ds-stepper (width >= 1024px) {
+    .ds-stepper--lg-vertical .ds-stepper__list {
+      --ds-stepper-list-direction: column;
+      --ds-stepper-item-direction: row;
+      --ds-stepper-item-align: flex-start;
+      --ds-stepper-item-flex: 0 0 auto;
+      --ds-stepper-item-gap: var(--ds-space-3);
+      --ds-stepper-item-padding-inline: 0;
+      --ds-stepper-text-align: start;
+      --ds-stepper-marker-size: var(--ds-space-6);
+      --ds-stepper-track: var(--ds-color-border-strong);
+      --ds-stepper-content-padding-bottom: var(--ds-space-10);
+      --ds-stepper-heading-direction: row;
+      --ds-stepper-heading-gap: 0 var(--ds-space-2);
+      --ds-stepper-heading-min-height: var(--ds-stepper-marker-size);
+      --ds-stepper-title-size: var(--ds-font-size-large);
+      --ds-stepper-title-weight: var(--ds-font-weight-semibold);
+      --ds-stepper-title-accent: 0%;
+      --ds-stepper-details-display: flex;
+      --ds-stepper-connector-top: var(--ds-stepper-marker-size);
+      --ds-stepper-connector-bottom: 0;
+      --ds-stepper-connector-start: calc(var(--ds-stepper-marker-size) / 2 - var(--ds-border-width-thick) / 2);
+      --ds-stepper-connector-end: auto;
+      --ds-stepper-connector-width: var(--ds-border-width-thick);
+      --ds-stepper-connector-height: auto;
+    }
+
+    .ds-stepper--lg-horizontal .ds-stepper__list {
+      --ds-stepper-list-direction: row;
+      --ds-stepper-item-direction: column;
+      --ds-stepper-item-align: center;
+      --ds-stepper-item-flex: 1 1 0;
+      --ds-stepper-item-gap: var(--ds-space-2);
+      --ds-stepper-item-padding-inline: var(--ds-space-1);
+      --ds-stepper-text-align: center;
+      --ds-stepper-marker-size: var(--ds-space-12);
+      --ds-stepper-connector-gap: var(--ds-space-3);
+      --ds-stepper-track: var(--ds-color-border-subtle);
+      --ds-stepper-content-padding-bottom: 0;
+      --ds-stepper-heading-direction: column;
+      --ds-stepper-heading-gap: var(--ds-space-0-5);
+      --ds-stepper-heading-min-height: 0;
+      --ds-stepper-title-size: var(--ds-font-size-medium);
+      --ds-stepper-title-weight: var(--ds-font-weight-medium);
+      --ds-stepper-title-accent: 100%;
+      --ds-stepper-details-display: none;
+      --ds-stepper-connector-top: calc(var(--ds-stepper-marker-size) / 2 - var(--ds-border-width-thick) / 2);
+      --ds-stepper-connector-bottom: auto;
+      --ds-stepper-connector-start: calc(50% + var(--ds-stepper-marker-size) / 2 + var(--ds-stepper-connector-gap));
+      --ds-stepper-connector-end: calc(-50% + var(--ds-stepper-marker-size) / 2 + var(--ds-stepper-connector-gap));
+      --ds-stepper-connector-width: auto;
+      --ds-stepper-connector-height: var(--ds-border-width-thick);
+    }
+  }
+
+  /* ================================================================
+     Layout — orientation-agnostic, reads the bundle above
+     ================================================================ */
+
+  /* Horizontal items are equal-width columns (flex: 1 1 0) — that's what
+     lets the connector reach the next marker's centre with plain
+     percentages: the next centre is always 50% past this item's end. */
+  .ds-stepper__item {
+    position: relative;
+    display: flex;
+    flex: var(--ds-stepper-item-flex);
+    flex-direction: var(--ds-stepper-item-direction);
+    align-items: var(--ds-stepper-item-align);
+    gap: var(--ds-stepper-item-gap);
+    min-width: 0;
+    padding-inline: var(--ds-stepper-item-padding-inline);
+    text-align: var(--ds-stepper-text-align);
+  }
+
+  .ds-stepper__rail {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  /* Absolutely positioned in both orientations, against the item: down from
+     under this marker to the item's bottom edge (= the next marker's top)
+     when vertical, across to the next marker when horizontal. */
+  .ds-stepper__connector {
+    position: absolute;
+    top: var(--ds-stepper-connector-top);
+    bottom: var(--ds-stepper-connector-bottom);
+    inset-inline: var(--ds-stepper-connector-start) var(--ds-stepper-connector-end);
+    width: var(--ds-stepper-connector-width);
+    height: var(--ds-stepper-connector-height);
+    background-color: var(--ds-stepper-track);
+    transition: background-color var(--ds-duration-base) var(--ds-easing-standard);
+  }
+
+  .ds-stepper__connector--reached {
+    background-color: var(--ds-stepper-accent);
+  }
+
+  .ds-stepper__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: var(--ds-stepper-item-align);
+    min-width: 0;
+    max-width: 100%;
+    padding-bottom: var(--ds-stepper-content-padding-bottom);
+  }
+
+  .ds-stepper__item--last .ds-stepper__content {
+    padding-bottom: 0;
+  }
+
+  /* Vertical: at least one marker tall, so the title sits centred on the
+     marker, and the timestamp wraps under the title on a narrow container
+     instead of squeezing it. Horizontal: stacked and centred. */
+  .ds-stepper__heading {
+    display: flex;
+    flex-flow: var(--ds-stepper-heading-direction) wrap;
+    align-items: center;
+    align-content: center;
+    gap: var(--ds-stepper-heading-gap);
+    min-height: var(--ds-stepper-heading-min-height);
+  }
+
+  /* Overrides Text's own size/weight classes (a lower cascade layer), so
+     the title can change with the orientation bundle. The reached-title
+     colour mixes toward the step's accent — 0% vertical (plain text), 100%
+     horizontal (brand, as in the checkout design) — because the accent is
+     per-item and can't be referenced from the list-level bundle. */
+  .ds-stepper__title {
+    color: color-mix(in srgb, var(--ds-stepper-accent) var(--ds-stepper-title-accent), var(--ds-color-text-primary));
+    font-size: var(--ds-stepper-title-size);
+    font-weight: var(--ds-stepper-title-weight);
+    overflow-wrap: break-word;
+  }
+
+  .ds-stepper__item--upcoming .ds-stepper__title {
+    color: var(--ds-color-text-disabled);
+  }
+
+  .ds-stepper__timestamp {
+    overflow-wrap: break-word;
+  }
+
+  .ds-stepper__details {
+    display: var(--ds-stepper-details-display);
+    flex-direction: column;
+    gap: var(--ds-space-4);
+    padding-top: var(--ds-space-3);
+    text-align: start;
+  }
+
+  .ds-stepper__detail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-1);
+  }
+
+  /* ================================================================
+     Colour
+     ================================================================ */
+
+  /* Reached steps take their accent from `color`; the connector leading into
+     a step carries that step's accent class too, so a cancelled step's line
+     turns red alongside its marker. */
+  .ds-stepper__accent-primary {
+    --ds-stepper-accent: var(--ds-color-action-primary);
+  }
+
+  .ds-stepper__accent-success {
+    --ds-stepper-accent: var(--ds-color-feedback-success);
+  }
+
+  .ds-stepper__accent-warning {
+    --ds-stepper-accent: var(--ds-color-feedback-warning);
+  }
+
+  .ds-stepper__accent-danger {
+    --ds-stepper-accent: var(--ds-color-feedback-danger);
+  }
+
+  /* --- Marker --- */
+
+  .ds-stepper__marker {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: var(--ds-stepper-marker-size);
+    height: var(--ds-stepper-marker-size);
+    border: var(--ds-border-width-thick) solid transparent;
+    border-radius: var(--ds-radius-full);
+    transition:
+      background-color var(--ds-duration-base) var(--ds-easing-standard),
+      border-color var(--ds-duration-base) var(--ds-easing-standard),
+      color var(--ds-duration-base) var(--ds-easing-standard);
+  }
+
+  /* indicator="icon": filled check / ringed dot / plain grey dot. */
+  .ds-stepper--indicator-icon .ds-stepper__item--completed .ds-stepper__marker {
+    background-color: var(--ds-stepper-accent);
+    color: var(--ds-color-text-inverse);
+  }
+
+  .ds-stepper--indicator-icon .ds-stepper__item--current .ds-stepper__marker {
+    background-color: var(--ds-color-surface-base);
+    border-color: var(--ds-stepper-accent);
+  }
+
+  .ds-stepper--indicator-icon .ds-stepper__item--current .ds-stepper__marker::after {
+    content: "";
+    width: 40%;
+    height: 40%;
+    background-color: var(--ds-stepper-accent);
+    border-radius: var(--ds-radius-full);
+  }
+
+  .ds-stepper--indicator-icon .ds-stepper__item--upcoming .ds-stepper__marker {
+    background-color: var(--ds-stepper-track);
+  }
+
+  /* indicator="number": outlined check / filled number / muted number. */
+  .ds-stepper--indicator-number .ds-stepper__item--completed .ds-stepper__marker {
+    border-color: var(--ds-stepper-accent);
+    color: var(--ds-stepper-accent);
+  }
+
+  .ds-stepper--indicator-number .ds-stepper__item--current .ds-stepper__marker {
+    background-color: var(--ds-stepper-accent);
+    color: var(--ds-color-text-inverse);
+  }
+
+  .ds-stepper--indicator-number .ds-stepper__item--upcoming .ds-stepper__marker {
+    background-color: var(--ds-color-surface-sunken);
+    color: var(--ds-color-text-disabled);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds-stepper__marker,
+    .ds-stepper__connector {
+      transition: none;
+    }
+  }
+}

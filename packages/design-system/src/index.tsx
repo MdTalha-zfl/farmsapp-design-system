@@ -191,3 +191,15 @@ export { Countdown, type CountdownProps, type CountdownTimeLeft, type CountdownS
 export { Shaker, type ShakerProps, type ShakerIntensity } from "./components/Shaker/Shaker";
 export { Pulser, type PulserProps, type PulserIntensity } from "./components/Pulser/Pulser";
 export { Shimmer, type ShimmerProps, type ShimmerSpeed } from "./components/Shimmer/Shimmer";
+export {
+  Stepper,
+  StepperItem,
+  StepperItemDetail,
+  type StepperProps,
+  type StepperItemProps,
+  type StepperItemDetailProps,
+  type StepperOrientation,
+  type StepperIndicator,
+  type StepperItemStatus,
+  type StepperColor,
+} from "./components/Stepper";
