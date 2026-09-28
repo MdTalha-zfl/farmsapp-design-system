@@ -1,0 +1,71 @@
+@layer ds-components {
+  .ds-rating {
+    --ds-rating-fill: var(--ds-color-action-primary);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-space-2);
+  }
+
+  /* `color` overrides the fill via this custom property rather than a
+     hardcoded value on `.ds-rating__star-fill svg` below, so a consumer
+     wanting a shade this scale doesn't cover can still override
+     `--ds-rating-fill` directly instead of fighting specificity. */
+  .ds-rating--color-warning {
+    --ds-rating-fill: var(--ds-color-feedback-warning);
+  }
+
+  .ds-rating--color-success {
+    --ds-rating-fill: var(--ds-color-feedback-success);
+  }
+
+  .ds-rating--color-danger {
+    --ds-rating-fill: var(--ds-color-feedback-danger);
+  }
+
+  /* Two stacked stars: an empty "track" star underneath (light neutral
+     outline), and a filled star clipped to the value's fraction on top. The
+     standard technique for a partial (e.g. half) star without a separate
+     half-star icon. Defaults to brand color, not Lucide's conventional
+     gold/amber "warning" hue — matches this design system's brand-green
+     anchor rather than the generic star-rating yellow — but `color`
+     switches to that familiar gold (or another feedback hue) when a
+     consumer wants it. */
+  .ds-rating__star {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .ds-rating__star-track,
+  .ds-rating__star-fill svg {
+    display: block;
+    stroke-width: 1.5px;
+
+    /* Without this, the flex item shrinks to fit the clipped width instead
+       of staying full-size and being cropped by overflow:hidden — the star
+       gets squished into a distorted blob rather than showing a clean
+       partial-star crop. */
+    flex-shrink: 0;
+  }
+
+  .ds-rating__star-track {
+    color: var(--ds-color-border-default);
+  }
+
+  .ds-rating__star-fill {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    display: inline-flex;
+    white-space: nowrap;
+  }
+
+  /* Lucide's star SVG ships fill="none" (outline style); overriding fill
+     here (lower specificity than this class, so it wins over the SVG's own
+     attribute) is what makes the filled portion read as a solid star
+     instead of just another outline. */
+  .ds-rating__star-fill svg {
+    color: var(--ds-rating-fill);
+    fill: var(--ds-rating-fill);
+  }
+}

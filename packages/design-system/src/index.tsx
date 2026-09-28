@@ -219,3 +219,4 @@ export {
   type StepperItemStatus,
   type StepperColor,
 } from "./components/Stepper";
+export { Rating, type RatingProps, type RatingColor } from "./components/Rating/Rating";
