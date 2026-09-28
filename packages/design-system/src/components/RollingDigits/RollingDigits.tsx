@@ -72,7 +72,7 @@ function RollingDigit({ digit }: { digit: number }) {
  * Purely visual: the whole thing is `aria-hidden` and carries no live region
  * of its own, since what that region should announce (remaining time, a new
  * quantity, a new price) is specific to the call site — pair this with your
- * own `aria-live` text alongside it, as Countdown and CartQuantityStepper both do.
+ * own `aria-live` text alongside it, as Countdown and CartCounter both do.
  */
 export function RollingDigits({ value, fontSize = "1em", weight = "semibold", color, monospace = true, className }: RollingDigitsProps) {
   const chars = Array.from(String(value));

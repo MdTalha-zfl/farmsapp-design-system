@@ -25,7 +25,7 @@ export const FormattedPrice: Story = {
   args: { value: "₹1,234.56", fontSize: "28px" },
 };
 
-/** The common ecommerce case this was pulled out of Countdown/CartQuantityStepper
+/** The common ecommerce case this was pulled out of Countdown/CartCounter
  * for: a price that rolls to its new value once a coupon is applied. */
 export const PriceAfterCoupon: Story = {
   args: { value: 1499 },
@@ -55,7 +55,7 @@ export const LiveTicker: Story = {
   },
 };
 
-/** A manual quantity stepper — the same shape CartQuantityStepper now uses for its
+/** A manual quantity stepper — the same shape CartCounter now uses for its
  * value. */
 export const QuantityStepper: Story = {
   args: { value: 1 },
