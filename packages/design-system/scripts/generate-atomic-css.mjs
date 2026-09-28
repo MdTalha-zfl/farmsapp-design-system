@@ -220,6 +220,7 @@ const componentCssFiles = [
   "../src/components/Radio/radio.css",
   "../src/components/Switch/switch.css",
   "../src/components/Toast/toast.css",
+  "../src/components/RollingDigits/rolling-digits.css",
   "../src/components/BottomBar/bottom-bar.css",
   "../src/components/BottomNav/bottom-nav.css",
   "../src/components/Collapsible/collapsible.css",

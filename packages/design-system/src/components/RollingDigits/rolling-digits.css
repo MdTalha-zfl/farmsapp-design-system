@@ -1,0 +1,65 @@
+@layer ds-components {
+  .ds-rolling-digits {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ds-rolling-digits-color, currentColor);
+  }
+
+  .ds-rolling-digits--mono {
+    font-family: var(--ds-font-family-mono);
+  }
+
+  .ds-rolling-digits__static {
+    display: inline-flex;
+    align-items: center;
+    height: calc(var(--ds-rolling-digits-font-size) * 1.3);
+    font-size: var(--ds-rolling-digits-font-size);
+    font-weight: var(--ds-rolling-digits-weight);
+    line-height: 1;
+    white-space: pre;
+  }
+
+  .ds-rolling-digits__track {
+    display: inline-block;
+    height: calc(var(--ds-rolling-digits-font-size) * 1.3);
+    overflow: hidden;
+  }
+
+  /* Deliberately not this project's shared duration/easing tokens
+     (--ds-duration-slow, --ds-easing-standard): those are tuned for
+     one-shot UI chrome (a toast, a menu) where restrained-and-linear reads
+     as snappy. A wheel rolling through several rows in one hop (a "59 -> 00"
+     seconds rollover) needs real ease-in/ease-out or it reads as a jump-cut
+     once it's moving fast. cubic-bezier(0.34, 1.15, 0.28, 1) overshoots by
+     ~15% before settling — a hint of mechanical give — kept subtle to stay
+     in this system's restrained family rather than becoming a bouncy
+     spring. */
+  .ds-rolling-digits__strip {
+    display: flex;
+    flex-direction: column;
+    transform: translate3d(
+      0,
+      calc(var(--ds-rolling-digit, 0) * var(--ds-rolling-digits-font-size) * 1.3 * -1),
+      0
+    );
+    transition: transform 320ms cubic-bezier(0.34, 1.15, 0.28, 1);
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  .ds-rolling-digits__cell {
+    display: flex;
+    height: calc(var(--ds-rolling-digits-font-size) * 1.3);
+    align-items: center;
+    justify-content: center;
+    font-size: var(--ds-rolling-digits-font-size);
+    font-weight: var(--ds-rolling-digits-weight);
+    line-height: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds-rolling-digits__strip {
+      transition: none;
+    }
+  }
+}
