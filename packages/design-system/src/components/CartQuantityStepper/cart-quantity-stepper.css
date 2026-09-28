@@ -1,0 +1,60 @@
+@layer ds-components {
+  .ds-cart-quantity-stepper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ds-space-2);
+    width: fit-content;
+    background-color: var(--ds-color-surface-sunken);
+    border-radius: var(--ds-radius-lg);
+    padding: var(--ds-space-1);
+  }
+
+  .ds-cart-quantity-stepper--disabled {
+    opacity: 0.6;
+  }
+
+  /* Same scale as CounterInput's +/- buttons (counter-input.css
+     --ds-counter-button-width) — the two counters read as one family. */
+  .ds-cart-quantity-stepper--size-xsmall { --ds-cart-quantity-stepper-button-size: 28px; }
+  .ds-cart-quantity-stepper--size-small { --ds-cart-quantity-stepper-button-size: 32px; }
+  .ds-cart-quantity-stepper--size-medium { --ds-cart-quantity-stepper-button-size: 36px; }
+  .ds-cart-quantity-stepper--size-large { --ds-cart-quantity-stepper-button-size: 42px; }
+
+  /* Overrides IconButton's own transparent/no-container default — this
+     stepper's buttons are always filled squares, regardless of emphasis. */
+  .ds-cart-quantity-stepper__button.ds-cart-quantity-stepper__button {
+    width: var(--ds-cart-quantity-stepper-button-size);
+    height: var(--ds-cart-quantity-stepper-button-size);
+    flex: none;
+    background-color: var(--ds-color-action-primary);
+    color: var(--ds-color-text-inverse);
+    border-radius: var(--ds-radius-md);
+    transition:
+      background-color var(--ds-duration-fast) var(--ds-easing-standard),
+      transform var(--ds-duration-fast) var(--ds-easing-standard);
+  }
+
+  .ds-cart-quantity-stepper__button.ds-cart-quantity-stepper__button:disabled {
+    background-color: var(--ds-color-action-primary-disabled);
+    color: var(--ds-color-text-disabled);
+  }
+
+  .ds-cart-quantity-stepper__button.ds-cart-quantity-stepper__button:hover:not(:disabled) {
+    background-color: var(--ds-color-action-primary-hover);
+  }
+
+  .ds-cart-quantity-stepper__button.ds-cart-quantity-stepper__button:active:not(:disabled) {
+    background-color: var(--ds-color-action-primary-active);
+    transform: scale(0.9);
+  }
+
+  /* Font-size/weight/mono digits now live in the RollingDigits component
+     this wraps (CartQuantityStepper.tsx) — this owns just the layout around it. */
+  .ds-cart-quantity-stepper__value {
+    display: inline-flex;
+    justify-content: center;
+    min-width: 1.5em;
+    color: var(--ds-color-text-primary);
+  }
+}
