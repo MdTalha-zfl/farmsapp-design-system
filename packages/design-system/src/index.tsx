@@ -188,3 +188,6 @@ export { CollapsibleBody, type CollapsibleBodyProps } from "./components/Collaps
 export { RollingDigits, type RollingDigitsProps } from "./components/RollingDigits/RollingDigits";
 export { CartQuantityStepper, type CartQuantityStepperProps } from "./components/CartQuantityStepper/CartQuantityStepper";
 export { Countdown, type CountdownProps, type CountdownTimeLeft, type CountdownSize } from "./components/Countdown/Countdown";
+export { Shaker, type ShakerProps, type ShakerIntensity } from "./components/Shaker/Shaker";
+export { Pulser, type PulserProps, type PulserIntensity } from "./components/Pulser/Pulser";
+export { Shimmer, type ShimmerProps, type ShimmerSpeed } from "./components/Shimmer/Shimmer";

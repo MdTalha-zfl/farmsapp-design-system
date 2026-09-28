@@ -1,0 +1,49 @@
+@layer ds-components {
+  .ds-pulser {
+    display: inline-block;
+  }
+
+  /* A double zoom-in/zoom-out (in → out → in → out) followed by a hold —
+     mirrors Shaker's shape: the two pulses are compressed into the first
+     ~40% of the cycle (see the keyframes below), the rest of the
+     duration is the hold before the next cycle. Scales around the
+     element's own center so it grows evenly instead of drifting toward a
+     corner. */
+  .ds-pulser--active {
+    transform-origin: center;
+  }
+
+  .ds-pulser--active.ds-pulser--intensity-subtle {
+    animation: ds-pulser-pulse-loop 1.6s ease-in-out infinite;
+
+    --ds-pulser-scale: 1.04;
+  }
+
+  .ds-pulser--active.ds-pulser--intensity-medium {
+    animation: ds-pulser-pulse-loop 1.3s ease-in-out infinite;
+
+    --ds-pulser-scale: 1.08;
+  }
+
+  .ds-pulser--active.ds-pulser--intensity-strong {
+    animation: ds-pulser-pulse-loop 1.05s ease-in-out infinite;
+
+    --ds-pulser-scale: 1.14;
+  }
+
+  /* zoom in, zoom out, zoom in, zoom out, then hold flat until the next
+     cycle starts. */
+  @keyframes ds-pulser-pulse-loop {
+    0%, 20%, 40%, 100% { transform: scale(1); }
+    10%, 30% { transform: scale(var(--ds-pulser-scale)); }
+  }
+}
+
+/* Same real accessibility case as Shaker/Spinner: an attention-grabbing
+   pulse is motion whose sole purpose is motion, so it's suppressed
+   outright rather than just shortened. */
+@media (prefers-reduced-motion: reduce) {
+  .ds-pulser--active {
+    animation: none;
+  }
+}

@@ -1,0 +1,53 @@
+@layer ds-components {
+  .ds-shaker {
+    display: inline-block;
+  }
+
+  /* A quick smooth wiggle followed by a hold — an ambient "look here"
+     pulse, not a sharp rattle and not a nonstop jitter either. The wiggle
+     itself is compressed into the first ~35% of the cycle (see the
+     keyframes below); the rest of the duration is the hold between
+     pulses. Intentionally not using the brand's snappy/utilitarian easing
+     token, since that's tuned for instant micro-interactions, not this
+     kind of looping attention cue. */
+  .ds-shaker--active {
+    /* Rotate around the element's own center, not its edge — keeps the
+       vertical center and horizontal anchor point fixed in place, so the
+       wiggle turns in place instead of sliding sideways. */
+    transform-origin: center;
+  }
+
+  .ds-shaker--active.ds-shaker--intensity-subtle {
+    animation: ds-shaker-shake-loop 1.6s ease-in-out infinite;
+
+    --ds-shaker-rotate: 1.5deg;
+  }
+
+  .ds-shaker--active.ds-shaker--intensity-medium {
+    animation: ds-shaker-shake-loop 1.3s ease-in-out infinite;
+
+    --ds-shaker-rotate: 3deg;
+  }
+
+  .ds-shaker--active.ds-shaker--intensity-strong {
+    animation: ds-shaker-shake-loop 1.05s ease-in-out infinite;
+
+    --ds-shaker-rotate: 4deg;
+  }
+
+  @keyframes ds-shaker-shake-loop {
+    0%, 35%, 100% { transform: rotate(0deg); }
+    8.75% { transform: rotate(calc(var(--ds-shaker-rotate) * -1)); }
+    17.5% { transform: rotate(var(--ds-shaker-rotate)); }
+    26.25% { transform: rotate(calc(var(--ds-shaker-rotate) * -0.6)); }
+  }
+}
+
+/* Same real accessibility case as the spinner: an attention-grabbing shake
+   is motion whose sole purpose is motion, so it's suppressed outright
+   rather than just shortened. */
+@media (prefers-reduced-motion: reduce) {
+  .ds-shaker--active {
+    animation: none;
+  }
+}
