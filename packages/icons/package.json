@@ -1,6 +1,6 @@
 {
   "name": "@farmsapp/icons",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Individually tree-shakable icon components, generated from SVG source via SVGR — System Blueprint §01.",
   "type": "module",
   "sideEffects": [
