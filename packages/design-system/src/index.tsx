@@ -182,3 +182,6 @@ export {
   type ToastAction,
   type ToastDismissReason,
 } from "./components/Toast";
+export { Collapsible, type CollapsibleProps } from "./components/Collapsible/Collapsible";
+export { CollapsibleTrigger, type CollapsibleTriggerProps } from "./components/Collapsible/CollapsibleTrigger";
+export { CollapsibleBody, type CollapsibleBodyProps } from "./components/Collapsible/CollapsibleBody";
