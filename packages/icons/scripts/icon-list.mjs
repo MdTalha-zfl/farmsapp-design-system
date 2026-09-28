@@ -30,4 +30,5 @@ export const ICON_LIST = [
   { lucideName: "shopping-cart", componentName: "ShoppingCartIcon" },
   { lucideName: "package", componentName: "PackageIcon" },
   { lucideName: "heart", componentName: "HeartIcon" },
+  { lucideName: "star", componentName: "StarIcon" },
 ];

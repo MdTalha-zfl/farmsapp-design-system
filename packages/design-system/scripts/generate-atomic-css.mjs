@@ -220,6 +220,7 @@ const componentCssFiles = [
   "../src/components/Radio/radio.css",
   "../src/components/Switch/switch.css",
   "../src/components/Toast/toast.css",
+  "../src/components/Rating/rating.css",
   "../src/components/SpotlightPopoverTour/spotlight-popover-tour.css",
   "../src/components/Stepper/stepper.css",
   "../src/components/Shaker/shaker.css",
