@@ -1,0 +1,67 @@
+@layer ds-components {
+  .ds-shimmer {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+
+    /* Clips the sweeping band to the wrapper's own box. If the child has
+       rounded corners (most buttons do), pass a matching border-radius
+       via `className` so the clip doesn't square them off. */
+  }
+
+  .ds-shimmer--active::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -60%;
+    width: 60%;
+    pointer-events: none;
+
+    /* A real skewed element, not a gradient stretched over the whole
+       box — `skewX` gives a consistent diagonal tilt regardless of the
+       button's aspect ratio, and animating only `transform` (not
+       `background-position`) keeps the sweep on the compositor thread
+       instead of repainting every frame. */
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 55%),
+      transparent
+    );
+    transform: translateX(0) skewX(-20deg);
+  }
+
+  /* The sweep itself is compressed into the first ~40% of the cycle (see
+     the keyframes below); the rest of the duration is the hold — parked
+     off-screen — before the next pass. Mirrors Shaker/Pulser's
+     pulse-then-hold shape. */
+  .ds-shimmer--active.ds-shimmer--speed-slow::after {
+    animation: ds-shimmer-sweep-loop 2.2s ease-in-out infinite;
+  }
+
+  .ds-shimmer--active.ds-shimmer--speed-medium::after {
+    animation: ds-shimmer-sweep-loop 1.8s ease-in-out infinite;
+  }
+
+  .ds-shimmer--active.ds-shimmer--speed-fast::after {
+    animation: ds-shimmer-sweep-loop 1.4s ease-in-out infinite;
+  }
+
+  /* translateX(267%) is relative to the band's own 60%-of-container
+     width, so it lands the band at +100% of the container — fully off
+     the right edge, having swept clear across from -60% on the left. */
+  @keyframes ds-shimmer-sweep-loop {
+    0%, 10% { transform: translateX(0) skewX(-20deg); }
+    40%, 100% { transform: translateX(267%) skewX(-20deg); }
+  }
+}
+
+/* Same real accessibility case as Shaker/Pulser/Spinner: a repeating
+   sweep is motion whose sole purpose is motion, so it's suppressed
+   outright rather than just shortened. */
+@media (prefers-reduced-motion: reduce) {
+  .ds-shimmer--active::after {
+    animation: none;
+  }
+}
