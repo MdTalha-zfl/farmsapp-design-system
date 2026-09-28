@@ -27,4 +27,7 @@ export const ICON_LIST = [
   { lucideName: "chevron-right", componentName: "ChevronRightIcon" },
   { lucideName: "info", componentName: "InfoIcon" },
   { lucideName: "trash-2", componentName: "TrashIcon" },
+  { lucideName: "shopping-cart", componentName: "ShoppingCartIcon" },
+  { lucideName: "package", componentName: "PackageIcon" },
+  { lucideName: "heart", componentName: "HeartIcon" },
 ];

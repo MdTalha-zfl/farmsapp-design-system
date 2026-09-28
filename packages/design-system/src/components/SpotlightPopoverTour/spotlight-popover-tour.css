@@ -1,0 +1,53 @@
+@layer ds-components {
+  .ds-spotlight-popover-tour__mask {
+    position: fixed;
+    inset: 0;
+    z-index: var(--ds-z-index-tour);
+
+    /* Purely visual — never intercepts clicks. SpotlightPopoverTour's own focus manager is
+       non-modal by design (decisions/decision-tour-api-and-structure.md),
+       so nothing about the mask should block reaching the spotlighted
+       target or anything else on the page. */
+    pointer-events: none;
+    transition: opacity var(--ds-duration-base) var(--ds-easing-standard);
+  }
+
+  .ds-spotlight-popover-tour__pulse {
+    animation: ds-spotlight-popover-tour-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes ds-spotlight-popover-tour-pulse {
+    0%,
+    100% {
+      stroke-opacity: 1;
+    }
+
+    50% {
+      stroke-opacity: 0.35;
+    }
+  }
+
+  .ds-spotlight-popover-tour__popover {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--ds-color-surface-raised);
+    color: var(--ds-color-text-primary);
+    border: 1px solid var(--ds-color-border-default);
+    border-radius: var(--ds-radius-lg);
+    box-shadow: var(--ds-elevation-dialog);
+    outline: none;
+    transition: opacity var(--ds-duration-base) var(--ds-easing-standard);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds-spotlight-popover-tour__mask,
+    .ds-spotlight-popover-tour__popover {
+      transition: none;
+    }
+
+    .ds-spotlight-popover-tour__pulse {
+      animation: none;
+    }
+  }
+}

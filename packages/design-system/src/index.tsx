@@ -88,6 +88,22 @@ export {
   PopoverInteractiveWrapper,
   type PopoverInteractiveWrapperProps,
 } from "./components/Popover/PopoverInteractiveWrapper";
+export {
+  SpotlightPopoverTour,
+  type SpotlightPopoverTourProps,
+  type SpotlightPopoverTourStepConfig,
+  type SpotlightPopoverTourSteps,
+  type SpotlightPopoverTourStepRenderProps,
+} from "./components/SpotlightPopoverTour/SpotlightPopoverTour";
+export {
+  SpotlightPopoverTourStep,
+  type SpotlightPopoverTourStepProps,
+} from "./components/SpotlightPopoverTour/SpotlightPopoverTourStep";
+export {
+  SpotlightPopoverTourFooter,
+  type SpotlightPopoverTourFooterProps,
+  type SpotlightPopoverTourFooterAction,
+} from "./components/SpotlightPopoverTour/SpotlightPopoverTourFooter";
 export { Modal, type ModalProps, type ModalSize } from "./components/Modal/Modal";
 export { ModalHeader, type ModalHeaderProps } from "./components/Modal/ModalHeader";
 export { ModalBody, type ModalBodyProps } from "./components/Modal/ModalBody";
