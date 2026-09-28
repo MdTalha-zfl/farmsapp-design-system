@@ -1,0 +1,93 @@
+@layer ds-components {
+  /* Full width by default so a consumer dropping this into a hero/banner
+     section gets centered wrapping for free, with no extra wrapper CSS. */
+  .ds-countdown {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .ds-countdown__boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(var(--ds-space-2), 2.5vw, var(--ds-space-4));
+    max-width: 100%;
+  }
+
+  .ds-countdown__unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ds-space-1);
+  }
+
+  /* The digit-rolling mechanics (the 0-9 strip, its transition/easing) now
+     live in the shared RollingDigits component — this file only owns the
+     box's own chrome (background/border/size), the one part that's
+     Countdown-specific. */
+  .ds-countdown__box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: var(--ds-color-surface-base);
+    border: var(--ds-border-width-thin) solid var(--ds-color-border-subtle);
+    border-radius: var(--ds-radius-md);
+  }
+
+  /* Box dimensions are layout, not type, so they stay clamp()'d in px per
+     decisions/decision-rem-for-typography-px-for-layout.md — only the digit
+     font-size itself (set via RollingDigits' `fontSize` prop in
+     Countdown.tsx) needs to respect a user's text-size setting. */
+  .ds-countdown__unit--size-small .ds-countdown__box {
+    width: clamp(32px, 9vw, 40px);
+    height: clamp(32px, 9vw, 40px);
+  }
+
+  .ds-countdown__unit--size-medium .ds-countdown__box {
+    width: clamp(40px, 11vw, 56px);
+    height: clamp(40px, 11vw, 56px);
+  }
+
+  .ds-countdown__unit--size-large .ds-countdown__box {
+    width: clamp(48px, 13vw, 72px);
+    height: clamp(48px, 13vw, 72px);
+  }
+
+  .ds-countdown__unit--size-xlarge .ds-countdown__box {
+    width: clamp(56px, 16vw, 96px);
+    height: clamp(56px, 16vw, 96px);
+  }
+
+  .ds-countdown__unit--size-2xlarge .ds-countdown__box {
+    width: clamp(64px, 18vw, 120px);
+    height: clamp(64px, 18vw, 120px);
+  }
+
+  .ds-countdown__label {
+    text-transform: capitalize;
+  }
+
+  .ds-countdown__unit--size-large .ds-countdown__label,
+  .ds-countdown__unit--size-xlarge .ds-countdown__label,
+  .ds-countdown__unit--size-2xlarge .ds-countdown__label {
+    font-size: clamp(11px, 2.5vw, 14px);
+  }
+
+  /* Visible boxes are aria-hidden (a per-second live region would be
+     unusable); this is the one node screen readers actually see, updated
+     the same tick the boxes are. */
+  .ds-countdown__sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
