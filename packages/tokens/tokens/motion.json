@@ -20,6 +20,7 @@
     "modal": { "$value": 300, "$type": "number" },
     "toast": { "$value": 400, "$type": "number" },
     "popover": { "$value": 450, "$type": "number", "$description": "Above modal/toast (can hold interactive content), below tooltip — a tooltip triggered from inside an open popover must still win." },
+    "tour": { "$value": 460, "$type": "number", "$description": "Above popover, below tooltip — a SpotlightPopoverTour's mask+card must sit above everything else on the page (it exists to direct attention to one specific thing), but the existing invariant (tooltip always wins, even nested inside another floating element) still holds if a tooltip ever appears inside a SpotlightPopoverTour step's own content." },
     "tooltip": { "$value": 500, "$type": "number", "$description": "Highest in the scale — a tooltip must be able to render above everything, including a toast. Matches Blade's own real default (1100, also its own scale's highest value) in relative position, not absolute number." }
   }
 }
