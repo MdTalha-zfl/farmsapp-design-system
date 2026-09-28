@@ -1,6 +1,6 @@
 {
   "name": "@farmsapp/tokens",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Primitive and semantic design tokens — Style Dictionary source, compiled to CSS custom properties and typed TS constants. See System Blueprint §05.",
   "type": "module",
   "sideEffects": false,
